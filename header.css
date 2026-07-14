@@ -102,6 +102,8 @@ dialog {
   margin: 0 0 22px;
 }
 .detail-tags:empty { display: none; }
+.image-wrap img.fallback-image,
+.detail-image img.fallback-image { opacity: 0.2; }
 
 @media (max-width: 850px) {
   .detail-image { height: min(42dvh, 360px); }
