@@ -105,7 +105,7 @@ dialog {
 .detail-image img.fallback-image {
   object-fit: contain;
   padding: 12% 22%;
-  top: -10px;
+  top: -12px;
   opacity: 0.15;
 }
 .dark .image-wrap img.fallback-image,
