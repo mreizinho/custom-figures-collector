@@ -5,7 +5,6 @@
   --ink: #252624;
   --muted: #70716d;
   --line: #d1d2cf;
-  --accent: #2563eb;
   --shadow: 0 12px 30px #25262410;
 }
 
@@ -14,18 +13,6 @@
 .detail-image { background: #dedfdb; }
 
 .card .condition { background: #f5f5f3; }
-
-/* Blue collection accent, used consistently for status and controls. */
-.catalogue:not(.list) .card .brand { color: var(--accent); }
-.card .condition,
-.detail-tags span { border-color: var(--accent); color: var(--accent); }
-.actions button { border-color: var(--accent); }
-.actions .selected {
-  background: var(--accent);
-  border-color: var(--accent);
-}
-.stats strong,
-.stats small { color: var(--accent); }
 
 body.dark {
   --bg: #20211f;
