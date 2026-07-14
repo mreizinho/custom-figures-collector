@@ -110,6 +110,7 @@ dialog {
 }
 .dark .image-wrap img.fallback-image,
 .dark .detail-image img.fallback-image { filter: invert(1); }
+.catalogue.list .image-wrap img.fallback-image { top: -4px; }
 
 @media (max-width: 850px) {
   .detail-image { height: min(42dvh, 360px); }
