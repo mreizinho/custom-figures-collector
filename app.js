@@ -4,6 +4,8 @@ const SHEET_ID = '1rZx6B94LOAUbwpgrLJmNTmWSzvE3DGOaMTR4GXFzoMo';
 // file read a public sheet, including when it is opened directly from disk.
 const endpoint = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json;responseHandler:sheetCallback`;
 const $ = (s) => document.querySelector(s);
+document.addEventListener('pointerdown',()=>document.body.classList.add('pointer-focus'));
+document.addEventListener('keydown',event=>{if(event.key==='Tab')document.body.classList.remove('pointer-focus')});
 let figures = [], exchangeRates = {EUR:1}, ratesReady = false, totalCurrency = localStorage.getItem('minifig-total-currency') || 'EUR', selected = new Set(JSON.parse(localStorage.getItem('minifig-owned') || '[]')), wished = new Set(JSON.parse(localStorage.getItem('minifig-wished') || '[]')), removedOwned = new Set(JSON.parse(localStorage.getItem('minifig-not-owned') || '[]')), removedWished = new Set(JSON.parse(localStorage.getItem('minifig-not-wished') || '[]'));
 const clean = v => String(v ?? '').trim();
 const column = (row, names) => { for (const name of names) { const key = Object.keys(row).find(k => k.toLowerCase().replace(/[^a-z0-9]/g,'') === name); if(key && row[key] != null) return clean(row[key]); } return ''; };
