@@ -12,14 +12,15 @@
 .image-wrap,
 .detail-image { background: #dedfdb; }
 
-.card .condition { background: #f5f5f3; }
+.card .condition { background: var(--paper); }
 
 body.dark {
-  --bg: #20211f;
-  --paper: #2b2c29;
-  --ink: #f1f2ee;
-  --muted: #adaea9;
-  --line: #484946;
+  --bg: #181917;
+  --paper: #282925;
+  --ink: #f4f5f0;
+  --muted: #b8bab2;
+  --line: #4c4e48;
+  --shadow: 0 12px 30px #0005;
 }
 
 .material-symbols-rounded {
@@ -44,6 +45,8 @@ body.dark {
 .filter-toggle { align-items: center; gap: 6px; }
 .filter-toggle .material-symbols-rounded { font-size: 20px; }
 .brick.material-symbols-rounded { display: inline-grid; font-size: 18px; }
+#theme { display: grid; place-items: center; padding: 0; }
+#theme .material-symbols-rounded { display: block; transform: translateY(0px); }
 .actions .material-symbols-rounded { font-size: 17px; }
 .actions button {
   display: grid;
@@ -73,6 +76,11 @@ body.dark {
 .detail-actions .material-symbols-rounded { font-size: 18px; }
 
 body { transition: background-color .2s ease, color .2s ease; }
+input, select { color: var(--ink); }
+input::placeholder { color: var(--muted); opacity: 1; }
+.filters label { color: var(--muted); }
+.filters input[type="checkbox"] { transform: translateY(2px); }
+.view-buttons .active { color: var(--paper); }
 .pointer-focus button:focus-visible,
 .pointer-focus input:focus-visible,
 .pointer-focus select:focus-visible { outline: none; }
@@ -91,6 +99,14 @@ body { transition: background-color .2s ease, color .2s ease; }
 .empty-state h2 { margin: 10px 0 6px; font-size: 21px; }
 .empty-state p { margin: 0 0 20px; color: var(--muted); }
 .empty-state button { border: 0; background: var(--ink); color: var(--paper); padding: 11px 16px; font-weight: 600; }
+
+body.dark { color-scheme: dark; }
+.dark .actions .selected { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.dark .detail-actions button { color: var(--paper); }
+.dark .close { background: var(--paper); color: var(--ink); }
+.dark .tag-filters label:has(input:checked),
+.dark .detail-tags span { color: #20211e; }
+.dark .card:hover { border-color: #686a63; box-shadow: 0 18px 38px #0007; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }

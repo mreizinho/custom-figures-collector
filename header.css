@@ -102,7 +102,14 @@ dialog {
 }
 .detail-tags:empty { display: none; }
 .image-wrap img.fallback-image,
-.detail-image img.fallback-image { opacity: 0.2; }
+.detail-image img.fallback-image {
+  object-fit: contain;
+  padding: 12% 22%;
+  top: -10px;
+  opacity: 0.15;
+}
+.dark .image-wrap img.fallback-image,
+.dark .detail-image img.fallback-image { filter: invert(1); }
 
 @media (max-width: 850px) {
   .detail-image { height: min(42dvh, 360px); }
