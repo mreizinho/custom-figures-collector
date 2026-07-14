@@ -17,7 +17,11 @@ main { padding-top: 36px; }
   grid-template-rows: auto auto;
   padding-right: 14px;
 }
-.catalogue.list .card h2 { grid-column: 1; grid-row: 1; }
+.catalogue.list .card h2 {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  align-self: center;
+}
 .catalogue.list .card .brand {
   display: block;
   grid-column: 1;

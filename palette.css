@@ -64,6 +64,11 @@ body.dark {
 }
 .stats article { border: 0; background: var(--paper); }
 .stats article:last-child { border: 0; }
+.stat-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.currency-toggle { display: flex; flex: 0 0 auto; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.currency-toggle button { border: 0; background: transparent; color: var(--muted); padding: 4px 8px; font-family: 'DM Mono', monospace; font-size: 13px; line-height: 1; }
+.currency-toggle button + button { border-left: 1px solid var(--line); }
+.currency-toggle button.active { background: var(--ink); color: var(--paper); }
 .detail-actions button { display: inline-flex; align-items: center; gap: 7px; }
 .detail-actions .material-symbols-rounded { font-size: 18px; }
 
