@@ -1,5 +1,5 @@
 /* Compact collection overview after removing the hero panel. */
-main { padding-top: 36px; }
+main { padding-top: 28px; }
 .stats { grid-template-columns: repeat(4, 1fr); }
 
 @media (max-width: 1050px) {
@@ -7,7 +7,7 @@ main { padding-top: 36px; }
 }
 
 @media (max-width: 560px) {
-  main { padding-top: 24px; }
+  main { padding-top: 20px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
 }
 
