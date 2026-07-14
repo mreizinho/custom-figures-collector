@@ -22,6 +22,51 @@ body.dark {
   --line: #484946;
 }
 
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 21px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.search > .material-symbols-rounded { font-size: 27px; }
+.view-buttons button { display: grid; place-items: center; padding: 0; }
+.view-buttons .material-symbols-rounded { display: block; font-size: 24px; line-height: 1; transform: translateY(1px); }
+.filter-toggle { align-items: center; gap: 6px; }
+.filter-toggle .material-symbols-rounded { font-size: 20px; }
+.brick.material-symbols-rounded { display: inline-grid; font-size: 18px; }
+.actions .material-symbols-rounded { font-size: 17px; }
+.actions button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  line-height: 1;
+}
+.actions button .material-symbols-rounded { display: block; line-height: 1; }
+.wish .material-symbols-rounded { font-variation-settings: 'FILL' 0; }
+.wish .material-symbols-rounded { transform: translateY(1px); }
+.wish.selected .material-symbols-rounded { font-variation-settings: 'FILL' 1; }
+
+.stats {
+  gap: 1px;
+  padding: 1px;
+  border: 0;
+  background: var(--line);
+}
+.stats article { border: 0; background: var(--paper); }
+.stats article:last-child { border: 0; }
+.detail-actions button { display: inline-flex; align-items: center; gap: 7px; }
+.detail-actions .material-symbols-rounded { font-size: 18px; }
+
 body { transition: background-color .2s ease, color .2s ease; }
 .topbar { background: color-mix(in srgb, var(--bg) 92%, transparent); }
 .card { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
@@ -44,6 +89,7 @@ body { transition: background-color .2s ease, color .2s ease; }
 }
 
 @media (max-width: 560px) {
+  .filter-toggle { display: flex; }
   .sort-control > span { display: none; }
   .results-head select { max-width: 170px; }
   .card:hover { transform: none; }

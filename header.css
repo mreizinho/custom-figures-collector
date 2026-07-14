@@ -1,32 +1,14 @@
 /* Compact collection overview after removing the hero panel. */
 main { padding-top: 36px; }
-.page-heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 32px;
-  margin: 12px 0 28px;
-}
-.page-heading .eyebrow { margin: 0 0 8px; }
-.page-heading h1 { margin: 0; font-size: clamp(36px, 5vw, 58px); line-height: .95; letter-spacing: -2.5px; }
-.page-heading > p { max-width: 390px; margin: 0; color: var(--muted); line-height: 1.5; }
-.stats { grid-template-columns: repeat(5, 1fr); }
+.stats { grid-template-columns: repeat(4, 1fr); }
 
 @media (max-width: 1050px) {
-  .stats { grid-template-columns: repeat(3, 1fr); }
-  .stats article:nth-child(3) { border-right: 0; }
-  .stats article:nth-child(-n + 3) { border-bottom: 1px solid var(--line); }
+  .stats { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 560px) {
   main { padding-top: 24px; }
-  .page-heading { display: block; margin-top: 6px; }
-  .page-heading > p { margin-top: 14px; font-size: 15px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
-  .stats article:nth-child(2n) { border-right: 0; }
-  .stats article:nth-child(-n + 3) { border-bottom: 1px solid var(--line); }
-  .stats article:nth-child(3) { border-right: 1px solid var(--line); }
-  .stats article:last-child { grid-column: span 2; }
 }
 
 /* List cards: primary information first, metadata on a quieter second row. */
