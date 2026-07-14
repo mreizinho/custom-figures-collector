@@ -1,0 +1,23 @@
+/* Neutral grayscale palette: quiet surfaces with a clear orange accent. */
+:root {
+  --bg: #e6e7e4;
+  --paper: #f5f5f3;
+  --ink: #252624;
+  --muted: #70716d;
+  --line: #d1d2cf;
+  --shadow: 0 12px 30px #25262410;
+}
+
+.image-button,
+.image-wrap,
+.detail-image { background: #dedfdb; }
+
+.card .condition { background: #f5f5f3; }
+
+body.dark {
+  --bg: #20211f;
+  --paper: #2b2c29;
+  --ink: #f1f2ee;
+  --muted: #adaea9;
+  --line: #484946;
+}
