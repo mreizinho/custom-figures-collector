@@ -80,6 +80,18 @@ main { padding-top: 28px; }
   background: var(--paper);
   padding: 5px 9px;
 }
+.catalogue:not(.list) .card .condition-list { display: none; }
+.catalogue:not(.list) .card .condition-overlay {
+  position: absolute;
+  right: 6px;
+  bottom: 20px;
+  top: auto;
+  z-index: 2;
+  transform: none;
+  background: var(--paper);
+}
+.catalogue.list .card .condition-overlay { display: none; }
+.catalogue:not(.list) .fallback-card .condition-overlay { bottom: 44px; }
 
 /* Keep the detail card comfortably inside the viewport. */
 dialog {
