@@ -51,10 +51,12 @@ body.dark {
 .brand-icon-filled { visibility: hidden; }
 .dark .brand-icon-outline { visibility: hidden; }
 .dark .brand-icon-filled { visibility: visible; filter: invert(1); }
-.brand .brand-name { font-weight: 700; }
-.brand strong { font-weight: 400; }
-.brand .brand-name { display: inline-block; transform: translateY(-1px) scaleY(1.22); transform-origin: center; }
-.brand strong { display: inline-block; transform: translateY(-1px) scaleY(1.18); transform-origin: center; }
+.brand .brand-name { font-weight: 400; }
+.brand strong { font-weight: 700; }
+.brand .brand-name { display: inline-block; transform: translateY(-1px) scaleY(1.18); transform-origin: center; }
+.brand strong { display: inline-block; transform: translateY(-1px) scaleY(1.22); transform-origin: center; }
+.dark .brand .brand-name { font-weight: 700; transform: translateY(-1px) scaleY(1.22); }
+.dark .brand strong { font-weight: 400; transform: translateY(-1px) scaleY(1.18); }
 #theme { display: grid; place-items: center; padding: 0; }
 #theme .material-symbols-rounded { display: block; transform: translateY(0px); }
 .actions .material-symbols-rounded { font-size: 17px; }
