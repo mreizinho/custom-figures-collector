@@ -45,18 +45,22 @@ body.dark {
 .filter-toggle { align-items: center; gap: 6px; }
 .filter-toggle .material-symbols-rounded { font-size: 20px; }
 .brick.material-symbols-rounded { display: inline-grid; font-size: 18px; }
-.brand { display: inline-flex; align-items: center; min-width: 0; gap: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(20px, 2.6vw, 26px); line-height: 34px; letter-spacing: .65px; text-transform: uppercase; white-space: nowrap; }
+.brand { position: relative; display: inline-flex; align-items: center; min-width: 0; gap: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(20px, 2.6vw, 26px); line-height: 34px; letter-spacing: .65px; text-transform: uppercase; white-space: nowrap; }
 .brand-icon { display: grid; flex: 0 0 28px; width: 28px; height: 28px; margin-right: 0; }
 .brand-icon img { grid-area: 1 / 1; display: block; width: 28px; height: 28px; object-fit: contain; }
 .brand-icon-filled { visibility: hidden; }
 .dark .brand-icon-outline { visibility: hidden; }
 .dark .brand-icon-filled { visibility: visible; filter: invert(1); }
 .brand .brand-name { font-weight: 400; }
-.brand strong { font-weight: 700; }
 .brand .brand-name { display: inline-block; transform: translateY(-1px) scaleY(1.18); transform-origin: center; }
-.brand strong { display: inline-block; transform: translateY(-1px) scaleY(1.22); transform-origin: center; }
-.dark .brand .brand-name { font-weight: 700; transform: translateY(-1px) scaleY(1.22); }
-.dark .brand strong { font-weight: 400; transform: translateY(-1px) scaleY(1.18); }
+.brand-accent { border: 0; background: transparent; color: var(--accent); padding: 0; font: inherit; font-weight: 400; letter-spacing: inherit; line-height: inherit; transform: translateY(-1px) scaleY(1.18); transform-origin: center; }
+.accent-picker { position: absolute; z-index: 40; top: calc(100% + 10px); right: 0; width: 196px; padding: 14px; border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); color: var(--ink); font-family: Outfit, sans-serif; font-size: 12px; line-height: 1.2; letter-spacing: 0; text-transform: none; white-space: normal; }
+.accent-picker > span { display: block; margin-bottom: 10px; font-weight: 600; }
+.accent-swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
+.accent-swatches button { width: 100%; aspect-ratio: 1; border: 2px solid var(--paper); border-radius: 50%; background: var(--swatch); box-shadow: 0 0 0 1px var(--line); }
+.accent-swatches button.active { box-shadow: 0 0 0 2px var(--ink); }
+.custom-accent { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; color: var(--muted); }
+.custom-accent input { width: 42px; height: 26px; border: 1px solid var(--line); background: transparent; padding: 2px; }
 #theme { display: grid; place-items: center; padding: 0; }
 #theme .material-symbols-rounded { display: block; transform: translateY(0px); }
 .actions .material-symbols-rounded { font-size: 17px; }
@@ -91,6 +95,7 @@ body.dark {
 .detail-actions .material-symbols-rounded { font-size: 18px; }
 
 body { transition: background-color .2s ease, color .2s ease; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline-color: var(--accent); }
 input, select { color: var(--ink); }
 input::placeholder { color: var(--muted); opacity: 1; }
 .filters label { color: var(--muted); }
