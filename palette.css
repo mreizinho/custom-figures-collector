@@ -110,6 +110,7 @@ body.dark {
 .stats article { border: 0; background: var(--paper); padding: 20px 24px; }
 .stats article:last-child { border: 0; }
 .stats > article > span { text-transform: uppercase; letter-spacing: .65px; font-size: 11px; font-weight: 600; }
+.stats strong, #ownedValue { color: var(--accent); }
 .owned-stat { position: relative; }
 .stat-foot { display: flex; align-items: center; gap: 10px; }
 .currency-toggle { position: absolute; top: 18px; right: 18px; display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
