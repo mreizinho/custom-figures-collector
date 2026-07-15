@@ -116,6 +116,13 @@ body.dark {
 .currency-toggle button.active { background: var(--ink); color: var(--paper); }
 .detail-actions button { display: inline-flex; align-items: center; gap: 7px; }
 .detail-actions .material-symbols-rounded { font-size: 18px; }
+.confirm-dialog { width: min(420px, calc(100% - 32px)); max-width: 420px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); box-shadow: 0 24px 70px #0005; }
+.confirm-copy { padding: 24px; }
+.confirm-copy h2 { margin: 0 0 8px; font-size: 20px; }
+.confirm-copy p { margin: 0; color: var(--muted); line-height: 1.45; }
+.confirm-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px; }
+.confirm-actions button { border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 9px 15px; }
+.confirm-actions #acceptConfirm { border-color: var(--ink); background: var(--ink); color: var(--paper); font-weight: 600; }
 
 body { transition: background-color .2s ease, color .2s ease; }
 button:focus-visible, input:focus-visible, select:focus-visible { outline-color: var(--accent); }
