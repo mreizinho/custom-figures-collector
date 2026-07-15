@@ -61,6 +61,7 @@ body.dark {
 .accent-swatches button.active { box-shadow: 0 0 0 2px var(--ink); }
 .custom-accent { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; color: var(--muted); }
 .custom-accent input { width: 42px; height: 26px; border: 1px solid var(--line); background: transparent; padding: 2px; }
+.custom-accent button { height: 26px; border: 0; background: var(--ink); color: var(--paper); padding: 0 9px; font-size: 11px; font-weight: 600; }
 #theme { display: grid; place-items: center; padding: 0; }
 #theme .material-symbols-rounded { display: block; transform: translateY(0px); }
 .actions .material-symbols-rounded { font-size: 17px; }
