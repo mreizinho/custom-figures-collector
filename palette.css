@@ -214,8 +214,8 @@ body.dark { color-scheme: dark; }
   .results-head .sort-control { width: 180px; }
   .sort-control .sort-icon { display: block; }
   .results-head select { max-width: 170px; }
-  .catalogue:not(.list) .card .condition-overlay { right: 5px; bottom: 12px; padding: 3px 6px; font-size: 8px; font-weight: 500; }
-  .catalogue:not(.list) .fallback-card .condition-overlay { bottom: 28px; }
+  .catalogue:not(.list) .card .condition-overlay { right: 5px; bottom: 12px; padding: 2px 5px; font-size: 7px; font-weight: 500; }
+  .catalogue:not(.list) .fallback-card .condition-overlay { bottom: 23px; }
   .card:hover { transform: none; }
 }
 
