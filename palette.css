@@ -45,8 +45,8 @@ body.dark {
 .filter-toggle { align-items: center; gap: 6px; }
 .filter-toggle .material-symbols-rounded { font-size: 20px; }
 .brick.material-symbols-rounded { display: inline-grid; font-size: 18px; }
-.brand { display: inline-flex; align-items: center; gap: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(20px, 2.6vw, 26px); line-height: 34px; letter-spacing: .65px; text-transform: uppercase; }
-.brand-icon { display: grid; width: 28px; height: 28px; margin-right: 0; }
+.brand { display: inline-flex; align-items: center; min-width: 0; gap: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(20px, 2.6vw, 26px); line-height: 34px; letter-spacing: .65px; text-transform: uppercase; white-space: nowrap; }
+.brand-icon { display: grid; flex: 0 0 28px; width: 28px; height: 28px; margin-right: 0; }
 .brand-icon img { grid-area: 1 / 1; display: block; width: 28px; height: 28px; object-fit: contain; }
 .brand-icon-filled { visibility: hidden; }
 .dark .brand-icon-outline { visibility: hidden; }
@@ -54,7 +54,7 @@ body.dark {
 .brand .brand-name { font-weight: 400; }
 .brand strong { font-weight: 700; }
 .brand .brand-name,
-.brand strong { display: inline-block; transform: scaleY(1.18); transform-origin: center; }
+.brand strong { display: inline-block; transform: translateY(-1px) scaleY(1.18); transform-origin: center; }
 #theme { display: grid; place-items: center; padding: 0; }
 #theme .material-symbols-rounded { display: block; transform: translateY(0px); }
 .actions .material-symbols-rounded { font-size: 17px; }
@@ -181,4 +181,8 @@ body.dark { color-scheme: dark; }
   .sort-control .sort-icon { display: block; }
   .results-head select { max-width: 170px; }
   .card:hover { transform: none; }
+}
+
+@media (max-width: 400px) {
+  .brand { gap: 4px; font-size: 18px; letter-spacing: .4px; }
 }
