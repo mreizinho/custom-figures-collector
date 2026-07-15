@@ -215,7 +215,7 @@ body.dark { color-scheme: dark; }
   .sort-control .sort-icon { display: block; }
   .results-head select { max-width: 170px; }
   .catalogue:not(.list) .card .condition-overlay { right: 5px; bottom: 20px; padding: 2px 5px; font-size: 7px; font-weight: 500; }
-  .catalogue:not(.list) .fallback-card .condition-overlay { bottom: 40px; }
+  .catalogue:not(.list) .fallback-card .condition-overlay { bottom: 37.5px; }
   .card:hover { transform: none; }
 }
 
