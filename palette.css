@@ -237,7 +237,7 @@ body.dark { color-scheme: dark; }
 }
 
 @media (max-width: 600px) {
-  .topbar { padding-inline: 16px; }
+  .topbar { height: 64px; padding-inline: 16px; }
   .topbar .brand { font-size: clamp(18px, 5.2vw, 23px); }
   .mobile-menu-toggle { display: grid; flex: 0 0 44px; }
   .header-actions { display: none; position: absolute; top: calc(100% + 8px); right: 16px; z-index: 50; width: 210px; padding: 6px; border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
