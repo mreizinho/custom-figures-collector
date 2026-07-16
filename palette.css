@@ -225,7 +225,7 @@ body.dark { color-scheme: dark; }
   .toolbar .view-buttons { display: flex; flex: 0 0 auto; }
   .toolbar .view-buttons button { width: 44px; }
   .results-head { flex-wrap: wrap; gap: 10px; }
-  .results-head .results-controls { margin-left: auto; }
+  .results-head .results-controls { margin-left: auto; justify-content: flex-end; }
   .results-head .sort-control { width: 145px; }
   .sort-control .sort-icon { display: block; }
   .results-head select { max-width: 170px; }
