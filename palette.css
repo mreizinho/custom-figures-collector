@@ -200,6 +200,10 @@ body.dark { color-scheme: dark; }
   .filter-tags { order: 4; }
 }
 
+@media (min-width: 601px) {
+  .topbar { padding-inline: max(clamp(20px, 5vw, 72px), calc((100vw - 1440px) / 2 + 72px)); }
+}
+
 @media (max-width: 850px) {
   .content { display: flex; flex-direction: column; gap: 0; }
   .results { display: contents; }
