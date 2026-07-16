@@ -89,6 +89,7 @@ body.dark {
 .header-actions .material-symbols-rounded { display: block; transform: translateY(0); }
 .mobile-menu-toggle { display: none; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 0; background: transparent; color: var(--ink); padding: 0; }
 .mobile-menu-toggle .material-symbols-rounded { font-size: 34px; font-variation-settings: 'wght' 300; }
+.mobile-menu-toggle[aria-expanded="false"] .material-symbols-rounded { transform: scaleX(.88); }
 .stats[hidden] { display: none; }
 .actions .material-symbols-rounded { font-size: 17px; }
 .actions button {
