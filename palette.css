@@ -191,7 +191,7 @@ body.dark { color-scheme: dark; }
 }
 
 @media (min-width: 851px) {
-  .filters { display: flex; flex-direction: column; position: sticky; top: 92px; align-self: start; max-height: calc(100dvh - 112px); overflow: auto; padding-right: 8px; }
+  .filters { display: flex; flex-direction: column; }
   .filter-heading { order: 0; }
   .filter-collection { order: 1; }
   .filter-condition { order: 2; }
