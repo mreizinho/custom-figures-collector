@@ -160,14 +160,17 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .results-controls .filter-toggle { align-items: center; justify-content: center; gap: 7px; height: 40px; padding: 0 12px; color: var(--ink); line-height: 1; }
 .results-controls .filter-toggle .material-symbols-rounded { display: block; color: currentColor; line-height: 1; }
 .results-controls .filter-toggle.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.sort-control { position: relative; display: flex; align-items: center; gap: 7px; width: 185px; height: 40px; border: 1px solid var(--line); background: var(--paper); padding-left: 9px; color: var(--ink); }
+.sort-control { position: relative; display: flex; align-items: center; gap: 7px; width: 145px; height: 40px; border: 1px solid var(--line); background: var(--paper); padding-left: 9px; color: var(--ink); }
+.results-controls .view-buttons { display: flex; flex: 0 0 auto; }
+.results-controls .view-buttons button { width: 40px; height: 40px; }
 .sort-control .sort-icon { display: block; flex: 0 0 auto; color: currentColor; font-size: 20px; line-height: 1; }
 .sort-menu-toggle { display: flex; align-items: center; gap: 7px; width: 100%; height: 100%; border: 0; background: transparent; color: inherit; padding: 0 34px 0 0; text-align: left; }
 .sort-control .select-arrow { position: absolute; right: 12px; display: block; pointer-events: none; font-size: 20px; line-height: 1; }
 .sort-menu { position: absolute; z-index: 20; top: calc(100% + 4px); right: -1px; width: calc(100% + 2px); padding: 5px; border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
-.sort-menu button { display: flex; justify-content: space-between; width: 100%; border: 0; background: transparent; color: var(--ink); padding: 8px 10px; text-align: left; }
+.sort-menu button { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 7px; align-items: center; width: 100%; border: 0; background: transparent; color: var(--ink); padding: 8px 6px; text-align: left; }
 .sort-menu button:hover { background: var(--bg); }
-.sort-menu button.active::after { content: '✓'; }
+.sort-menu button::before { content: ''; }
+.sort-menu button.active::before { content: 'check'; font-family: 'Material Symbols Rounded'; font-size: 18px; font-variation-settings: 'wght' 700; line-height: 1; }
 .sort-menu hr { margin: 5px; border: 0; border-top: 1px solid var(--line); }
 .empty-state { border: 1px dashed var(--line); padding: 64px 24px; text-align: center; background: var(--paper); }
 .empty-state > span { display: block; font-size: 34px; color: var(--accent); }
@@ -223,7 +226,7 @@ body.dark { color-scheme: dark; }
   .toolbar .view-buttons button { width: 44px; }
   .results-head { flex-wrap: wrap; gap: 10px; }
   .results-head .results-controls { margin-left: auto; }
-  .results-head .sort-control { width: 180px; }
+  .results-head .sort-control { width: 145px; }
   .sort-control .sort-icon { display: block; }
   .results-head select { max-width: 170px; }
   .catalogue:not(.list) .card .condition-overlay { right: 5px; bottom: 20px; padding: 2px 5px; font-size: 7px; font-weight: 500; }
@@ -243,6 +246,8 @@ body.dark { color-scheme: dark; }
   .header-actions { display: none; position: absolute; top: calc(100% + 8px); right: 20px; z-index: 50; width: 210px; padding: 6px; border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
   .topbar.menu-open .header-actions { display: grid; }
   .header-actions button { display: flex; justify-content: flex-start; gap: 11px; width: 100%; height: 44px; border: 0; border-radius: 0; background: transparent; padding: 0 12px; text-align: left; }
+  .header-actions #statsToggle,
+  .header-actions #theme { border: 0; border-radius: 0; background: transparent; }
   .header-actions button:hover { background: var(--bg); }
   .header-actions button::after { content: attr(data-menu-label); font-size: 14px; white-space: nowrap; }
 }
