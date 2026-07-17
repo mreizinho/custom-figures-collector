@@ -103,15 +103,21 @@ dialog {
   height: min(620px, calc(100dvh - 32px));
   min-height: 0;
 }
-.detail-copy { padding: 38px; }
-.detail-copy h2 { margin: 0 0 6px; }
-.detail-brand {
-  color: var(--ink);
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 1px;
-  margin: 0 0 22px;
+.detail-copy { position: relative; padding: 38px; }
+.detail-copy h2 { margin: 0 0 6px; padding-right: 44px; }
+.detail-character {
+  min-height: 30px;
+  margin: 12px 0 22px;
+  border-top: 1px solid var(--line);
+  padding-top: 8px;
+  color: var(--muted);
+  font-family: Outfit, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
 }
+.detail-id { position: absolute; right: 18px; bottom: 18px; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .5px; opacity: .65; }
+.detail-image img { object-fit: contain; }
 .detail-tags:empty { display: none; }
 .image-wrap img.fallback-image,
 .detail-image img.fallback-image {
@@ -123,6 +129,13 @@ dialog {
 .dark .image-wrap img.fallback-image,
 .dark .detail-image img.fallback-image { filter: invert(1); }
 .catalogue.list .image-wrap img.fallback-image { top: -4px; }
+
+@media (min-width: 851px) {
+  .detail-grid { height: auto; aspect-ratio: 2 / 1; }
+  .detail-image,
+  .detail-copy { height: 100%; }
+  .detail-copy { overflow-y: auto; }
+}
 
 @media (max-width: 850px) {
   .detail-image { height: min(42dvh, 360px); }
