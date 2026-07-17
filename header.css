@@ -91,7 +91,6 @@ main { padding-top: 28px; }
   background: var(--paper);
 }
 .catalogue.list .card .condition-overlay { display: none; }
-.catalogue:not(.list) .fallback-card .condition-overlay { bottom: 44px; }
 
 /* Keep the detail card comfortably inside the viewport. */
 dialog {
