@@ -206,6 +206,8 @@ body.dark { color-scheme: dark; }
   .filter-tags { order: 4; }
 }
 
+html { scrollbar-gutter: stable; }
+
 @media (min-width: 601px) {
   .topbar { padding-inline: max(clamp(20px, 5vw, 72px), calc((100vw - 1440px) / 2 + 72px)); }
 }
