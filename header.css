@@ -190,17 +190,19 @@ dialog {
     display: block;
     overflow-x: auto;
     overflow-y: hidden;
+    background: #fff;
     overscroll-behavior-x: contain;
     touch-action: pan-x;
     scrollbar-width: none;
   }
   #detail.image-zoomed .detail-image::-webkit-scrollbar { display: none; }
   #detail.image-zoomed .detail-image img:not(.fallback-image) {
-    position: static;
+    position: relative;
+    top: 5%;
     display: block;
     width: auto;
     max-width: none;
-    height: 100%;
+    height: 90%;
     max-height: none;
     margin-inline: auto;
     transform: none;
