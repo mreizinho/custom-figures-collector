@@ -184,4 +184,25 @@ dialog {
   }
   #detail .detail-copy::-webkit-scrollbar { display: none; }
   #detail.image-zoomed .detail-grid { grid-template-rows: 1fr; }
+  #detail.image-zoomed .detail-image {
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+  #detail.image-zoomed .detail-image img:not(.fallback-image) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(175vw, 112lvh);
+    max-width: none;
+    height: auto;
+    max-height: none;
+    transform: translate(-50%, -50%);
+  }
+  #detail.image-zoomed .close {
+    position: fixed;
+    top: max(16px, env(safe-area-inset-top));
+    right: max(16px, env(safe-area-inset-right));
+    z-index: 10;
+  }
 }
