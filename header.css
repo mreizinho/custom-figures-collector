@@ -188,11 +188,10 @@ dialog {
   #detail.image-zoomed .detail-image {
     position: relative;
     display: block;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: auto;
     background: #fff;
     overscroll-behavior-x: contain;
-    touch-action: pan-x;
+    touch-action: none;
     scrollbar-width: none;
   }
   #detail.image-zoomed .detail-image::-webkit-scrollbar { display: none; }
@@ -202,7 +201,7 @@ dialog {
     display: block;
     width: auto;
     max-width: none;
-    height: 90%;
+    height: var(--photo-height, 90%);
     max-height: none;
     margin-inline: auto;
     transform: none;
