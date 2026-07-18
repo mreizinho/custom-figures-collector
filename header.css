@@ -103,7 +103,7 @@ dialog {
   height: min(620px, calc(100dvh - 32px));
   min-height: 0;
 }
-.detail-copy { position: relative; padding: 38px; }
+.detail-copy { position: relative; min-width: 0; padding: 38px; }
 .detail-copy h2 { margin: 0 0 6px; padding-right: 44px; }
 .detail-character {
   min-height: 30px;
