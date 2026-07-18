@@ -188,17 +188,22 @@ dialog {
   #detail.image-zoomed .detail-image {
     position: relative;
     display: block;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+    scrollbar-width: none;
   }
+  #detail.image-zoomed .detail-image::-webkit-scrollbar { display: none; }
   #detail.image-zoomed .detail-image img:not(.fallback-image) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: min(175vw, 112lvh);
+    position: static;
+    display: block;
+    width: auto;
     max-width: none;
-    height: auto;
+    height: 100%;
     max-height: none;
-    transform: translate(-50%, -50%);
+    margin-inline: auto;
+    transform: none;
   }
   #detail.image-zoomed .close {
     position: fixed;
