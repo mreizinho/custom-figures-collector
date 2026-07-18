@@ -242,6 +242,7 @@ body.dark {
   position: relative;
   isolation: isolate;
   display: block;
+  border-radius: 3px;
   clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
   background: var(--line);
   color: var(--ink);
@@ -253,6 +254,7 @@ body.dark {
   position: absolute;
   inset: .65px;
   z-index: -1;
+  border-radius: 2.35px;
   clip-path: polygon(7.62px 0, 100% 0, 100% 100%, 0 100%, 0 7.62px);
   background: #fff;
 }
@@ -308,8 +310,9 @@ input::placeholder { color: var(--muted); opacity: 1; }
   isolation: isolate;
   margin: 0;
   border: 0;
+  border-radius: 3px;
   clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
-  background: var(--line);
+  background: #8b8d88;
   padding-left: 11px;
 }
 .tag-filters label::before {
@@ -317,8 +320,9 @@ input::placeholder { color: var(--muted); opacity: 1; }
   position: absolute;
   inset: .65px;
   z-index: -1;
+  border-radius: 2.35px;
   clip-path: polygon(7.62px 0, 100% 0, 100% 100%, 0 100%, 0 7.62px);
-  background: var(--paper);
+  background: #fff;
 }
 .tag-filters label:has(input:checked) {
   border-color: var(--accent);
@@ -385,6 +389,10 @@ body.dark { color-scheme: dark; }
 .dark .detail-tag-suggestions button::before { background: var(--bg); }
 .dark .tag-filters label:has(input:checked),
 .dark .detail-tags span { color: #20211e; }
+.dark .tag-filters label { background: #8f918b; }
+.dark .tag-filters label::before { background: var(--bg); }
+.dark .tag-filters label:has(input:checked),
+.dark .tag-filters label:has(input:checked)::before { background: var(--accent); }
 .dark .card:hover { border-color: #686a63; box-shadow: 0 18px 38px #0007; }
 
 @media (prefers-reduced-motion: reduce) {
