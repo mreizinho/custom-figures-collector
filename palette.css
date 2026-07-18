@@ -162,11 +162,41 @@ body.dark {
 }
 .detail-info { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 12px; color: var(--muted); }
 .detail-info p { margin: 0; line-height: 1.75; }
-.detail-tag-editor { margin-top: 12px; border: 1px solid var(--line); background: var(--bg); padding: 9px 12px; }
+.detail-tag-editor { position: relative; margin-top: 12px; border: 1px solid var(--line); background: var(--bg); padding: 9px 12px; }
 .detail-tag-editor > label { display: block; margin-bottom: 3px; color: var(--muted); font-size: 12px; font-weight: 600; }
 .detail-tag-editor > div { display: flex; gap: 7px; }
 .detail-tag-editor input { min-width: 0; flex: 1; border: 1px solid var(--line); background: var(--paper); color: var(--ink); padding: 7px 10px; }
 .detail-tag-editor button { border: 0; background: var(--ink); color: var(--paper); padding: 7px 13px; font-weight: 600; }
+.detail-tag-suggestions {
+  position: absolute;
+  top: calc(100% - 8px);
+  right: 12px;
+  left: 12px;
+  z-index: 5;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  box-shadow: 0 10px 24px #0002;
+  scrollbar-width: none;
+}
+.detail-tag-suggestions::-webkit-scrollbar { display: none; }
+.detail-tag-suggestions[hidden] { display: none; }
+.detail-tag-suggestions button {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: left;
+}
+.detail-tag-suggestions button:last-child { border-bottom: 0; }
+.detail-tag-suggestions button:hover,
+.detail-tag-suggestions button:focus-visible { background: var(--bg); }
 .detail-custom-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
 .detail-custom-tags:empty { display: none; }
 .detail-custom-tag {
