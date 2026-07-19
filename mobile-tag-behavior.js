@@ -14,6 +14,45 @@ function showAvailableTagSuggestions() {
   list.hidden = visible === 0;
 }
 
+function installDesktopTagSearch() {
+  const input = document.querySelector('#detailTagInput');
+  const addButton = document.querySelector('#detailTagAdd');
+  const suggestions = document.querySelector('#detailTagSuggestions');
+  if (input && suggestions && !document.querySelector('#detailTagSuggestionsClose')) {
+    const closeButton = document.createElement('button');
+    closeButton.id = 'detailTagSuggestionsClose';
+    closeButton.className = 'detail-tag-suggestions-close';
+    closeButton.type = 'button';
+    closeButton.title = 'Close suggestions';
+    closeButton.setAttribute('aria-label', 'Close suggestions');
+    closeButton.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">close</span>';
+    closeButton.addEventListener('click', event => {
+      event.stopPropagation();
+      suggestions.hidden = true;
+      input.focus({ preventScroll: true });
+    });
+    suggestions.prepend(closeButton);
+  }
+  if (!input || !addButton || document.querySelector('#detailTagSearch')) return;
+  const searchButton = document.createElement('button');
+  searchButton.id = 'detailTagSearch';
+  searchButton.className = 'detail-tag-search';
+  searchButton.type = 'button';
+  searchButton.title = 'Show tag suggestions';
+  searchButton.setAttribute('aria-label', 'Show tag suggestions');
+  searchButton.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">search</span>';
+  searchButton.addEventListener('click', event => {
+    event.stopPropagation();
+    showAvailableTagSuggestions();
+  });
+  addButton.before(searchButton);
+}
+
+new MutationObserver(installDesktopTagSearch).observe(document.querySelector('#detailContent'), {
+  childList: true,
+  subtree: true
+});
+
 document.addEventListener('click', event => {
   if (!mobileTagView.matches) return;
 

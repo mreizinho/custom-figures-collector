@@ -131,9 +131,9 @@ body.dark {
 .currency-toggle button { border: 0; background: transparent; color: var(--muted); padding: 4px 8px; font-family: 'DM Mono', monospace; font-size: 13px; line-height: 1; }
 .currency-toggle button + button { border-left: 1px solid var(--line); }
 .currency-toggle button.active { background: var(--ink); color: var(--paper); }
-.detail-actions button { display: inline-flex; align-items: center; gap: 7px; }
-.detail-actions .material-symbols-rounded { font-size: 18px; }
-.detail-actions { display: grid; grid-template-columns: max-content max-content; align-items: center; }
+.detail-actions button { display: inline-flex; align-items: center; justify-content: flex-start; width: 100%; min-width: 0; gap: 7px; text-align: left; }
+.detail-actions .material-symbols-rounded { flex: 0 0 auto; font-size: 18px; }
+.detail-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: center; width: 100%; }
 .detail-actions #detailWish { background: var(--accent); }
 .detail-actions .detail-secondary-action { border: 1px solid var(--line); background: #fff !important; color: var(--ink); }
 .detail-actions .detail-secondary-action[aria-expanded="true"] { border-color: var(--ink); background: var(--ink) !important; color: var(--paper); }
@@ -170,6 +170,9 @@ body.dark {
 .detail-tag-editor > div { display: flex; gap: 7px; }
 .detail-tag-editor input { min-width: 0; flex: 1; border: 1px solid var(--line); background: var(--paper); color: var(--ink); padding: 7px 10px; }
 .detail-tag-editor button { border: 0; background: var(--ink); color: var(--paper); padding: 7px 13px; font-weight: 600; }
+.detail-tag-editor .detail-tag-search { display: grid; flex: 0 0 38px; width: 38px; place-items: center; border: 1px solid var(--line); background: var(--paper); color: var(--ink); padding: 0; }
+.detail-tag-search .material-symbols-rounded { font-size: 19px; }
+@media(min-width:601px){.detail-tag-editor input{border-right:0}.detail-tag-editor .detail-tag-search{margin-left:-7px}}
 .detail-tag-suggestions {
   position: fixed;
   top: 50%;
@@ -202,6 +205,9 @@ body.dark {
   font-size: 14px;
   font-weight: 700;
 }
+.detail-tag-suggestions .detail-tag-suggestions-close { position: absolute; top: 9px; right: 9px; display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid var(--line); border-radius: 50%; clip-path: none; background: var(--paper); color: var(--ink); padding: 0; }
+.detail-tag-suggestions .detail-tag-suggestions-close::before { display: none; }
+.detail-tag-suggestions-close .material-symbols-rounded { font-size: 17px; }
 .detail-tag-suggestions button {
   position: relative;
   isolation: isolate;
@@ -328,6 +334,7 @@ body.dark {
 .sync-direction-actions strong { margin-bottom: 3px; font-size: 16px; }
 .sync-direction-actions small { color: var(--muted); font-size: 12px; line-height: 1.35; }
 @media(max-width:600px){.settings-dialog{position:fixed;inset:0;width:100%;max-width:none;height:100dvh;max-height:none;margin:0;overflow:hidden}.settings-copy{height:100%;min-height:0;padding:72px 22px max(28px,env(safe-area-inset-bottom));overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}.settings-copy::-webkit-scrollbar{display:none}.settings-actions{display:grid;grid-template-columns:1fr 1fr}.settings-actions button{min-width:0}.settings-account-actions{grid-template-columns:minmax(0,1.45fr) repeat(2,minmax(0,1fr));gap:5px}.settings-account-actions button{gap:4px;padding:10px 7px;font-size:12px}.settings-account-actions .material-symbols-rounded{font-size:17px}.settings-footer{margin:12px -22px calc(-1 * max(28px,env(safe-area-inset-bottom)));padding:12px 22px max(12px,env(safe-area-inset-bottom))}.detail-actions{grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.detail-actions button{justify-content:flex-start;width:100%;min-width:0;text-align:left}.detail-actions .material-symbols-rounded{flex:0 0 auto}}
+@media(max-width:600px){.detail-tag-editor .detail-tag-search{display:none}}
 .confirm-copy { padding: 24px; }
 .confirm-copy h2 { margin: 0 0 8px; font-size: 20px; }
 .confirm-copy p { margin: 0; color: var(--muted); line-height: 1.45; }
