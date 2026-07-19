@@ -287,8 +287,9 @@ body.dark {
 }
 .detail-custom-tag button .material-symbols-rounded { font-size: 15px; }
 .confirm-dialog { width: min(420px, calc(100% - 32px)); max-width: 420px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); box-shadow: 0 24px 70px #0005; }
-.settings-dialog { width: min(560px, calc(100% - 32px)); max-width: 560px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); }
-.settings-copy { padding: 34px; }
+.settings-dialog { width: min(560px, calc(100% - 32px)); max-width: 560px; max-height: calc(100dvh - 32px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; border: 1px solid var(--line); background: var(--paper); color: var(--ink); }
+.settings-dialog::-webkit-scrollbar { display: none; }
+.settings-copy { min-height: 100%; padding: 34px; }
 .settings-copy h2 { margin: 0 46px 24px 0; font-size: 30px; }
 .settings-copy section { border-top: 1px solid var(--line); padding: 20px 0; }
 .settings-copy section:last-child { padding-bottom: 0; }
@@ -297,6 +298,7 @@ body.dark {
 .settings-copy input[type="text"] { width: 100%; border: 1px solid var(--line); background: var(--bg); color: var(--ink); padding: 11px 12px; }
 .settings-copy textarea { width: 100%; resize: vertical; border: 1px solid var(--line); background: var(--bg); color: var(--ink); padding: 11px 12px; font: inherit; line-height: 1.45; }
 .settings-copy button:not(.close),.settings-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); padding: 10px 14px; font-weight: 600; }
+.settings-copy [hidden] { display: none !important; }
 .settings-copy #saveSpreadsheet,.settings-copy #saveCollections { background: var(--ink); color: var(--paper); }
 .settings-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .google-settings-actions { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -304,7 +306,7 @@ body.dark {
 .google-settings-actions .material-symbols-rounded { font-size: 19px; }
 .settings-actions .material-symbols-rounded { font-size: 19px; }
 .settings-copy .settings-status { min-height: 19px; margin-bottom: 0; color: var(--accent); }
-@media(max-width:600px){.settings-dialog{width:100%;max-width:none;height:100lvh;max-height:none;margin:0}.settings-copy{padding:72px 22px 28px}.settings-actions{display:grid;grid-template-columns:1fr 1fr}.settings-actions button{min-width:0}}
+@media(max-width:600px){.settings-dialog{width:100%;max-width:none;height:100lvh;max-height:100lvh;margin:0}.settings-copy{padding:72px 22px 28px}.settings-actions{display:grid;grid-template-columns:1fr 1fr}.settings-actions button{min-width:0}}
 .confirm-copy { padding: 24px; }
 .confirm-copy h2 { margin: 0 0 8px; font-size: 20px; }
 .confirm-copy p { margin: 0; color: var(--muted); line-height: 1.45; }
