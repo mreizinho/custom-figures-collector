@@ -122,12 +122,13 @@ dialog {
 .image-wrap img.fallback-image,
 .detail-image img.fallback-image {
   object-fit: contain;
+  background-color: transparent;
   padding: 12% 22%;
   top: -12px;
   opacity: 0.15;
 }
 .dark .image-wrap img.fallback-image { filter: invert(1); }
-.dark .detail-image img.fallback-image { filter: none; }
+.dark .detail-image img.fallback-image { filter: invert(1); }
 .catalogue.list .image-wrap img.fallback-image { top: -4px; }
 
 @media (min-width: 851px) {

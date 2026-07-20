@@ -194,38 +194,13 @@ function installSettingsUi() {
       <button type="button" id="firebaseDownload" data-firebase-required><span class="material-symbols-rounded">cloud_download</span>Download</button>
     </div>
     <p id="firebaseStatus" class="settings-status" role="status" aria-live="polite"></p>`;
-  const settingsFooter = document.createElement('div');
-  settingsFooter.className = 'settings-footer';
-  settingsFooter.innerHTML = '<button type="button" id="applySettings" disabled><span class="material-symbols-rounded">check</span>Apply</button>';
-  document.querySelector('.settings-copy').append(settingsFooter);
-  const spreadsheetInput = document.querySelector('#spreadsheetUrl');
-  const collectionsInput = document.querySelector('#collectionNames');
-  const applyButton = document.querySelector('#applySettings');
-  const currentEditableSettings = () => ({ spreadsheet: spreadsheetInput.value, collections: collectionsInput.value });
-  const updateApplyState = () => {
-    if (!settingsBaseline) return applyButton.disabled = true;
-    const current = currentEditableSettings();
-    applyButton.disabled = current.spreadsheet === settingsBaseline.spreadsheet && current.collections === settingsBaseline.collections;
-  };
-  [spreadsheetInput, collectionsInput].forEach(input => input.addEventListener('input', updateApplyState));
-  document.querySelector('#settingsToggle').addEventListener('click', () => {
-    queueMicrotask(() => {
-      settingsBaseline = currentEditableSettings();
-      updateApplyState();
-    });
-  });
-  applyButton.addEventListener('click', () => {
-    const spreadsheetValue = document.querySelector('#spreadsheetUrl').value.trim();
-    const spreadsheetIsValid = /\/spreadsheets\/d\/[a-zA-Z0-9_-]+/.test(spreadsheetValue) || /^[a-zA-Z0-9_-]{20,}$/.test(spreadsheetValue);
-    const collectionNames = document.querySelector('#collectionNames').value.split(/[\n,;]+/).map(value => value.trim()).filter(Boolean);
-    if (!spreadsheetIsValid) return status('Enter a valid Google Spreadsheet URL or ID.', true);
-    if (!collectionNames.length) return status('Enter at least one collection sheet name.', true);
-    saveSpreadsheet.click();
-    saveCollections.click();
-    settingsBaseline = currentEditableSettings();
-    updateApplyState();
-    status('Settings applied. Changes will synchronize automatically.');
-  });
+  let settingsFooter = document.querySelector('.settings-footer');
+  if (!settingsFooter) {
+    settingsFooter = document.createElement('div');
+    settingsFooter.className = 'settings-footer';
+    settingsFooter.innerHTML = '<button type="button" id="applySettings" disabled><span class="material-symbols-rounded">check</span>Apply</button>';
+    document.querySelector('.settings-copy').append(settingsFooter);
+  }
   document.querySelector('#firebaseAuth').addEventListener('click', async () => {
     try {
       if (auth.currentUser) {
