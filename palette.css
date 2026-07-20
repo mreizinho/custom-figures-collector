@@ -502,9 +502,9 @@ html { scrollbar-gutter: stable; }
   .stats { margin-bottom: 24px; }
   .stats article { padding: 16px 17px; }
   .filter-toggle { display: flex; }
-  .toolbar { display:grid; grid-template-columns:minmax(0,1fr) 48px; width:100%; }
+  .toolbar { display:block; width:100%; }
   .toolbar .search { display:flex; width:100%; min-width:0; }
-  .add-figure { position:static; width:48px; height:48px; border-radius:0; box-shadow:none; }
+  .add-figure { position:fixed; right:max(20px,env(safe-area-inset-right)); bottom:max(20px,env(safe-area-inset-bottom)); z-index:25; width:56px; height:56px; border-radius:50%; box-shadow:0 12px 30px #0005; }
   .add-figure-dialog { position:fixed; inset:0; width:100%; max-width:none; height:100dvh; max-height:none; margin:0; border:0; border-radius:0; }
   .add-figure-dialog form { width:100%; height:100%; min-width:0; align-content:start; overflow-y:auto; padding:72px 22px max(28px,env(safe-area-inset-bottom)); }
   .add-figure-dialog label,.add-figure-dialog input,.add-figure-dialog select,.add-figure-value { min-width:0; }
