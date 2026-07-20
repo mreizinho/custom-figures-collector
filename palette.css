@@ -397,6 +397,10 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .add-photo-overlay { position:absolute; left:10px; bottom:10px; z-index:6; display:grid; place-items:center; width:27px; height:23px; border:1px solid var(--line); border-radius:999px; background:#eeece4; color:#20211e; font-size:15px; line-height:1; }
 .add-photo-overlay:hover { border-color:var(--ink); }
 .add-photo-overlay:focus-visible { outline:3px solid #ffb09d; outline-offset:2px; }
+.catalogue .add-photo-overlay { display:none; }
+.detail-add-photo { position:absolute; left:18px; bottom:18px; z-index:3; display:grid; place-items:center; border:0; background:transparent; color:var(--muted); padding:0; opacity:.45; }
+.detail-add-photo .material-symbols-rounded { font-size:22px; }
+.detail-add-photo:hover,.detail-add-photo:focus-visible { color:var(--ink); opacity:1; }
 .dark .card .condition { border-color: var(--line); background: var(--paper); color: var(--ink); }
 .dark .catalogue:not(.list) .card .condition-overlay { border-color: var(--line); background: var(--paper); color: var(--ink); }
 .dark .add-photo-overlay { border-color:var(--line); background:var(--paper); color:var(--ink); }
