@@ -8,16 +8,15 @@
   --shadow: 0 12px 30px #25262410;
 }
 
+body { --photo-background: #fdfdfd; }
+body.dark { --photo-background: #383934; }
+
 .image-button,
 .image-wrap,
-.detail-image { background: #fdfdfd; }
-
-.dark .image-button,
-.dark .image-wrap,
-.dark .detail-image { background: #383934; }
-
-#detail.image-zoomed .detail-image { background: #fdfdfd; }
-.dark #detail.image-zoomed .detail-image { background: #383934; }
+.image-wrap img,
+.detail-image,
+.detail-image img,
+#detail.image-zoomed .detail-image { background-color: var(--photo-background); }
 
 .card .condition { background: var(--paper); }
 
