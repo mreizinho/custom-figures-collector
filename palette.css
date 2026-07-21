@@ -399,6 +399,7 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .add-photo-overlay:focus-visible { outline:3px solid #ffb09d; outline-offset:2px; }
 .catalogue .add-photo-overlay { display:none; }
 .detail-add-photo { position:absolute; left:18px; bottom:18px; z-index:3; display:grid; place-items:center; border:0; background:transparent; color:var(--muted); padding:0; opacity:.45; }
+.detail-add-photo[hidden] { display:none; }
 .detail-add-photo .material-symbols-rounded { font-size:22px; }
 .detail-add-photo:hover,.detail-add-photo:focus-visible { color:var(--ink); opacity:1; }
 .dark .card .condition { border-color: var(--line); background: var(--paper); color: var(--ink); }
