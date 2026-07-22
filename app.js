@@ -161,7 +161,7 @@ addFigureButton.onclick=openAddFigure;$('#closeAddFigure').onclick=closeAddFigur
 addFigureDialog.addEventListener('click',event=>{if(event.target===addFigureDialog)closeAddFigure()});
 const updateAddFigurePosition=entries=>{const searchIsVisible=entries[0]?.isIntersecting;addFigureButton.classList.toggle('is-floating',!searchIsVisible)};
 new IntersectionObserver(updateAddFigurePosition,{threshold:0}).observe(searchControl);
-function normalizedHeader(value){return clean(value).toLowerCase().replace(/[^a-z0-9]/g,'')}
+function normalizedHeader(value){const header=clean(value);return header==='#'?'id':header.toLowerCase().replace(/[^a-z0-9]/g,'')}
 function headerIndex(headers,names){return headers.findIndex(header=>names.includes(normalizedHeader(header)))}
 function sheetColumn(index){let label='';for(let number=index+1;number;number=Math.floor((number-1)/26))label=String.fromCharCode(65+(number-1)%26)+label;return label}
 async function nextSequentialFigureId(headers,escapedCollection){const idIndex=headerIndex(headers,['id','number','setnumber','figureid']);if(idIndex<0)throw Error(`The ${activeCollection} sheet is missing an ID column.`);const idColumn=sheetColumn(idIndex),idRange=encodeURIComponent(`'${escapedCollection}'!${idColumn}2:${idColumn}`),response=await sheetsRequest(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${idRange}?majorDimension=COLUMNS`),values=(await response.json()).values?.[0]||[],ids=values.map(value=>Number.parseInt(clean(value).replace(/^#/,''),10)).filter(Number.isFinite);return(ids.length?Math.max(...ids):0)+1}
