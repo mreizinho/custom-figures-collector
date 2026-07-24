@@ -605,6 +605,7 @@ html { scrollbar-gutter: stable; }
 }
 
 @media (max-width: 850px) {
+  .settings-copy .desktop-columns-setting { display:none; }
   body:not(.dark) #detail .close { background: var(--paper); }
   .content { display: flex; flex-direction: column; gap: 0; }
   .results { display: contents; }
