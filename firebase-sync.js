@@ -35,6 +35,7 @@ const GUEST_SPREADSHEET_ID = '1rDpFScTbHWIG3TEUatUNFVX7E68CoOmcgoDRQmrlwZE';
 const GUEST_SPREADSHEET_URL = `https://docs.google.com/spreadsheets/d/${GUEST_SPREADSHEET_ID}/`;
 const GUEST_COLLECTIONS = ['Star Wars', 'Misc'];
 const ignoredKeys = new Set(['minifig-exchange-rates', 'minifig-google-client-id', 'minifig-firebase-user-id']);
+const isCloudSettingKey = key => String(key).startsWith('minifig-') && !String(key).startsWith('minifig-theme') && !ignoredKeys.has(String(key));
 const nativeSetItem = Storage.prototype.setItem;
 const nativeRemoveItem = Storage.prototype.removeItem;
 let currentUser = null;
@@ -82,7 +83,7 @@ function collectSettings() {
   const settings = {};
   for (let index = 0; index < localStorage.length; index += 1) {
     const key = localStorage.key(index);
-    if (key?.startsWith('minifig-') && !ignoredKeys.has(key)) {
+    if (isCloudSettingKey(key)) {
       settings[key] = localStorage.getItem(key);
     }
   }
@@ -108,11 +109,11 @@ function applySettings(settings) {
     const localKeys = [];
     for (let index = 0; index < localStorage.length; index += 1) {
       const key = localStorage.key(index);
-      if (key?.startsWith('minifig-') && !ignoredKeys.has(key)) localKeys.push(key);
+      if (isCloudSettingKey(key)) localKeys.push(key);
     }
     localKeys.filter(key => !remoteKeys.has(key)).forEach(key => nativeRemoveItem.call(localStorage, key));
     Object.entries(settings || {}).forEach(([key, value]) => {
-      if (key.startsWith('minifig-') && !ignoredKeys.has(key) && typeof value === 'string') {
+      if (isCloudSettingKey(key) && typeof value === 'string') {
         nativeSetItem.call(localStorage, key, value);
       }
     });
@@ -152,12 +153,12 @@ function scheduleSave() {
 
 Storage.prototype.setItem = function patchedSetItem(key, value) {
   nativeSetItem.call(this, key, value);
-  if (this === localStorage && String(key).startsWith('minifig-') && !ignoredKeys.has(String(key))) scheduleSave();
+  if (this === localStorage && isCloudSettingKey(key)) scheduleSave();
 };
 
 Storage.prototype.removeItem = function patchedRemoveItem(key) {
   nativeRemoveItem.call(this, key);
-  if (this === localStorage && String(key).startsWith('minifig-') && !ignoredKeys.has(String(key))) scheduleSave();
+  if (this === localStorage && isCloudSettingKey(key)) scheduleSave();
 };
 
 function renderAccount(user) {
@@ -304,7 +305,7 @@ function installSettingsUi() {
 
 function settingsFromRemoteData(data = {}) {
   let settings = (data.settings || data.spreadsheet?.id)
-    ? Object.fromEntries(Object.entries(data.settings || {}).filter(([key]) => !ignoredKeys.has(key)))
+    ? Object.fromEntries(Object.entries(data.settings || {}).filter(([key]) => isCloudSettingKey(key)))
     : null;
   if (!settings) return null;
   settings = normalizeSpreadsheetSettings(settings);
