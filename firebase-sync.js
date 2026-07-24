@@ -47,6 +47,7 @@ let pendingGoogleAccessToken = '';
 let cloudSyncPaused = false;
 let authStateRevision = 0;
 let promptOnNextUserConnection = false;
+let pendingCloudSettings = null;
 
 function announceGoogleAuth(user, accessToken = '') {
   window.collectorFirebaseUser = user?.uid || '';
@@ -167,7 +168,7 @@ function renderAccount(user) {
   button.innerHTML = `<span class="material-symbols-rounded">${user ? 'logout' : 'account_circle'}</span>${user ? 'Sign out' : 'Sign in with Google'}`;
   button.setAttribute('aria-pressed', String(Boolean(user)));
   document.querySelectorAll('[data-firebase-required]').forEach(control => { control.disabled = !user; });
-  status(user ? `Synced as ${user.email || 'Google user'}.` : 'Sign in to synchronize this collection across devices.');
+  status(user ? `Signed in as ${user.email || 'Google user'}.` : 'Sign in to synchronize this collection across devices.');
 }
 
 function chooseInitialSyncDirection(hasRemoteSettings) {
@@ -280,7 +281,7 @@ function installSettingsUi() {
       if (!savedSettings || savedSettings['minifig-spreadsheet-id'] !== expectedSettings['minifig-spreadsheet-id'] || savedSettings['minifig-spreadsheet-url'] !== expectedSettings['minifig-spreadsheet-url']) {
         throw new Error('The spreadsheet configuration could not be verified after upload.');
       }
-      status(`Uploaded spreadsheet: ${savedSettings['minifig-spreadsheet-url']}.`);
+      status('Config saved');
     } catch (error) {
       status(`Upload failed: ${error.message}`, true);
     }
@@ -292,12 +293,34 @@ function installSettingsUi() {
       const settings = settingsFromRemoteData(snapshot.data());
       if (!settings) return status('No cloud settings were found for this account.', true);
       remoteFingerprint = fingerprint(settings);
-      stageRestoredSpreadsheet(settings);
-      applySettings(settings);
-      location.reload();
+      pendingCloudSettings = settings;
+      window.dispatchEvent(new CustomEvent('collector-config-staged', { detail: { settings } }));
+      status('Config loaded. Review the settings, then choose Apply and Close.');
     } catch (error) {
       status(`Download failed: ${error.message}`, true);
     }
+  });
+  document.querySelector('#applySettings')?.addEventListener('click', () => {
+    if (!pendingCloudSettings) return;
+    const spreadsheetValue = document.querySelector('#spreadsheetUrl')?.value?.trim() || '';
+    const spreadsheetId = spreadsheetIdFromValue(spreadsheetValue) || pendingCloudSettings['minifig-spreadsheet-id'] || '';
+    const collections = (document.querySelector('#collectionNames')?.value || '').split(/[\n,;]+/).map(value => value.trim()).filter(Boolean);
+    const mergedSettings = {
+      ...pendingCloudSettings,
+      'minifig-spreadsheet-id': spreadsheetId,
+      'minifig-spreadsheet-url': spreadsheetValue || pendingCloudSettings['minifig-spreadsheet-url'] || '',
+      'minifig-collections': JSON.stringify(collections),
+      'minifig-max-columns': document.querySelector('#desktopMaxColumns')?.value || pendingCloudSettings['minifig-max-columns'] || '5'
+    };
+    stageRestoredSpreadsheet(mergedSettings);
+    applySettings(mergedSettings);
+    pendingCloudSettings = null;
+    status('Config applied');
+    setTimeout(() => location.reload(), 350);
+  });
+  document.querySelector('#settingsToggle')?.addEventListener('click', () => {
+    pendingCloudSettings = null;
+    renderAccount(auth.currentUser);
   });
   renderAccount(auth.currentUser);
   if (auth.currentUser) announceGoogleAuth(auth.currentUser);

@@ -181,6 +181,8 @@ body.dark {
 .wish .material-symbols-rounded { font-variation-settings: 'FILL' 0; }
 .wish .material-symbols-rounded { transform: translateY(1px); }
 .wish.selected .material-symbols-rounded { font-variation-settings: 'FILL' 1; }
+body .actions .wish.selected { border-color:var(--accent); background:var(--accent); color:#fff; }
+body .actions .wish.selected .material-symbols-rounded { color:inherit; }
 
 .stats {
   gap: 1px;
@@ -365,11 +367,20 @@ body.dark {
 .settings-dialog::-webkit-scrollbar { display: none; }
 .settings-copy { min-height: 100%; padding: 34px; }
 .settings-copy h2 { margin: 0 46px 24px 0; font-size: 30px; }
-.settings-copy section { border-top: 1px solid var(--line); padding: 20px 0; }
+.settings-copy section { border-top: 1px solid var(--line); padding: 20px 0 8px; }
 .settings-copy section:last-child { padding-bottom: 0; }
+.settings-copy section > :last-child { margin-bottom:0; }
 .settings-copy label,.settings-copy h3 { display: block; margin: 0 0 8px; font-size: 14px; font-weight: 600; }
 .settings-copy p { margin: 8px 0 14px; color: var(--muted); font-size: 13px; line-height: 1.45; }
 .settings-copy input[type="text"] { width: 100%; border: 1px solid var(--line); background: var(--bg); color: var(--ink); padding: 11px 12px; }
+.settings-copy .desktop-columns-select { position:relative; min-width:0; }
+.settings-copy #desktopMaxColumns { width:150px; min-width:0; border:1px solid var(--line); background:var(--paper); color:var(--ink); padding:10px 34px 10px 12px; font-weight:600; }
+.settings-copy .column-count-icon { display:none; }
+.settings-copy .desktop-columns-setting { display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-rows:auto auto; align-items:center; gap:4px 24px; }
+.settings-copy .desktop-columns-setting h3 { grid-column:1; grid-row:1; margin:0; }
+.settings-copy .desktop-columns-setting label { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.settings-copy .desktop-columns-setting .desktop-columns-select { grid-column:2; grid-row:1 / 3; align-self:center; }
+.settings-copy .desktop-columns-setting p { display:block; grid-column:1; grid-row:2; margin:0; }
 .settings-spreadsheet-field { display: grid; grid-template-columns: minmax(0,1fr) 46px; }
 .settings-spreadsheet-field #spreadsheetUrl { min-width: 0; border-right: 0; }
 .settings-copy #chooseSpreadsheet { width: 46px; min-width: 46px; padding: 0; border: 1px solid var(--line); background: var(--paper); color: var(--ink); }
@@ -385,8 +396,22 @@ body.dark {
 .settings-account-actions { display: grid; grid-template-columns: minmax(0,1.5fr) repeat(2,minmax(0,1fr)); margin-top: 14px; }
 .settings-account-actions button { width: 100%; white-space: nowrap; }
 .settings-footer { position: sticky; bottom: 0; display: flex; justify-content: flex-end; margin: 12px -34px -34px; padding: 14px 34px; border-top: 1px solid var(--line); background: var(--paper); }
+.settings-footer:empty { display:none; }
 .settings-copy #applySettings { min-width: 112px; background: var(--ink); color: var(--paper); }
 .settings-copy #applySettings:disabled,.settings-account-actions button:disabled { cursor: not-allowed; opacity: .42; }
+.settings-dialog > #applySettings { position:absolute; top:12px; right:12px; z-index:2; display:grid; place-items:center; width:38px; height:38px; border:1px solid var(--line); border-radius:50%; background:#fff; color:var(--ink); padding:0; transform-origin:right center; }
+.settings-dialog > #applySettings.has-changes { right:60px; z-index:3; grid-template-columns:auto auto; gap:7px; width:auto; padding:0 14px; border-radius:19px; animation:settings-apply-split .28s cubic-bezier(.2,.8,.2,1) both; }
+.settings-dialog > #applySettings .apply-label { white-space:nowrap; font-size:14px; font-weight:400; }
+.settings-dialog > #applySettings .material-symbols-rounded { display:block; font-size:21px; line-height:1; }
+.settings-dialog > #applySettings:disabled { cursor:not-allowed; visibility:hidden; opacity:0; transform:scale(.82); }
+.settings-dialog > #applySettings.has-changes + #closeSettings { animation:settings-close-split .28s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes settings-apply-split { from { opacity:0; transform:translateX(48px) scale(.82); } to { opacity:1; transform:translateX(0) scale(1); } }
+@keyframes settings-close-split { 0% { transform:scale(.92); } 100% { transform:scale(1); } }
+@media (prefers-reduced-motion:reduce) {
+  .settings-dialog > #applySettings.has-changes,
+  .settings-dialog > #applySettings.has-changes + #closeSettings { animation:none; }
+}
+.dark .settings-dialog > #applySettings { background:var(--bg); color:var(--ink); }
 .settings-actions .material-symbols-rounded { font-size: 19px; }
 .settings-copy .settings-status { min-height: 19px; margin-bottom: 0; color: var(--accent); }
 .sync-direction-dialog { width: min(470px, calc(100% - 32px)); max-width: 470px; max-height: calc(100dvh - 32px); overflow-y: auto; border: 1px solid var(--line); background: var(--paper); color: var(--ink); }
@@ -473,6 +498,9 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .image-wrap img { transition: transform .35s ease; }
 .card:hover .image-wrap img { transform: scale(1.025); }
 .catalogue.list .card { grid-template-columns: 102px minmax(0, 1fr); }
+@media (min-width: 851px) {
+  .catalogue:not(.list) { grid-template-columns:repeat(var(--catalogue-columns,5),minmax(0,1fr)); }
+}
 .catalogue.list .image-button, .catalogue.list .image-wrap { height: 100%; }
 .actions button { transition: transform .15s ease, background-color .15s ease, color .15s ease; }
 .actions button:hover { transform: scale(1.08); }
