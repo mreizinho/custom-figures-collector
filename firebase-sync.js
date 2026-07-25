@@ -44,6 +44,7 @@ let saveTimer = 0;
 let applyingRemote = false;
 let settingsBaseline = null;
 let pendingGoogleAccessToken = '';
+let deferGuestReloadUntilSettingsClose = false;
 let cloudSyncPaused = false;
 let authStateRevision = 0;
 let promptOnNextUserConnection = false;
@@ -165,7 +166,7 @@ Storage.prototype.removeItem = function patchedRemoveItem(key) {
 function renderAccount(user) {
   const button = document.querySelector('#firebaseAuth');
   if (!button) return;
-  button.innerHTML = `<span class="material-symbols-rounded">${user ? 'logout' : 'account_circle'}</span>${user ? 'Sign out' : 'Sign in with Google'}`;
+  button.innerHTML = `<span class="material-symbols-rounded">${user ? 'logout' : 'login'}</span>${user ? 'Sign out' : 'Sign in'}`;
   button.setAttribute('aria-pressed', String(Boolean(user)));
   document.querySelectorAll('[data-firebase-required]').forEach(control => { control.disabled = !user; });
   status(user ? `Signed in as ${user.email || 'Google user'}.` : 'Sign in to synchronize this collection across devices.');
@@ -185,11 +186,11 @@ function chooseInitialSyncDirection(hasRemoteSettings) {
         <div class="sync-direction-actions">
           <button type="button" data-sync-direction="upload">
             <span class="material-symbols-rounded">cloud_upload</span>
-            <span><strong>Upload</strong><small>Save this device's current settings to the cloud</small></span>
+            <span><strong>Save Config</strong><small>Save this device's current settings to the cloud</small></span>
           </button>
           <button type="button" data-sync-direction="download">
             <span class="material-symbols-rounded">cloud_download</span>
-            <span><strong>Download</strong><small>Replace this device's settings with the cloud copy</small></span>
+            <span><strong>Load Config</strong><small>Replace this device's settings with the cloud copy</small></span>
           </button>
         </div>
       </div>`;
@@ -200,7 +201,7 @@ function chooseInitialSyncDirection(hasRemoteSettings) {
   download.title = hasRemoteSettings ? '' : 'No cloud settings are available yet';
   dialog.querySelector('.sync-direction-copy > p').textContent = hasRemoteSettings
     ? 'This is the first sign-in for this Google account on this browser. Choose which settings should be kept.'
-    : 'No cloud settings exist for this account yet. Upload this device’s current settings to begin syncing.';
+    : 'No saved configuration exists for this account yet. Use Save Config to create one.';
   dialog.showModal();
   return new Promise(resolve => {
     dialog.oncancel = event => event.preventDefault();
@@ -230,18 +231,18 @@ function installSettingsUi() {
   const section = document.querySelector('.google-settings');
   if (!section) return;
   section.innerHTML = `
-    <h3>Google account</h3>
+    <h3>Google Account</h3>
     <input id="googleClientId" type="hidden">
     <button type="button" id="connectGoogle" hidden></button>
     <button type="button" id="saveGoogleClient" hidden></button>
     <button type="button" id="saveOnline" hidden></button>
     <button type="button" id="loadOnline" hidden></button>
     <button type="button" id="disconnectGoogle" hidden></button>
-    <p>Use Upload to save this device’s configuration. A saved configuration is offered for download only when you sign in.</p>
+    <p>Use your Google Account to backup, restore and sync your configuration across multiple devices.<br>Choose Save to store this device’s configuration, or Load to restore a saved configuration.</p>
     <div class="google-settings-actions settings-account-actions">
-      <button type="button" id="firebaseAuth"><span class="material-symbols-rounded">account_circle</span>Sign in with Google</button>
-      <button type="button" id="firebaseUpload" data-firebase-required><span class="material-symbols-rounded">cloud_upload</span>Upload</button>
-      <button type="button" id="firebaseDownload" data-firebase-required><span class="material-symbols-rounded">cloud_download</span>Download</button>
+      <button type="button" id="firebaseAuth"><span class="material-symbols-rounded">login</span>Sign in</button>
+      <button type="button" id="firebaseUpload" data-firebase-required><span class="material-symbols-rounded">save</span>Save</button>
+      <button type="button" id="firebaseDownload" data-firebase-required><span class="material-symbols-rounded">folder_open</span>Load</button>
     </div>
     <p id="firebaseStatus" class="settings-status" role="status" aria-live="polite"></p>`;
   let settingsFooter = document.querySelector('.settings-footer');
@@ -254,6 +255,7 @@ function installSettingsUi() {
   document.querySelector('#firebaseAuth').addEventListener('click', async () => {
     try {
       if (auth.currentUser) {
+        deferGuestReloadUntilSettingsClose = Boolean(document.querySelector('#settingsDialog')?.open);
         await signOut(auth);
       } else {
         promptOnNextUserConnection = true;
@@ -273,7 +275,7 @@ function installSettingsUi() {
   });
   document.querySelector('#firebaseUpload').addEventListener('click', async () => {
     try {
-      status('Uploading this device’s settings…');
+      status('Saving configuration…');
       const expectedSettings = collectSettings();
       await saveNow(true);
       const verification = await getDoc(doc(db, 'users', auth.currentUser.uid));
@@ -283,12 +285,12 @@ function installSettingsUi() {
       }
       status('Config saved');
     } catch (error) {
-      status(`Upload failed: ${error.message}`, true);
+      status(`Save failed: ${error.message}`, true);
     }
   });
   document.querySelector('#firebaseDownload').addEventListener('click', async () => {
     try {
-      status('Downloading cloud settings…');
+      status('Loading saved configuration…');
       const snapshot = await getDoc(doc(db, 'users', auth.currentUser.uid));
       const settings = settingsFromRemoteData(snapshot.data());
       if (!settings) return status('No cloud settings were found for this account.', true);
@@ -297,7 +299,7 @@ function installSettingsUi() {
       window.dispatchEvent(new CustomEvent('collector-config-staged', { detail: { settings } }));
       status('Config loaded. Review the settings, then choose Apply and Close.');
     } catch (error) {
-      status(`Download failed: ${error.message}`, true);
+      status(`Load failed: ${error.message}`, true);
     }
   });
   document.querySelector('#applySettings')?.addEventListener('click', () => {
@@ -361,14 +363,13 @@ function confirmCloudSettingsDownload(user, settings) {
           </button>
           <button type="button" data-cloud-choice="download">
             <span class="material-symbols-rounded">cloud_download</span>
-            <span><strong>Download</strong><small>Replace local settings with the saved cloud configuration</small></span>
+            <span><strong>Load Config</strong><small>Replace local settings with the saved cloud configuration</small></span>
           </button>
         </div>
       </div>`;
     document.body.append(dialog);
   }
-  const savedSpreadsheet = settings?.['minifig-spreadsheet-url'] || settings?.['minifig-spreadsheet-id'] || 'Unknown spreadsheet';
-  dialog.querySelector('p').textContent = `A saved configuration was found for ${user.email || 'this Google account'}. Spreadsheet: ${savedSpreadsheet}. Do you want to download it?`;
+  dialog.querySelector('p').textContent = `A saved configuration was found for ${user.email || 'this Google account'}. Do you want to load it?`;
   const settingsDialog = document.querySelector('#settingsDialog');
   if (settingsDialog?.open) settingsDialog.close();
   dialog.showModal();
@@ -408,7 +409,20 @@ async function connectUser(user) {
     nativeSetItem.call(localStorage, 'minifig-spreadsheet-url', GUEST_SPREADSHEET_URL);
     nativeSetItem.call(localStorage, 'minifig-collections', JSON.stringify(GUEST_COLLECTIONS));
     if (!GUEST_COLLECTIONS.includes(localStorage.getItem('minifig-collection'))) nativeSetItem.call(localStorage, 'minifig-collection', GUEST_COLLECTIONS[0]);
-    if (guestChanged) location.reload();
+    if (guestChanged) {
+      const settingsDialog = document.querySelector('#settingsDialog');
+      if (deferGuestReloadUntilSettingsClose && settingsDialog?.open) {
+        const spreadsheetInput = document.querySelector('#spreadsheetUrl');
+        const collectionInput = document.querySelector('#collectionNames');
+        if (spreadsheetInput) spreadsheetInput.value = GUEST_SPREADSHEET_URL;
+        if (collectionInput) collectionInput.value = GUEST_COLLECTIONS.join('\n');
+        status('Signed out. Demo mode will load after closing Settings.');
+        settingsDialog.addEventListener('close', () => location.reload(), { once: true });
+      } else {
+        location.reload();
+      }
+    }
+    deferGuestReloadUntilSettingsClose = false;
     return;
   }
 
