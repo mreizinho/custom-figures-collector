@@ -547,7 +547,7 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .quick-search.is-open input { background:color-mix(in srgb,var(--bg) 92%,transparent); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
 .quick-search button { background:var(--paper); }
 .search input[type="search"]::-webkit-search-cancel-button,
-.quick-search input[type="search"]::-webkit-search-cancel-button { width:12px; height:12px; margin:0; -webkit-appearance:none; appearance:none; background:linear-gradient(45deg,transparent 43%,var(--ink) 43% 57%,transparent 57%),linear-gradient(-45deg,transparent 43%,var(--ink) 43% 57%,transparent 57%); cursor:pointer; }
+.quick-search input[type="search"]::-webkit-search-cancel-button { width:10px; height:10px; margin:0; -webkit-appearance:none; appearance:none; background:linear-gradient(45deg,transparent 43%,var(--ink) 43% 57%,transparent 57%),linear-gradient(-45deg,transparent 43%,var(--ink) 43% 57%,transparent 57%); cursor:pointer; }
 .add-figure-dialog { width:min(520px,calc(100% - 32px)); max-width:520px; border:1px solid var(--line); border-radius:12px; background:var(--paper); color:var(--ink); }
 .add-figure-dialog form { display:grid; gap:16px; padding:38px; }
 .add-figure-dialog h2 { margin:0; font-size:30px; }
