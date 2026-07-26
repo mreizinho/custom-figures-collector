@@ -699,8 +699,8 @@ html { scrollbar-gutter: stable; }
   .add-figure-value { grid-template-columns:minmax(0,1fr) 120px; }
   .toolbar .view-buttons { display:none; }
   .results-head { flex-wrap: wrap; gap: 10px; }
-  .results-head .results-controls { display:grid; grid-template-columns:minmax(78px,.8fr) minmax(100px,1.2fr) 80px; width:100%; min-width:0; margin-left:0; gap:8px; }
-  .results-head .filter-toggle { min-width:0; padding:0 8px 0 12px; }
+  .results-head .results-controls { display:grid; grid-template-columns:max-content minmax(0,1fr) 80px; width:100%; min-width:0; margin-left:0; gap:8px; }
+  .results-head .filter-toggle { min-width:0; padding:0 12px; white-space:nowrap; }
   .results-head .sort-control { width:auto; min-width:0; }
   .results-controls .view-buttons { width:80px; }
   .results-controls .view-buttons button { width:40px; min-width:0; }
