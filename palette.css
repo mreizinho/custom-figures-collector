@@ -203,6 +203,11 @@ body .actions .wish.selected .material-symbols-rounded { color:inherit; }
 .stats article:last-child { border: 0; }
 .stats > article > span { text-transform: uppercase; letter-spacing: .65px; font-size: 11px; font-weight: 600; }
 .stats strong { color: var(--accent); }
+.stat-filter-shortcut { display:block; width:max-content; border:0; background:transparent; color:inherit; padding:0; text-align:left; }
+.stat-filter-shortcut strong { display:block; transform-origin:left center; transition:transform .15s ease; }
+@media(hover:hover){.stat-filter-shortcut:hover strong { transform:scale(1.0715); }}
+.stat-filter-shortcut:focus-visible { border-radius:2px; outline:2px solid var(--accent); outline-offset:3px; }
+@media(max-width:600px){.stat-filter-shortcut,.stat-filter-shortcut:hover,.stat-filter-shortcut:focus,.stat-filter-shortcut:active,.stat-filter-shortcut strong { text-decoration:none!important; }.stat-filter-shortcut strong { transform:none!important; }}
 .owned-stat { position: relative; }
 .stat-foot { display: flex; align-items: center; gap: 10px; }
 .currency-toggle { position: absolute; top: 18px; right: 18px; display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
@@ -595,7 +600,7 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .add-photo-actions button[type="submit"] { display:flex; align-items:center; gap:6px; border-color:var(--accent); background:var(--accent); color:#fff; }
 .add-photo-actions button:disabled { opacity:.6; cursor:wait; }
 .results-controls { display: flex; align-items: center; gap: 8px; margin-left: auto; }
-.results-controls .filter-toggle { align-items: center; justify-content: center; gap: 7px; height: 40px; padding: 0 12px; color: var(--ink); line-height: 1; }
+.results-controls .filter-toggle { align-items:center; justify-content:flex-start; gap:7px; height:40px; padding:0 12px; color:var(--ink); line-height:1; text-align:left; }
 .results-controls .filter-toggle .material-symbols-rounded { display: block; color: currentColor; line-height: 1; }
 .results-controls .filter-toggle.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .sort-control { position: relative; display: flex; align-items: center; gap: 7px; width: 145px; height: 40px; border: 1px solid var(--line); background: var(--paper); padding-left: 9px; color: var(--ink); }
