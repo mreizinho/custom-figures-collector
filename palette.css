@@ -540,6 +540,10 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .dark .catalogue:not(.list) .card .condition-overlay { border-color:var(--line); background:color-mix(in srgb,var(--paper) 80%,transparent); color:var(--ink); }
 .dark .add-photo-overlay { border-color:var(--line); background:var(--paper); color:var(--ink); }
 .image-wrap img { transition: transform .35s ease; }
+.image-wrap.has-alternate-images img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.image-wrap.has-alternate-images .primary-image { opacity:1; }
+.image-wrap.has-alternate-images .alternate-image { animation:alternate-photo-cycle 4s ease-in-out infinite; }
+@keyframes alternate-photo-cycle { 0%,35%,100%{opacity:0} 50%,85%{opacity:1} }
 .card:hover .image-wrap img { transform: scale(1.025); }
 .catalogue.list .card { grid-template-columns: 116px minmax(0, 1fr); height: auto; }
 .filter-pin, .filter-page-button { display: none; }
@@ -675,6 +679,8 @@ body.dark { color-scheme: dark; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+  .image-wrap.has-alternate-images .primary-image { animation:none!important; opacity:1; }
+  .image-wrap.has-alternate-images .alternate-image { animation:none!important; opacity:0; }
 }
 
 @media (min-width: 851px) {
