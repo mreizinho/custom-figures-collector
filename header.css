@@ -211,11 +211,11 @@ dialog {
     position: absolute;
     inset: auto;
     top: 5%;
-    left: 50%;
+    left: 0;
     width: auto;
     height: var(--photo-height, 90%);
     margin: 0;
-    transform: translateX(-50%);
+    transform: none;
   }
   #detail.image-zoomed .close {
     position: fixed;
