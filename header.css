@@ -207,13 +207,21 @@ dialog {
     margin-inline: auto;
     transform: none;
   }
-  #detail.image-zoomed .detail-image.has-alternate-images > .detail-alternate-image {
-    position: absolute;
+  #detail.image-zoomed .detail-image > .detail-photo-stage {
+    position: relative;
     inset: auto;
     top: 5%;
-    left: 0;
-    width: auto;
-    height: var(--photo-height, 90%);
+    margin: 0;
+  }
+  #detail.image-zoomed .detail-image .detail-photo-stage > img:not(.fallback-image) {
+    position: absolute;
+    inset: 0;
+    top: 0;
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
     margin: 0;
     transform: none;
   }

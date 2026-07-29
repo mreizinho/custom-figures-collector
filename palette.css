@@ -536,10 +536,11 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .detail-add-photo[hidden] { display:none; }
 .detail-add-photo .material-symbols-rounded { font-size:22px; }
 .detail-add-photo:hover,.detail-add-photo:focus-visible { color:var(--ink); opacity:1; }
-.detail-image.has-alternate-images > .detail-primary-image,.detail-image.has-alternate-images > .detail-alternate-image { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
-.detail-image.has-alternate-images > .detail-primary-image { opacity:1; }
-.detail-image.has-alternate-images > .detail-alternate-image { opacity:0; pointer-events:none; animation:alternate-photo-cycle var(--photo-cycle-duration,6s) ease-in-out infinite; }
-.detail-image.animation-paused > .detail-alternate-image { animation-play-state:paused; }
+.detail-photo-stage { position:absolute; inset:0; }
+.detail-photo-stage > .detail-primary-image,.detail-photo-stage > .detail-alternate-image { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+.detail-photo-stage > .detail-primary-image { opacity:1; }
+.detail-photo-stage > .detail-alternate-image { opacity:0; pointer-events:none; animation:alternate-photo-cycle var(--photo-cycle-duration,6s) ease-in-out infinite; }
+.detail-image.animation-paused .detail-photo-stage > .detail-alternate-image { animation-play-state:paused; }
 .detail-animation-toggle { position:absolute; z-index:3; width:38px; height:38px; border:0; border-radius:50%; background:transparent; color:var(--muted); opacity:1; box-shadow:none; isolation:isolate; transition:transform .14s ease,filter .14s ease; }
 .detail-animation-toggle::before { content:none; }
 .detail-animation-toggle:hover,.detail-animation-toggle:focus-visible { background:transparent; color:var(--muted); opacity:1; box-shadow:none; transform:scale(1.06); filter:brightness(1.08); }
@@ -551,7 +552,7 @@ input::placeholder { color: var(--muted); opacity: 1; }
 #detailAddPhoto .detail-camera-icon { display:block; width:38px; height:38px; fill:currentColor; }
 #detailAddPhoto:hover,#detailAddPhoto:focus-visible { background:transparent; color:var(--muted); opacity:1; transform:scale(1.06); filter:brightness(1.08); }
 #detailAddPhoto:active { transform:scale(.94); filter:brightness(.94); }
-.photo-animations-disabled .detail-image > .detail-alternate-image,.photo-animations-disabled .detail-animation-toggle { display:none; }
+.photo-animations-disabled .detail-photo-stage > .detail-alternate-image,.photo-animations-disabled .detail-animation-toggle { display:none; }
 .dark .card .condition { border-color: var(--line); background: var(--paper); color: var(--ink); }
 .dark .catalogue:not(.list) .card .condition-overlay { border-color:var(--line); background:color-mix(in srgb,var(--paper) 80%,transparent); color:var(--ink); }
 .dark .add-photo-overlay { border-color:var(--line); background:var(--paper); color:var(--ink); }
