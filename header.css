@@ -207,6 +207,16 @@ dialog {
     margin-inline: auto;
     transform: none;
   }
+  #detail.image-zoomed .detail-image.has-alternate-images > .detail-alternate-image {
+    position: absolute;
+    inset: auto;
+    top: 5%;
+    left: 50%;
+    width: auto;
+    height: var(--photo-height, 90%);
+    margin: 0;
+    transform: translateX(-50%);
+  }
   #detail.image-zoomed .close {
     position: fixed;
     top: max(16px, env(safe-area-inset-top));
