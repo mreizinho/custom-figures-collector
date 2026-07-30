@@ -35,6 +35,7 @@ const GUEST_SPREADSHEET_ID = '1rDpFScTbHWIG3TEUatUNFVX7E68CoOmcgoDRQmrlwZE';
 const GUEST_SPREADSHEET_URL = `https://docs.google.com/spreadsheets/d/${GUEST_SPREADSHEET_ID}/`;
 const GUEST_COLLECTIONS = ['Star Wars', 'Misc'];
 const ignoredKeys = new Set(['minifig-exchange-rates', 'minifig-google-client-id', 'minifig-firebase-user-id']);
+const locallyProtectedKeys = new Set(['minifig-custom-tags', 'minifig-custom-tag-vocabulary']);
 const isCloudSettingKey = key => String(key).startsWith('minifig-') && !String(key).startsWith('minifig-theme') && !ignoredKeys.has(String(key));
 const nativeSetItem = Storage.prototype.setItem;
 const nativeRemoveItem = Storage.prototype.removeItem;
@@ -113,7 +114,7 @@ function applySettings(settings) {
       const key = localStorage.key(index);
       if (isCloudSettingKey(key)) localKeys.push(key);
     }
-    localKeys.filter(key => !remoteKeys.has(key)).forEach(key => nativeRemoveItem.call(localStorage, key));
+    localKeys.filter(key => !remoteKeys.has(key) && !locallyProtectedKeys.has(key)).forEach(key => nativeRemoveItem.call(localStorage, key));
     Object.entries(settings || {}).forEach(([key, value]) => {
       if (isCloudSettingKey(key) && typeof value === 'string') {
         nativeSetItem.call(localStorage, key, value);
@@ -455,9 +456,7 @@ async function connectUser(user) {
   }
   remoteFingerprint = fingerprint(remoteSettings);
   if (!shouldOfferCloudDownload) {
-    stageRestoredSpreadsheet(remoteSettings);
-    applySettings(remoteSettings);
-    location.reload();
+    status(`Signed in as ${user.email || 'Google user'}. A saved configuration is available from Settings.`);
     return;
   }
   const download = await confirmCloudSettingsDownload(user, remoteSettings);
