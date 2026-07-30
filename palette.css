@@ -971,5 +971,7 @@ html { scrollbar-gutter: stable; }
 
 .mobile-camera-dialog.crop-adjustment .mobile-camera-stage video,
 .mobile-camera-dialog.crop-adjustment .mobile-camera-focus { display:none; }
-.mobile-crop-surface { position:absolute; inset:0; overflow:hidden; touch-action:none; user-select:none; -webkit-user-select:none; }
-.mobile-crop-surface img { position:absolute; left:50%; top:50%; display:block; max-width:none; max-height:none; pointer-events:none; transform-origin:center; will-change:transform; }
+.mobile-crop-surface { position:absolute; inset:0; z-index:1; overflow:hidden; background:#000; touch-action:none; user-select:none; -webkit-user-select:none; }
+.mobile-crop-surface img { position:absolute; left:50%; top:50%; display:block; max-width:none; max-height:none; opacity:0; pointer-events:none; transform-origin:center; will-change:transform; }
+.mobile-crop-surface img.ready { opacity:1; }
+.mobile-camera-dialog.crop-adjustment .mobile-camera-guide { z-index:2; }
