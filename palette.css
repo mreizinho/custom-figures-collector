@@ -955,12 +955,15 @@ html { scrollbar-gutter: stable; }
 .mobile-camera-copy { display:grid; gap:12px; padding:22px; }
 .mobile-camera-copy h2,.mobile-camera-copy p { margin:0; }
 .mobile-camera-copy > p { color:#d3d3d3; }
-.mobile-camera-stage { position:relative; width:100%; aspect-ratio:1; overflow:hidden; background:#000; }
-.mobile-camera-stage video { display:block; width:100%; height:100%; object-fit:cover; }
+.mobile-camera-stage { position:relative; width:100%; aspect-ratio:1; overflow:hidden; background:#000; touch-action:none; user-select:none; -webkit-user-select:none; }
+.mobile-camera-stage video { display:block; width:100%; height:100%; object-fit:cover; transform:scale(var(--camera-zoom,1)); transform-origin:center; }
 .mobile-camera-guide { position:absolute; inset:18px; border:2px solid #fff; box-shadow:0 0 0 999px #0006,0 0 0 1px #0008; pointer-events:none; }
 .mobile-camera-guide::before,.mobile-camera-guide::after { content:''; position:absolute; inset:50% auto auto 50%; background:#ffffff88; transform:translate(-50%,-50%); }
 .mobile-camera-guide::before { width:28px; height:1px; }
 .mobile-camera-guide::after { width:1px; height:28px; }
+.mobile-camera-focus { position:absolute; display:block; width:54px; height:54px; margin:-27px 0 0 -27px; border:2px solid #fff; opacity:0; pointer-events:none; transform:scale(1.25); }
+.mobile-camera-focus.visible { animation:mobile-camera-focus .65s ease-out; }
+@keyframes mobile-camera-focus { 0%{opacity:0;transform:scale(1.35)} 20%,70%{opacity:1;transform:scale(1)} 100%{opacity:0;transform:scale(.9)} }
 .mobile-camera-actions { display:flex; justify-content:flex-end; gap:8px; }
 .mobile-camera-actions button { display:inline-flex; min-height:44px; align-items:center; justify-content:center; gap:7px; border:1px solid #777; background:#222; color:#fff; padding:0 16px; font-weight:600; }
 .mobile-camera-actions #captureMobileCamera { border-color:var(--accent); background:var(--accent); }
