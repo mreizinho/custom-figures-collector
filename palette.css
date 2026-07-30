@@ -172,7 +172,7 @@ body.dark {
 .close .material-symbols-rounded { display: block; font-size: 21px; line-height: 1; }
 .collection-control { position: relative; }
 .collection-menu { position: absolute; z-index: 60; top: calc(100% + 8px); right: 0; width: 180px; padding: 5px; border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
-.collection-menu button { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 7px; align-items: center; justify-items: start; width: 100%; height: auto; border: 0; border-radius: 0; background: transparent; color: var(--ink); padding: 9px 10px; text-align: left; font-size: 14px; }
+.collection-menu button { display: grid; grid-template-columns: 18px minmax(0, 1fr) 18px; gap: 7px; align-items: center; justify-items: start; width: 100%; height: auto; border: 0; border-radius: 0; background: transparent; color: var(--ink); padding: 9px 10px; text-align: left; font-size: 14px; }
 .collection-menu button::before { content: ''; }
 .collection-menu button.active::before { content: 'check'; font-family: 'Material Symbols Rounded'; font-size: 18px; font-variation-settings: 'wght' 700; line-height: 1; }
 .collection-menu button:hover { background: var(--bg); }
@@ -378,6 +378,42 @@ body .actions .wish.selected .material-symbols-rounded { color:inherit; }
 }
 .detail-custom-tag button .material-symbols-rounded { font-size: 15px; }
 .confirm-dialog { width: min(420px, calc(100% - 32px)); max-width: 420px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); box-shadow: 0 24px 70px #0005; }
+.photo-folder-dialog { width:min(520px,calc(100% - 32px)); max-width:520px; border:1px solid var(--line); border-radius:12px; background:var(--paper); color:var(--ink); box-shadow:0 24px 70px #0005; }
+.photo-folder-dialog form { display:grid; gap:14px; padding:38px; }
+.photo-folder-dialog h2 { margin:0; font-size:30px; }
+.photo-folder-dialog form>p { margin:0; color:var(--muted); }
+.photo-folder-dialog label { margin-top:4px; color:var(--muted); font-size:13px; font-weight:600; }
+.photo-folder-dialog input { width:100%; height:44px; border:1px solid var(--line); background:var(--bg); color:var(--ink); padding:0 12px; }
+.photo-folder-choices { display:flex; flex-wrap:wrap; gap:8px; }
+.photo-folder-choices:empty { display:none; }
+.photo-folder-choices button { border:1px solid var(--line); border-radius:999px; background:var(--paper); color:var(--ink); padding:8px 12px; }
+.photo-folder-choices button:hover,.photo-folder-choices button:focus-visible { border-color:var(--accent); color:var(--accent); }
+.photo-folder-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:4px; }
+.photo-folder-actions button { display:flex; align-items:center; gap:6px; min-height:42px; border:1px solid var(--line); background:var(--paper); color:var(--ink); padding:0 16px; font-weight:600; }
+.photo-folder-actions button[type="submit"] { border-color:var(--accent); background:var(--accent); color:#fff; }
+.new-collection-dialog { width:min(520px,calc(100% - 32px)); max-width:520px; border:1px solid var(--line); border-radius:12px; background:var(--paper); color:var(--ink); box-shadow:0 24px 70px #0005; }
+.new-collection-dialog form { display:grid; gap:14px; padding:38px; }
+.new-collection-dialog h2 { margin:0; font-size:30px; }
+.new-collection-dialog form>p { margin:0; color:var(--muted); }
+.new-collection-dialog label { margin-top:4px; color:var(--muted); font-size:13px; font-weight:600; }
+.new-collection-dialog input,.new-collection-dialog select { width:100%; height:44px; border:1px solid var(--line); border-radius:0; background:var(--bg); color:var(--ink); padding:0 12px; }
+.new-collection-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:4px; }
+.new-collection-actions button { display:flex; align-items:center; gap:6px; min-height:42px; border:1px solid var(--line); background:var(--paper); color:var(--ink); padding:0 16px; font-weight:600; }
+.new-collection-actions button[type="submit"] { border-color:var(--accent); background:var(--accent); color:#fff; }
+.collection-manager-setting { display:grid; grid-template-columns:minmax(0,1fr) minmax(220px,1fr); gap:26px; align-items:start; }
+.collection-manager-setting h3,.collection-manager-setting p { margin-top:0; }
+.detected-collections { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:12px; }
+.detected-collections span { border:1px solid var(--line); background:var(--bg); padding:6px 9px; color:var(--muted); font-size:13px; }
+.detected-collections span.active { border-color:var(--accent); color:var(--accent); }
+#newCollectionButton { display:inline-flex; align-items:center; gap:6px; min-height:42px; border:1px solid var(--accent); background:var(--accent); color:#fff; padding:0 15px; font-weight:600; }
+.collection-menu .collection-menu-new { border-top:1px solid var(--line); color:var(--accent); }
+.collection-menu .collection-menu-new::before { display:none; }
+.collection-menu .collection-menu-new .material-symbols-rounded { grid-column:1; font-size:18px; line-height:1; }
+.collection-menu .collection-name { grid-column:2; min-width:0; }
+.collection-menu .collection-delete { grid-column:3; visibility:hidden; cursor:pointer; color:var(--muted); font-size:18px; line-height:1; }
+.collection-menu button:hover .collection-delete,.collection-menu button:focus-visible .collection-delete,.collection-menu .collection-delete:focus { visibility:visible; }
+.collection-menu .collection-delete:hover,.collection-menu .collection-delete:focus { color:var(--accent); }
+#resultCount.photo-uploading { color:var(--accent); }
 .settings-dialog { width: min(560px, calc(100% - 32px)); max-width: 560px; max-height: calc(100dvh - 32px); overflow-y:hidden; overscroll-behavior:contain; border:1px solid var(--line); background:var(--paper); color:var(--ink); }
 .settings-dialog.is-scrollable { overflow-y:auto; scrollbar-width:thin; scrollbar-color:transparent transparent; scrollbar-gutter:stable; }
 .settings-dialog.is-scrollable:hover,.settings-dialog.is-scrollable:focus-within { scrollbar-color:color-mix(in srgb,var(--ink) 34%,transparent) transparent; }
@@ -536,6 +572,8 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .detail-add-photo[hidden] { display:none; }
 .detail-add-photo .material-symbols-rounded { font-size:22px; }
 .detail-add-photo:hover,.detail-add-photo:focus-visible { color:var(--ink); opacity:1; }
+#detail.image-zoomed .detail-add-photo,
+#detail.image-zoomed .detail-animation-toggle { display:none; }
 .detail-photo-stage { position:absolute; inset:0; }
 .detail-photo-stage > .detail-primary-image,.detail-photo-stage > .detail-alternate-image { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
 .detail-photo-stage > .detail-primary-image { opacity:1; }
@@ -545,11 +583,12 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .detail-animation-toggle::before { content:none; }
 .detail-animation-toggle:hover,.detail-animation-toggle:focus-visible { background:transparent; color:var(--muted); opacity:1; box-shadow:none; transform:scale(1.06); filter:brightness(1.08); }
 .detail-animation-toggle:active { transform:scale(.94); filter:brightness(.94); }
-.detail-media-icon { display:block; width:38px; height:38px; fill:currentColor; opacity:1; }
+.detail-media-icon { display:block; width:38px; height:38px; overflow:visible; fill:currentColor; opacity:1; shape-rendering:geometricPrecision; }
 .detail-animation-toggle[aria-pressed="true"] .detail-media-icon { width:38px; height:38px; transform:none; }
 #detailAddPhoto { width:38px; height:38px; border:0; border-radius:50%; background:transparent; color:var(--muted); opacity:1; isolation:isolate; transition:transform .14s ease,filter .14s ease; }
+#detailAddPhoto { top:18px; bottom:auto; }
 #detailAddPhoto::before { content:none; }
-#detailAddPhoto .detail-camera-icon { display:block; width:38px; height:38px; fill:currentColor; }
+#detailAddPhoto .detail-camera-icon { display:block; width:38px; height:38px; overflow:visible; fill:currentColor; shape-rendering:geometricPrecision; }
 #detailAddPhoto:hover,#detailAddPhoto:focus-visible { background:transparent; color:var(--muted); opacity:1; transform:scale(1.06); filter:brightness(1.08); }
 #detailAddPhoto:active { transform:scale(.94); filter:brightness(.94); }
 .photo-animations-disabled .detail-photo-stage > .detail-alternate-image,.photo-animations-disabled .detail-animation-toggle { display:none; }
@@ -840,6 +879,9 @@ html { scrollbar-gutter: stable; }
 
 @media (max-width:600px) {
   .settings-copy .desktop-columns-setting { display:none; }
+  .collection-manager-setting { grid-template-columns:1fr; gap:10px; }
+  .new-collection-dialog { position:fixed; inset:0; width:100%; max-width:none; height:100dvh; max-height:none; margin:0; border:0; border-radius:0; }
+  .new-collection-dialog form { width:100%; min-width:0; padding:72px 22px max(28px,env(safe-area-inset-bottom)); }
 }
 
 @media (max-width: 560px) {
@@ -898,9 +940,13 @@ html { scrollbar-gutter: stable; }
   .collection-control { width: 100%; }
   .collection-control > #collectionToggle { border: 0; border-radius: 0; background: transparent; }
   .collection-menu { position: static; width: 100%; margin: 0 0 4px; border: 0; border-top: 1px solid var(--line); box-shadow: none; padding: 4px 6px; }
-  .header-actions .collection-menu button { display: grid; grid-template-columns: 18px minmax(0, 1fr); height: 38px; padding-block: 6px; }
+  .header-actions .collection-menu button { display: grid; grid-template-columns: 18px minmax(0, 1fr) 18px; height: 38px; padding-block: 6px; }
   .header-actions button:hover { background: var(--bg); }
   .header-actions button::after { content: attr(data-menu-label); font-size: 14px; white-space: nowrap; }
   .add-photo-dialog { position:fixed; inset:0; width:100%; max-width:none; height:100dvh; max-height:none; margin:0; border:0; border-radius:0; }
   .add-photo-dialog form { width:100%; min-width:0; padding:72px 22px max(28px,env(safe-area-inset-bottom)); }
 }
+
+#detail > .close { transition:background-color .15s ease,color .15s ease,border-color .15s ease; }
+#detail > .close:hover,
+#detail > .close:focus-visible { border-color:var(--ink); background:var(--ink); color:var(--paper); }

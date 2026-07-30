@@ -432,7 +432,8 @@ async function connectUser(user) {
   pendingGoogleAccessToken = '';
   sessionStorage.removeItem('collector-restored-spreadsheet-id');
   sessionStorage.removeItem('collector-restored-spreadsheet-url');
-  if (!shouldOfferCloudDownload) {
+  const localSpreadsheetId = spreadsheetIdFromValue(localStorage.getItem('minifig-spreadsheet-id') || '');
+  if (!shouldOfferCloudDownload && localSpreadsheetId && localSpreadsheetId !== GUEST_SPREADSHEET_ID) {
     status(`Signed in as ${user.email || 'Google user'}.`);
     return;
   }
@@ -444,10 +445,21 @@ async function connectUser(user) {
   const remoteSettings = settingsFromRemoteData(remoteData);
   const remoteSpreadsheetId = remoteSettings?.['minifig-spreadsheet-id'] || '';
   if (!remoteSettings || !remoteSpreadsheetId || remoteSpreadsheetId === GUEST_SPREADSHEET_ID) {
+    if (localSpreadsheetId && localSpreadsheetId !== GUEST_SPREADSHEET_ID) {
+      status(`Signed in as ${user.email || 'Google user'}. Your current personal spreadsheet was kept.`);
+      return;
+    }
     status(`Signed in as ${user.email || 'Google user'}. No personal spreadsheet configuration is saved yet.`);
+    window.dispatchEvent(new CustomEvent('collector-onboarding-needed', { detail: { uid: user.uid, email: user.email || '' } }));
     return;
   }
   remoteFingerprint = fingerprint(remoteSettings);
+  if (!shouldOfferCloudDownload) {
+    stageRestoredSpreadsheet(remoteSettings);
+    applySettings(remoteSettings);
+    location.reload();
+    return;
+  }
   const download = await confirmCloudSettingsDownload(user, remoteSettings);
   if (revision !== authStateRevision) return;
   if (!download) {
@@ -458,6 +470,10 @@ async function connectUser(user) {
   applySettings(remoteSettings);
   location.reload();
 }
+
+window.addEventListener('collector-onboarding-complete', () => {
+  saveNow(true).then(() => status('Your collection spreadsheet is ready and its configuration was saved.')).catch(error => status(`Spreadsheet created, but configuration sync failed: ${error.message}`, true));
+});
 
 installSettingsUi();
 setPersistence(auth, browserLocalPersistence)
