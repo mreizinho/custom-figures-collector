@@ -157,6 +157,21 @@ dialog {
 #detail.image-zoomed .detail-image img { cursor: zoom-out; }
 
 @media (max-width: 600px) {
+  html:fullscreen,
+  html:-webkit-full-screen,
+  html:fullscreen body,
+  html:-webkit-full-screen body {
+    overflow: hidden;
+    background: #000;
+  }
+  html:fullscreen body > :not(#detail),
+  html:-webkit-full-screen body > :not(#detail) {
+    display: none !important;
+  }
+  html:fullscreen #detail,
+  html:-webkit-full-screen #detail {
+    z-index: 2147483647;
+  }
   #detail,
   #detail.image-zoomed {
     inset: 0;
