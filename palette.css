@@ -864,6 +864,7 @@ html { scrollbar-gutter: stable; }
   .settings-tabs::after { width:50%; }
   .settings-copy .settings-tabs [data-settings-tab="display"] { display:flex!important; }
   .desktop-columns-setting { display:none; }
+  .settings-tab-panel > .display-currency-setting { border-top:0; }
   .display-currency-setting,.display-photo-animation-setting { grid-template-columns:1fr; }
   .display-currency-setting h3,.display-currency-setting p,.settings-currency-choices,.display-photo-animation-setting h3,.display-photo-animation-setting p,.photo-animation-controls { grid-column:1; grid-row:auto; }
   .settings-currency-choices,.photo-animation-controls { width:100%; margin-top:10px; }
