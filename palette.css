@@ -806,7 +806,8 @@ body.dark { color-scheme: dark; }
 .settings-copy .settings-currency-choices button + button { border-left:0; }
 .settings-copy .settings-currency-choices button.selected { border-color:var(--accent); background:var(--accent); color:#fff; }
 .photo-animation-controls { display:flex; align-items:center; justify-content:flex-end; gap:8px; width:176px; }
-.settings-copy .settings-switch { display:block; flex:0 0 auto; margin:0; cursor:pointer; }
+.settings-copy .settings-switch { position:relative; display:block; flex:0 0 auto; margin:0; cursor:pointer; }
+.photo-animation-controls .settings-switch::before { content:'Enabled'; position:absolute; left:0; bottom:calc(100% + 7px); color:var(--ink); font-size:14px; font-weight:600; line-height:1; }
 .settings-switch input { position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
 .settings-switch-track { position:relative; display:grid; grid-template-columns:1fr 1fr; align-items:center; width:80px; height:42px; overflow:hidden; border:1px solid var(--line); border-radius:0; background:var(--bg); color:var(--ink); font-size:10px; font-weight:700; text-transform:uppercase; transition:background-color .16s ease,border-color .16s ease,color .16s ease; }
 .settings-switch-track::after { content:''; position:absolute; z-index:1; top:4px; left:4px; width:32px; height:32px; border:1px solid transparent; border-radius:2px; background:var(--paper); box-shadow:0 1px 3px #0003; transition:transform .16s ease; }
@@ -975,3 +976,7 @@ html { scrollbar-gutter: stable; }
 .mobile-crop-surface img { position:absolute; left:50%; top:50%; display:block; max-width:none; max-height:none; opacity:0; pointer-events:none; transform-origin:center; will-change:transform; }
 .mobile-crop-surface img.ready { opacity:1; }
 .mobile-camera-dialog.crop-adjustment .mobile-camera-guide { z-index:2; }
+
+.settings-copy .desktop-column-choice-label,
+.photo-animation-controls .settings-switch::before,
+.settings-photo-duration > strong { font-size:11px; font-weight:400; letter-spacing:.08em; text-transform:uppercase; }
