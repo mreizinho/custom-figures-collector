@@ -79,7 +79,7 @@ function enableMobilePhotoGestures(){
   if(!pane||!img)return;
   const stage=pane.querySelector('.detail-photo-stage');
   const imageAspect=()=>img.naturalWidth&&img.naturalHeight?img.naturalWidth/img.naturalHeight:1;
-  const setPhotoScale=value=>{if(stage){const height=pane.clientHeight*value;stage.style.height=`${height}px`;stage.style.width=`${height*imageAspect()}px`}else images.forEach(image=>image.style.setProperty('--photo-height',`${100*value}%`))};
+  const setPhotoScale=value=>{if(stage){const height=pane.clientHeight*.9*value;stage.style.height=`${height}px`;stage.style.width=`${height*imageAspect()}px`}else images.forEach(image=>image.style.setProperty('--photo-height',`${90*value}%`))};
   const center=()=>{pane.scrollLeft=Math.max(0,(pane.scrollWidth-pane.clientWidth)/2);pane.scrollTop=Math.max(0,(pane.scrollHeight-pane.clientHeight)/2)};
   if(pane.dataset.gesturesReady){setPhotoScale(1);requestAnimationFrame(center);return}
   pane.dataset.gesturesReady='true';

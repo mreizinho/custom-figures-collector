@@ -213,11 +213,11 @@ dialog {
   #detail.image-zoomed .detail-image::-webkit-scrollbar { display: none; }
   #detail.image-zoomed .detail-image img:not(.fallback-image) {
     position: relative;
-    top: 0;
+    top: 5%;
     display: block;
     width: auto;
     max-width: none;
-    height: var(--photo-height, 100%);
+    height: var(--photo-height, 90%);
     max-height: none;
     margin-inline: auto;
     transform: none;
@@ -225,7 +225,7 @@ dialog {
   #detail.image-zoomed .detail-image > .detail-photo-stage {
     position: relative;
     inset: auto;
-    top: 0;
+    top: 5%;
     margin: 0;
   }
   #detail.image-zoomed .detail-image .detail-photo-stage > img:not(.fallback-image) {
