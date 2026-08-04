@@ -1,2 +1,8 @@
 .DS_Store
 Thumbs.db
+.env
+.env.*
+output/image-api-tests/
+output/stability-background-tests/
+__pycache__/
+*.pyc

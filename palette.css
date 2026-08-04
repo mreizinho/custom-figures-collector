@@ -367,7 +367,7 @@ body .actions .wish.selected .material-symbols-rounded { color:inherit; }
   opacity: 0;
   pointer-events: none;
   transform: scale(.8);
-  transition: opacity .15s ease, transform .15s ease;
+  transition: opacity .15s ease, transform .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease;
 }
 .detail-custom-tag:hover button,
 .detail-custom-tag:focus-within button,
@@ -953,9 +953,21 @@ html { scrollbar-gutter: stable; }
   .add-photo-dialog form { width:100%; min-width:0; padding:72px 22px max(28px,env(safe-area-inset-bottom)); }
 }
 
-#detail > .close { transition:background-color .15s ease,color .15s ease,border-color .15s ease; }
-#detail > .close:hover,
-#detail > .close:focus-visible { border-color:var(--ink); background:var(--ink); color:var(--paper); }
+:where(.close, .detail-tag-suggestions-close, .brand-suggestions-close) {
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.close:hover,
+.close:focus-visible,
+.detail-tag-suggestions-close:hover,
+.detail-tag-suggestions-close:focus-visible,
+.brand-suggestions-close:hover,
+.brand-suggestions-close:focus-visible,
+.detail-custom-tag button:hover,
+.detail-custom-tag button:focus-visible {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
 
 .mobile-camera-dialog { width:min(560px,calc(100% - 24px)); max-width:560px; border:0; background:#111; color:#fff; }
 .mobile-camera-copy { display:grid; gap:12px; padding:22px; }

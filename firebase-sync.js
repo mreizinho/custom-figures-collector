@@ -1,11 +1,13 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
 import {
   browserLocalPersistence,
+  getRedirectResult,
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
   setPersistence,
   signInWithPopup,
+  signInWithRedirect,
   signOut
 } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
 import {
@@ -50,6 +52,8 @@ let cloudSyncPaused = false;
 let authStateRevision = 0;
 let promptOnNextUserConnection = false;
 let pendingCloudSettings = null;
+const REDIRECT_SIGN_IN_KEY = 'collector-google-redirect-pending';
+const useRedirectSignIn = ['localhost', '127.0.0.1'].includes(location.hostname);
 
 function announceGoogleAuth(user, accessToken = '') {
   window.collectorFirebaseUser = user?.uid || '';
@@ -261,6 +265,11 @@ function installSettingsUi() {
         await signOut(auth);
       } else {
         promptOnNextUserConnection = true;
+        if (useRedirectSignIn) {
+          sessionStorage.setItem(REDIRECT_SIGN_IN_KEY, '1');
+          await signInWithRedirect(auth, provider);
+          return;
+        }
         const result = await signInWithPopup(auth, provider);
         pendingGoogleAccessToken = GoogleAuthProvider.credentialFromResult(result)?.accessToken || '';
         announceGoogleAuth(result.user, pendingGoogleAccessToken);
@@ -476,5 +485,20 @@ window.addEventListener('collector-onboarding-complete', () => {
 
 installSettingsUi();
 setPersistence(auth, browserLocalPersistence)
-  .then(() => onAuthStateChanged(auth, user => connectUser(user).catch(error => status(`Sync failed: ${error.message}`, true))))
+  .then(async () => {
+    if (sessionStorage.getItem(REDIRECT_SIGN_IN_KEY) === '1') promptOnNextUserConnection = true;
+    try {
+      const result = await getRedirectResult(auth);
+      if (result) {
+        pendingGoogleAccessToken = GoogleAuthProvider.credentialFromResult(result)?.accessToken || '';
+        announceGoogleAuth(result.user, pendingGoogleAccessToken);
+      }
+      sessionStorage.removeItem(REDIRECT_SIGN_IN_KEY);
+    } catch (error) {
+      promptOnNextUserConnection = false;
+      sessionStorage.removeItem(REDIRECT_SIGN_IN_KEY);
+      status(`Sign-in failed: ${error.message}`, true);
+    }
+    onAuthStateChanged(auth, user => connectUser(user).catch(error => status(`Sync failed: ${error.message}`, true)));
+  })
   .catch(error => status(`Sign-in persistence failed: ${error.message}`, true));
