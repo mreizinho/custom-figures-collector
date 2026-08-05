@@ -71,13 +71,12 @@ function resetDetailPhotoZoom(){const detail=$('#detail'),pane=$('.detail-image'
 new MutationObserver(()=>{if(!$('#detail').classList.contains('image-zoomed'))resetDetailPhotoZoom()}).observe($('#detail'),{attributes:true,attributeFilter:['class']});
 async function enterMobileDetailFullscreen(){if(!window.matchMedia('(max-width: 600px)').matches||document.fullscreenElement)return;const page=document.documentElement;try{if(page.requestFullscreen)await page.requestFullscreen({navigationUI:'hide'});else if(page.webkitRequestFullscreen)page.webkitRequestFullscreen()}catch(error){console.debug('Fullscreen mode is not supported by this mobile browser.',error)}}
 async function exitMobileDetailFullscreen(){try{if(document.fullscreenElement&&document.exitFullscreen)await document.exitFullscreen();else if(document.webkitFullscreenElement&&document.webkitExitFullscreen)document.webkitExitFullscreen()}catch(error){console.debug('Fullscreen mode could not be closed.',error)}}
-$('#detail').addEventListener('click',event=>{if(event.target.closest('.detail-image img')&&!$('#detail').classList.contains('image-zoomed'))enterMobileDetailFullscreen()},{capture:true});
-function recenterMobileDetailAfterFullscreen(){if(!window.matchMedia('(max-width: 600px)').matches)return;const recenter=()=>{if($('#detail').classList.contains('image-zoomed'))enableMobilePhotoGestures()};requestAnimationFrame(()=>requestAnimationFrame(recenter));setTimeout(recenter,160)}
-document.addEventListener('fullscreenchange',recenterMobileDetailAfterFullscreen);
-document.addEventListener('webkitfullscreenchange',recenterMobileDetailAfterFullscreen);
+let mobileDetailFullscreenPending=false,mobileDetailFullscreenPromise=Promise.resolve();
+$('#detail').addEventListener('click',event=>{if(event.target.closest('.detail-image img')&&!$('#detail').classList.contains('image-zoomed')){mobileDetailFullscreenPending=true;mobileDetailFullscreenPromise=enterMobileDetailFullscreen().finally(()=>{mobileDetailFullscreenPending=false})}},{capture:true});
 new MutationObserver(()=>{if(!$('#detail').classList.contains('image-zoomed'))exitMobileDetailFullscreen()}).observe($('#detail'),{attributes:true,attributeFilter:['class']});
 $('#detail').addEventListener('close',exitMobileDetailFullscreen);
 function enableMobilePhotoGestures(){
+  if(mobileDetailFullscreenPending){mobileDetailFullscreenPromise.then(()=>requestAnimationFrame(enableMobilePhotoGestures));return}
   const pane=$('.detail-image'),images=[...(pane?.querySelectorAll('img:not(.fallback-image)')||[])],img=images[0];
   if(!pane||!img)return;
   const stage=pane.querySelector('.detail-photo-stage');
