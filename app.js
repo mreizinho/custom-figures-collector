@@ -72,6 +72,9 @@ new MutationObserver(()=>{if(!$('#detail').classList.contains('image-zoomed'))re
 async function enterMobileDetailFullscreen(){if(!window.matchMedia('(max-width: 600px)').matches||document.fullscreenElement)return;const page=document.documentElement;try{if(page.requestFullscreen)await page.requestFullscreen({navigationUI:'hide'});else if(page.webkitRequestFullscreen)page.webkitRequestFullscreen()}catch(error){console.debug('Fullscreen mode is not supported by this mobile browser.',error)}}
 async function exitMobileDetailFullscreen(){try{if(document.fullscreenElement&&document.exitFullscreen)await document.exitFullscreen();else if(document.webkitFullscreenElement&&document.webkitExitFullscreen)document.webkitExitFullscreen()}catch(error){console.debug('Fullscreen mode could not be closed.',error)}}
 $('#detail').addEventListener('click',event=>{if(event.target.closest('.detail-image img')&&!$('#detail').classList.contains('image-zoomed'))enterMobileDetailFullscreen()},{capture:true});
+function recenterMobileDetailAfterFullscreen(){if(!$('#detail').classList.contains('image-zoomed')||!window.matchMedia('(max-width: 600px)').matches)return;requestAnimationFrame(()=>requestAnimationFrame(enableMobilePhotoGestures))}
+document.addEventListener('fullscreenchange',recenterMobileDetailAfterFullscreen);
+document.addEventListener('webkitfullscreenchange',recenterMobileDetailAfterFullscreen);
 new MutationObserver(()=>{if(!$('#detail').classList.contains('image-zoomed'))exitMobileDetailFullscreen()}).observe($('#detail'),{attributes:true,attributeFilter:['class']});
 $('#detail').addEventListener('close',exitMobileDetailFullscreen);
 function enableMobilePhotoGestures(){
