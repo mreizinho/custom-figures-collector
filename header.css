@@ -203,8 +203,10 @@ dialog {
   #detail.image-zoomed .detail-grid { grid-template-rows: 1fr; }
   #detail.image-zoomed .detail-image {
     position: relative;
-    display: block;
-    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     background: #fff;
     overscroll-behavior-x: contain;
     touch-action: none;
@@ -227,7 +229,10 @@ dialog {
     position: relative;
     inset: auto;
     top: 0;
-    margin: 0 auto;
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    will-change: transform;
   }
   #detail.image-zoomed .detail-image .detail-photo-stage > img:not(.fallback-image) {
     position: absolute;
@@ -239,6 +244,7 @@ dialog {
     height: 100%;
     max-height: none;
     margin: 0;
+    object-fit: contain;
     transform: none;
   }
   #detail.image-zoomed .close {
