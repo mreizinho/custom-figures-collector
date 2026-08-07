@@ -217,9 +217,9 @@ dialog {
     position: relative;
     top: 10%;
     display: block;
-    width: 80%;
+    width: 80vw;
     max-width: none;
-    height: 80%;
+    height: 80dvh;
     max-height: none;
     margin-inline: auto;
     object-fit: contain;
@@ -229,8 +229,8 @@ dialog {
     position: relative;
     inset: auto;
     top: 0;
-    width: 80%;
-    height: 80%;
+    width: 80vw;
+    height: 80dvh;
     margin: auto;
     will-change: transform;
   }
