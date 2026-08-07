@@ -215,17 +215,18 @@ dialog {
     position: relative;
     top: 5%;
     display: block;
-    width: auto;
+    width: 90%;
     max-width: none;
-    height: var(--photo-height, 90%);
+    height: 90%;
     max-height: none;
     margin-inline: auto;
+    object-fit: contain;
     transform: none;
   }
   #detail.image-zoomed .detail-image > .detail-photo-stage {
     position: relative;
     inset: auto;
-    top: 5%;
+    top: 0;
     margin: 0 auto;
   }
   #detail.image-zoomed .detail-image .detail-photo-stage > img:not(.fallback-image) {
