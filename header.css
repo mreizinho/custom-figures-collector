@@ -215,7 +215,7 @@ dialog {
   #detail.image-zoomed .detail-image::-webkit-scrollbar { display: none; }
   #detail.image-zoomed .detail-image img:not(.fallback-image) {
     position: relative;
-    top: 10%;
+    top: 0;
     display: block;
     width: 80vw;
     max-width: none;
