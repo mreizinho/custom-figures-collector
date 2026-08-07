@@ -226,7 +226,7 @@ dialog {
     position: relative;
     inset: auto;
     top: 5%;
-    margin: 0;
+    margin: 0 auto;
   }
   #detail.image-zoomed .detail-image .detail-photo-stage > img:not(.fallback-image) {
     position: absolute;
