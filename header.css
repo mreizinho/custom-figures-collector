@@ -215,11 +215,11 @@ dialog {
   #detail.image-zoomed .detail-image::-webkit-scrollbar { display: none; }
   #detail.image-zoomed .detail-image img:not(.fallback-image) {
     position: relative;
-    top: 5%;
+    top: 10%;
     display: block;
-    width: 90%;
+    width: 80%;
     max-width: none;
-    height: 90%;
+    height: 80%;
     max-height: none;
     margin-inline: auto;
     object-fit: contain;
@@ -229,8 +229,8 @@ dialog {
     position: relative;
     inset: auto;
     top: 0;
-    width: 90%;
-    height: 90%;
+    width: 80%;
+    height: 80%;
     margin: auto;
     will-change: transform;
   }

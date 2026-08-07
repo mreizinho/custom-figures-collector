@@ -91,7 +91,7 @@ function enableMobilePhotoGestures(){
   let scale=1,translateX=0,translateY=0,pinch=null,scaleFrame=0;
   const applyTransform=()=>{stage.style.transform=`translate3d(${translateX}px,${translateY}px,0) scale(${scale})`};
   const resetView=()=>{scale=1;translateX=0;translateY=0;stage.style.transformOrigin='50% 50%';applyTransform()};
-  stage.style.width='90%';stage.style.height='90%';stage.style.margin='auto';stage.style.flex='0 0 auto';
+  stage.style.width='80%';stage.style.height='80%';stage.style.margin='auto';stage.style.flex='0 0 auto';
   if(pane.dataset.gesturesReady){resetView();return}
   pane.dataset.gesturesReady='true';
   const pointers=new Map();
