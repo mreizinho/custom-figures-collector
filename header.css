@@ -157,23 +157,7 @@ dialog {
 #detail.image-zoomed .detail-image img { cursor: zoom-out; }
 
 @media (max-width: 600px) {
-  html:fullscreen,
-  html:-webkit-full-screen,
-  html:fullscreen body,
-  html:-webkit-full-screen body {
-    overflow: hidden;
-    background: #000;
-  }
-  html:fullscreen body > :not(#detail),
-  html:-webkit-full-screen body > :not(#detail) {
-    display: none !important;
-  }
-  html:fullscreen #detail,
-  html:-webkit-full-screen #detail {
-    z-index: 2147483647;
-  }
-  #detail,
-  #detail.image-zoomed {
+  #detail {
     inset: 0;
     width: 100vw;
     max-width: none;
@@ -183,8 +167,7 @@ dialog {
     border-radius: 0;
   }
   #detail #detailContent { width: 100%; height: 100%; }
-  #detail .detail-grid,
-  #detail.image-zoomed .detail-grid {
+  #detail .detail-grid {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: min(42lvh, 360px) minmax(0, 1fr);
@@ -194,63 +177,11 @@ dialog {
     aspect-ratio: auto;
   }
   #detail .detail-image { width: 100%; height: 100%; }
+  #detail .detail-image img { cursor: default; }
   #detail .detail-copy {
     min-height: 0;
     overflow-y: auto;
     scrollbar-width: none;
   }
   #detail .detail-copy::-webkit-scrollbar { display: none; }
-  #detail.image-zoomed .detail-grid { grid-template-rows: 1fr; }
-  #detail.image-zoomed .detail-image {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background: #fff;
-    overscroll-behavior-x: contain;
-    touch-action: none;
-    scrollbar-width: none;
-  }
-  #detail.image-zoomed .detail-image::-webkit-scrollbar { display: none; }
-  #detail.image-zoomed .detail-image img:not(.fallback-image) {
-    position: relative;
-    top: 0;
-    display: block;
-    width: 80vw;
-    max-width: none;
-    height: 80dvh;
-    max-height: none;
-    margin-inline: auto;
-    object-fit: contain;
-    transform: none;
-  }
-  #detail.image-zoomed .detail-image > .detail-photo-stage {
-    position: relative;
-    inset: auto;
-    top: 0;
-    width: 80vw;
-    height: 80dvh;
-    margin: auto;
-    will-change: transform;
-  }
-  #detail.image-zoomed .detail-image .detail-photo-stage > img:not(.fallback-image) {
-    position: absolute;
-    inset: 0;
-    top: 0;
-    display: block;
-    width: 100%;
-    max-width: none;
-    height: 100%;
-    max-height: none;
-    margin: 0;
-    object-fit: contain;
-    transform: none;
-  }
-  #detail.image-zoomed .close {
-    position: fixed;
-    top: max(16px, env(safe-area-inset-top));
-    right: max(16px, env(safe-area-inset-right));
-    z-index: 10;
-  }
 }
