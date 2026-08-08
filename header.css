@@ -191,8 +191,28 @@ dialog {
   #detail.image-zoomed .detail-id,
   #detail.image-zoomed .detail-info-overlay { display:none; }
   #detail.image-zoomed .detail-photo-stage,
-  #detail.image-zoomed .detail-image > img:not(.fallback-image) { transform:scale(1.75); transform-origin:center; }
+  #detail.image-zoomed .detail-image > img:not(.fallback-image) {
+    position:absolute;
+    inset:auto;
+    top:50%;
+    left:50%;
+    width:100%;
+    height:100%;
+    transform:translate(-50%,-50%) scale(1.75);
+    transform-origin:center;
+  }
   #detail.image-zoomed .close { position:fixed; top:max(16px,env(safe-area-inset-top)); right:max(16px,env(safe-area-inset-right)); z-index:10; }
   #detail:fullscreen,
-  #detail:-webkit-full-screen { z-index:2147483647; background:var(--photo-background); }
+  #detail:-webkit-full-screen {
+    inset:0;
+    width:100vw;
+    max-width:none;
+    height:100dvh;
+    max-height:none;
+    margin:0;
+    border:0;
+    padding:0;
+    z-index:2147483647;
+    background:var(--photo-background);
+  }
 }
