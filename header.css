@@ -193,4 +193,6 @@ dialog {
   #detail.image-zoomed .detail-photo-stage,
   #detail.image-zoomed .detail-image > img:not(.fallback-image) { transform:scale(1.75); transform-origin:center; }
   #detail.image-zoomed .close { position:fixed; top:max(16px,env(safe-area-inset-top)); right:max(16px,env(safe-area-inset-right)); z-index:10; }
+  #detail:fullscreen,
+  #detail:-webkit-full-screen { z-index:2147483647; background:var(--photo-background); }
 }
