@@ -201,9 +201,25 @@ dialog {
     transform:translate(-50%,-50%) scale(1.75);
     transform-origin:center;
   }
-  #detail.image-zoomed .close { position:fixed; top:max(16px,env(safe-area-inset-top)); right:max(16px,env(safe-area-inset-right)); z-index:10; }
-  #detail:fullscreen,
-  #detail:-webkit-full-screen {
+  #detail.image-zoomed > .close { display:none; }
+  #detail.image-zoomed .mobile-zoom-close {
+    position:fixed;
+    top:max(16px,env(safe-area-inset-top));
+    right:max(16px,env(safe-area-inset-right));
+    z-index:10;
+    display:grid;
+    place-items:center;
+    width:52px;
+    height:52px;
+    border:1px solid #ffffff30;
+    border-radius:50%;
+    background:#111d;
+    color:#fff;
+    padding:0;
+  }
+  #detail.image-zoomed .mobile-zoom-close .material-symbols-rounded { font-size:34px; }
+  #detail .detail-image:fullscreen,
+  #detail .detail-image:-webkit-full-screen {
     inset:0;
     width:100vw;
     max-width:none;
