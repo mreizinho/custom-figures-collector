@@ -211,11 +211,7 @@ dialog {
     place-items:center;
     width:38px;
     height:38px;
-    border:1px solid #ffffff30;
     border-radius:50%;
-    background:#111d;
-    color:#fff;
-    padding:0;
   }
   #detail.image-zoomed .mobile-zoom-close .material-symbols-rounded { font-size:21px; line-height:1; }
   #detail .detail-image:fullscreen,
