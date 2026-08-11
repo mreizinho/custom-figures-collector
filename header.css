@@ -250,3 +250,7 @@ dialog {
 .catalogue-status-toast[hidden] {
   display:none;
 }
+
+.dark .catalogue-status-toast {
+  color:#fff;
+}
