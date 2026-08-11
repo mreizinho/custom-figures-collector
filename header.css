@@ -234,11 +234,15 @@ dialog {
   left:50%;
   bottom:max(22px, env(safe-area-inset-bottom));
   z-index:10000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   max-width:min(560px, calc(100vw - 32px));
+  min-height:58px;
   padding:12px 18px;
   transform:translateX(-50%);
   border:1px solid var(--line);
-  border-radius:10px;
+  border-radius:4px;
   background:var(--accent);
   color:var(--paper);
   box-shadow:0 10px 32px #0005;
