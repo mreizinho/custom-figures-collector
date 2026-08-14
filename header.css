@@ -231,13 +231,13 @@ dialog {
 
 .catalogue-status-toast {
   position:fixed;
-  left:50%;
-  bottom:max(22px, env(safe-area-inset-bottom));
+  inset:auto auto max(22px, env(safe-area-inset-bottom)) 50%;
   z-index:10000;
   display:flex;
   align-items:center;
   justify-content:center;
   max-width:min(560px, calc(100vw - 32px));
+  margin:0;
   min-height:58px;
   padding:12px 18px;
   transform:translateX(-50%);
@@ -250,6 +250,8 @@ dialog {
   text-align:center;
   pointer-events:none;
 }
+
+.catalogue-status-toast::backdrop { background:transparent; }
 
 .catalogue-status-toast[hidden] {
   display:none;
