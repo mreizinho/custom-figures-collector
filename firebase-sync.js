@@ -54,7 +54,7 @@ let authStateRevision = 0;
 let promptOnNextUserConnection = false;
 let pendingCloudSettings = null;
 const REDIRECT_SIGN_IN_KEY = 'collector-google-redirect-pending';
-const useRedirectSignIn = ['localhost', '127.0.0.1'].includes(location.hostname);
+const useRedirectSignIn = false;
 
 function announceGoogleAuth(user, accessToken = '') {
   window.collectorFirebaseUser = user?.uid || '';
