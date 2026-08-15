@@ -129,13 +129,17 @@ dialog {
 }
 .dark .image-wrap img.fallback-image { filter: invert(1); }
 .dark .detail-image img.fallback-image { filter: invert(1); }
-/* Edge Mobile can corrupt nearby rounded controls while compositing a filtered
-   fallback image. Keep the SVG fallback, but avoid that GPU filter there. */
-html.edge-mobile body.dark .image-wrap img.fallback-image,
-html.edge-mobile body.dark .detail-image img.fallback-image {
-  filter: none;
-  opacity: 0.32;
+.image-wrap.fallback-placeholder .placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  overflow: hidden;
+  color: transparent;
+  background: url('lego-figure.svg?v=1') center calc(50% - 12px) / 56% 76% no-repeat;
+  opacity: 0.15;
 }
+.dark .image-wrap.fallback-placeholder .placeholder { opacity: 0.32; }
 .catalogue.list .image-wrap img.fallback-image { top: -4px; }
 
 @media (min-width: 851px) {
