@@ -683,6 +683,10 @@ input::placeholder { color: var(--muted); opacity: 1; }
   .actions button:hover { transform: scale(1.08); }
 }
 @media (hover:none), (pointer:coarse) {
+  .actions button {
+    transition: none;
+    transform: none;
+  }
   .actions button:hover { transform:none; }
 }
 .results { min-width: 0; }
