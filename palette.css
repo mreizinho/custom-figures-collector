@@ -204,10 +204,14 @@ body.dark {
 .stats[hidden] { display: none; }
 .actions .material-symbols-rounded { font-size: 17px; }
 .actions button {
+  appearance: none;
+  -webkit-appearance: none;
   display: grid;
   place-items: center;
+  background-clip: padding-box;
   padding: 0;
   line-height: 1;
+  -webkit-tap-highlight-color: transparent;
 }
 .actions button .material-symbols-rounded { display: block; line-height: 1; }
 .wish .material-symbols-rounded { font-variation-settings: 'FILL' 0; }
@@ -675,7 +679,12 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .catalogue.list .card .condition-list { display: none; }
 .catalogue.list .card .condition-overlay:not([hidden]) { position: absolute; inset: auto 8px 8px auto; z-index: 5; display: block !important; visibility: visible; opacity: 1; pointer-events: none; padding: 2px 5px; border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--paper) 80%, transparent); color: var(--ink); font-size: 7px; line-height: normal; transform: none; }
 .actions button { transition: transform .15s ease, background-color .15s ease, color .15s ease; }
-.actions button:hover { transform: scale(1.08); }
+@media (hover:hover) and (pointer:fine) {
+  .actions button:hover { transform: scale(1.08); }
+}
+@media (hover:none), (pointer:coarse) {
+  .actions button:hover { transform:none; }
+}
 .results { min-width: 0; }
 .results-summary { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
 .toolbar { gap:0; margin-bottom:16px; }
