@@ -204,27 +204,16 @@ body.dark {
 .stats[hidden] { display: none; }
 .actions .material-symbols-rounded { font-size: 17px; }
 .actions button {
-  appearance: none;
-  -webkit-appearance: none;
   display: grid;
   place-items: center;
   padding: 0;
   line-height: 1;
-  -webkit-tap-highlight-color: transparent;
 }
 .actions button .material-symbols-rounded { display: block; line-height: 1; }
 .wish .material-symbols-rounded { font-variation-settings: 'FILL' 0; }
 .wish .material-symbols-rounded { transform: translateY(1px); }
 .wish.selected .material-symbols-rounded { font-variation-settings: 'FILL' 1; }
-/* Draw selected circles without a rounded element mask. Edge Mobile can punch a
-   transient hole in border-radius backgrounds at certain compositor offsets. */
-.actions .selected {
-  border-color: transparent;
-  border-radius: 0;
-  background-color: transparent;
-  background-image: radial-gradient(circle at center, var(--ink) 0 13.25px, transparent 13.75px);
-}
-body .actions .wish.selected { border-color:transparent; background-color:transparent; background-image:radial-gradient(circle at center,var(--accent) 0 13.25px,transparent 13.75px); color:#fff; }
+body .actions .wish.selected { border-color:var(--accent); background:var(--accent); color:#fff; }
 body .actions .wish.selected .material-symbols-rounded { color:inherit; }
 
 .stats {
@@ -653,6 +642,18 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .image-wrap.has-alternate-images .primary-image { opacity:1; }
 .image-wrap.has-alternate-images .alternate-image { animation:alternate-photo-cycle var(--photo-cycle-duration,4s) ease-in-out infinite; }
 @keyframes alternate-photo-cycle { 0%,35%,100%{opacity:0} 50%,85%{opacity:1} }
+/* Edge Android corrupts unrelated rounded layers while opacity-crossfading a
+   large image. Keep photo cycling there, but switch frames discretely. */
+.edge-mobile .image-wrap.has-alternate-images .alternate-image {
+  opacity: 1;
+  visibility: hidden;
+  animation-name: alternate-photo-cycle-edge;
+  animation-timing-function: step-end;
+}
+@keyframes alternate-photo-cycle-edge {
+  0%, 35%, 100% { visibility: hidden; }
+  50%, 85% { visibility: visible; }
+}
 .photo-animations-disabled .image-wrap.has-alternate-images .primary-image { opacity:1; }
 .photo-animations-disabled .image-wrap.has-alternate-images .alternate-image { animation:none; opacity:0; }
 .card:hover .image-wrap img { transform: scale(1.025); }
@@ -688,13 +689,6 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .actions button { transition: transform .15s ease, background-color .15s ease, color .15s ease; }
 @media (hover:hover) and (pointer:fine) {
   .actions button:hover { transform: scale(1.08); }
-}
-@media (hover:none), (pointer:coarse) {
-  .actions button {
-    transition: none;
-    transform: none;
-  }
-  .actions button:hover { transform:none; }
 }
 .results { min-width: 0; }
 .results-summary { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
@@ -800,7 +794,7 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .empty-state button { border: 0; background: var(--ink); color: var(--paper); padding: 11px 16px; font-weight: 600; }
 
 body.dark { color-scheme: dark; }
-.dark .actions .selected { color: var(--paper); }
+.dark .actions .selected { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .dark .detail-actions button { color: var(--paper); }
 .dark .detail-actions .detail-secondary-action { background: var(--bg) !important; color: var(--ink); }
 .dark .detail-actions .detail-secondary-action[aria-expanded="true"] {
