@@ -642,18 +642,6 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .image-wrap.has-alternate-images .primary-image { opacity:1; }
 .image-wrap.has-alternate-images .alternate-image { animation:alternate-photo-cycle var(--photo-cycle-duration,4s) ease-in-out infinite; }
 @keyframes alternate-photo-cycle { 0%,35%,100%{opacity:0} 50%,85%{opacity:1} }
-/* Edge Android corrupts unrelated rounded layers while opacity-crossfading a
-   large image. Keep photo cycling there, but switch frames discretely. */
-.edge-mobile .image-wrap.has-alternate-images .alternate-image {
-  opacity: 1;
-  visibility: hidden;
-  animation-name: alternate-photo-cycle-edge;
-  animation-timing-function: step-end;
-}
-@keyframes alternate-photo-cycle-edge {
-  0%, 35%, 100% { visibility: hidden; }
-  50%, 85% { visibility: visible; }
-}
 .photo-animations-disabled .image-wrap.has-alternate-images .primary-image { opacity:1; }
 .photo-animations-disabled .image-wrap.has-alternate-images .alternate-image { animation:none; opacity:0; }
 .card:hover .image-wrap img { transform: scale(1.025); }
