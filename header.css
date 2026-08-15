@@ -129,6 +129,13 @@ dialog {
 }
 .dark .image-wrap img.fallback-image { filter: invert(1); }
 .dark .detail-image img.fallback-image { filter: invert(1); }
+/* Edge Mobile can corrupt nearby rounded controls while compositing a filtered
+   fallback image. Keep the SVG fallback, but avoid that GPU filter there. */
+html.edge-mobile body.dark .image-wrap img.fallback-image,
+html.edge-mobile body.dark .detail-image img.fallback-image {
+  filter: none;
+  opacity: 0.32;
+}
 .catalogue.list .image-wrap img.fallback-image { top: -4px; }
 
 @media (min-width: 851px) {
