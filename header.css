@@ -129,17 +129,13 @@ dialog {
 }
 .dark .image-wrap img.fallback-image { filter: invert(1); }
 .dark .detail-image img.fallback-image { filter: invert(1); }
-.image-wrap.fallback-placeholder .placeholder {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: block;
-  overflow: hidden;
-  color: transparent;
-  background: url('lego-figure.svg?v=1') center calc(50% - 12px) / 56% 76% no-repeat;
-  opacity: 0.15;
+.image-wrap.fallback-placeholder {
+  background-image: url('lego-figure.svg?v=2');
+  background-position: center calc(50% - 12px);
+  background-size: 56% 76%;
+  background-repeat: no-repeat;
 }
-.dark .image-wrap.fallback-placeholder .placeholder { opacity: 0.32; }
+.image-wrap.fallback-placeholder .placeholder { color: transparent; }
 .catalogue.list .image-wrap img.fallback-image { top: -4px; }
 
 @media (min-width: 851px) {
