@@ -208,7 +208,6 @@ body.dark {
   -webkit-appearance: none;
   display: grid;
   place-items: center;
-  background-clip: padding-box;
   padding: 0;
   line-height: 1;
   -webkit-tap-highlight-color: transparent;
@@ -217,7 +216,15 @@ body.dark {
 .wish .material-symbols-rounded { font-variation-settings: 'FILL' 0; }
 .wish .material-symbols-rounded { transform: translateY(1px); }
 .wish.selected .material-symbols-rounded { font-variation-settings: 'FILL' 1; }
-body .actions .wish.selected { border-color:var(--accent); background:var(--accent); color:#fff; }
+/* Draw selected circles without a rounded element mask. Edge Mobile can punch a
+   transient hole in border-radius backgrounds at certain compositor offsets. */
+.actions .selected {
+  border-color: transparent;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: radial-gradient(circle at center, var(--ink) 0 13.25px, transparent 13.75px);
+}
+body .actions .wish.selected { border-color:transparent; background-color:transparent; background-image:radial-gradient(circle at center,var(--accent) 0 13.25px,transparent 13.75px); color:#fff; }
 body .actions .wish.selected .material-symbols-rounded { color:inherit; }
 
 .stats {
@@ -642,10 +649,6 @@ input::placeholder { color: var(--muted); opacity: 1; }
   38% { opacity:0; transform:translateX(72%) skewX(-9deg); }
   100% { opacity:0; transform:translateX(72%) skewX(-9deg); }
 }
-.image-wrap.has-alternate-images {
-  contain: paint;
-  isolation: isolate;
-}
 .image-wrap.has-alternate-images img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 .image-wrap.has-alternate-images .primary-image { opacity:1; }
 .image-wrap.has-alternate-images .alternate-image { animation:alternate-photo-cycle var(--photo-cycle-duration,4s) ease-in-out infinite; }
@@ -682,7 +685,6 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .catalogue.list .image-wrap img.fallback-image { top: 0; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
 .catalogue.list .card .condition-list { display: none; }
 .catalogue.list .card .condition-overlay:not([hidden]) { position: absolute; inset: auto 8px 8px auto; z-index: 5; display: block !important; visibility: visible; opacity: 1; pointer-events: none; padding: 2px 5px; border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--paper) 80%, transparent); color: var(--ink); font-size: 7px; line-height: normal; transform: none; }
-.actions { position: relative; z-index: 1; isolation: isolate; }
 .actions button { transition: transform .15s ease, background-color .15s ease, color .15s ease; }
 @media (hover:hover) and (pointer:fine) {
   .actions button:hover { transform: scale(1.08); }
@@ -798,7 +800,7 @@ input::placeholder { color: var(--muted); opacity: 1; }
 .empty-state button { border: 0; background: var(--ink); color: var(--paper); padding: 11px 16px; font-weight: 600; }
 
 body.dark { color-scheme: dark; }
-.dark .actions .selected { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.dark .actions .selected { color: var(--paper); }
 .dark .detail-actions button { color: var(--paper); }
 .dark .detail-actions .detail-secondary-action { background: var(--bg) !important; color: var(--ink); }
 .dark .detail-actions .detail-secondary-action[aria-expanded="true"] {
