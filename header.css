@@ -129,7 +129,11 @@ dialog {
 }
 .dark .image-wrap img.fallback-image { filter: invert(1); }
 body:not(.dark) .detail-image img.fallback-image { opacity: 1; }
-.dark .detail-image img.fallback-image { filter: none; opacity: 0.43; }
+.dark .detail-image img.fallback-image { filter: none; opacity: 1; }
+.detail-image img.fallback-image {
+  padding: 4% 20%;
+  top: -2%;
+}
 .image-wrap.fallback-placeholder .placeholder {
   position: absolute;
   inset: 0;
