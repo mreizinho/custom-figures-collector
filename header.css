@@ -235,6 +235,7 @@ body.dark[data-placeholder-style="outline"] .image-wrap.fallback-placeholder .pl
 #detail.image-zoomed .detail-image img { cursor: zoom-out; }
 
 @media (max-width: 600px) {
+  #detail:not(.image-zoomed) .detail-image { touch-action: pan-y; }
   #detail,
   #detail.image-zoomed {
     inset: 0;
