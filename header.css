@@ -136,9 +136,7 @@ dialog {
   display: block;
   overflow: hidden;
   color: transparent;
-  /* Edge Mobile diagnostic: temporarily disable the no-photo SVG.
-     background: url('lego-figure.svg?v=2') center calc(50% - 12px) / 56% 76% no-repeat;
-  */
+  background: url('lego-figure.svg?v=3') center calc(50% - 12px) / 56% 76% no-repeat;
   opacity: 0.62;
 }
 .dark .image-wrap.fallback-placeholder .placeholder { opacity: 0.78; }
