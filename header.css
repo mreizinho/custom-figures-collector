@@ -218,7 +218,7 @@ body.dark[data-placeholder-style="outline"] .image-wrap.fallback-placeholder .pl
   #detail.image-zoomed .detail-id,
   #detail.image-zoomed .detail-info-overlay { display:none; }
   #detail.image-zoomed .detail-photo-stage,
-  #detail.image-zoomed .detail-image > img:not(.fallback-image) {
+  #detail.image-zoomed .detail-image > img {
     position:absolute;
     inset:auto;
     top:50%;
