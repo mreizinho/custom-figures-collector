@@ -219,6 +219,11 @@ brandSuggestionsToggle.onclick=event=>{event.stopPropagation();brandSuggestions.
 brandInput.ondblclick=event=>{if(!window.matchMedia('(min-width: 601px)').matches)return;event.preventDefault();openBrandSuggestions()};
 $('#brandSuggestionsClose').onclick=()=>closeBrandSuggestions({refocus:true});
 brandSuggestionChoices.onclick=event=>{const option=event.target.closest('[data-brand-suggestion]');if(!option)return;brandInput.value=option.dataset.brandSuggestion;closeBrandSuggestions({refocus:true})};
+addFigureDialog.addEventListener('focusin',event=>{
+  if(!window.matchMedia('(max-width: 600px)').matches||brandSuggestions.hidden)return;
+  if(event.target===brandInput||event.target===brandSuggestionsToggle||brandSuggestions.contains(event.target))return;
+  closeBrandSuggestions();
+});
 addFigureButton.onclick=openAddFigure;$('#closeAddFigure').onclick=closeAddFigure;$('#cancelAddFigure').onclick=closeAddFigure;
 addFigureDialog.addEventListener('click',event=>{if(event.target===addFigureDialog)closeAddFigure()});
 const updateAddFigurePosition=entries=>{const searchIsVisible=entries[0]?.isIntersecting,floating=!searchIsVisible;addFigureButton.classList.toggle('is-floating',floating);quickSearch.classList.toggle('is-visible',floating);if(!floating)setQuickSearchOpen(false)};
