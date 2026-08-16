@@ -116,8 +116,59 @@ dialog {
   font-weight: 700;
   line-height: 1.35;
 }
-.detail-id { position: absolute; right: 18px; bottom: 18px; z-index: 2; color: var(--muted); font-family: Outfit, Arial, sans-serif; font-size: 12px; opacity: .45; }
+.detail-id { position: absolute; right: 18px; bottom: 18px; z-index: 2; color: var(--muted); font-family: Outfit, Arial, sans-serif; font-size: 12px; text-align: right; white-space: nowrap; opacity: .45; }
 .detail-image img { object-fit: contain; }
+.detail-figure-navigation { display: none; }
+@media (min-width: 601px) and (hover: hover) {
+  .detail-figure-navigation {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    display: grid;
+    width: 23px;
+    height: 32px;
+    border: 0;
+    border-radius: 0;
+    place-items: center;
+    padding: 0;
+    color: var(--muted);
+    background: transparent;
+    box-shadow: none;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+    opacity: .45;
+    pointer-events: auto;
+    transform: translateY(-50%);
+    transition: transform .14s ease, filter .14s ease;
+  }
+  .detail-figure-navigation-previous { right: auto; left: 5px; }
+  .detail-figure-navigation-next { right: 22px; left: auto; }
+  .detail-figure-navigation:disabled { opacity: 0; pointer-events: none; }
+  .detail-figure-navigation > svg {
+    display: block;
+    width: 40px;
+    height: 60px;
+    overflow: visible;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: .8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    transition: stroke-width .14s ease;
+  }
+  .detail-figure-navigation:hover,
+  .detail-figure-navigation:focus-visible {
+    transform: translateY(-50%) scale(1.06);
+    filter: brightness(1.08);
+  }
+  .detail-figure-navigation:hover > svg,
+  .detail-figure-navigation:focus-visible > svg { stroke-width: 2.4; }
+  .detail-figure-navigation:active { transform: translateY(-50%) scale(.94); filter: brightness(.94); }
+  #detail.image-zoomed .detail-figure-navigation { display: none; }
+}
 .detail-tags:empty { display: none; }
 .image-wrap img.fallback-image,
 .detail-image img.fallback-image {
