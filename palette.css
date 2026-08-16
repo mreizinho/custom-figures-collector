@@ -994,7 +994,7 @@ html { scrollbar-gutter: stable; }
   .toolbar { display:grid; grid-template-columns:minmax(0,1fr) 48px; width:100%; }
   .toolbar .search { display:flex; width:100%; min-width:0; }
   .add-figure { position:static; width:48px; height:48px; margin:0; border-radius:0; box-shadow:none; }
-  .add-figure.is-floating { top:auto; right:max(8px,env(safe-area-inset-right)); bottom:max(20px,env(safe-area-inset-bottom)); width:51px; height:51px; }
+  .add-figure.is-floating { top:auto; right:max(8px,env(safe-area-inset-right)); bottom:max(20px,env(safe-area-inset-bottom)); width:49px; height:49px; }
   .quick-search.is-visible { top:auto; right:max(8px,env(safe-area-inset-right)); bottom:max(81px,calc(env(safe-area-inset-bottom) + 61px)); }
   .quick-search.is-visible { border:0; outline:1px solid var(--line); outline-offset:-1px; }
   .quick-search input { height:51px; }
