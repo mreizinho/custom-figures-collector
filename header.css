@@ -128,7 +128,8 @@ dialog {
   opacity: 0.15;
 }
 .dark .image-wrap img.fallback-image { filter: invert(1); }
-.dark .detail-image img.fallback-image { filter: invert(1); }
+body:not(.dark) .detail-image img.fallback-image { opacity: 1; }
+.dark .detail-image img.fallback-image { filter: none; opacity: 0.43; }
 .image-wrap.fallback-placeholder .placeholder {
   position: absolute;
   inset: 0;
@@ -136,10 +137,15 @@ dialog {
   display: block;
   overflow: hidden;
   color: transparent;
-  background: url('lego-figure.svg?v=9') center calc(50% - 12px) / 56% 76% no-repeat;
-  opacity: 0.62;
+  background: url('lego-figure.svg?v=11') center center / 60% 91% no-repeat;
+  opacity: 1;
+  transition: none !important;
+  animation: none !important;
 }
-.dark .image-wrap.fallback-placeholder .placeholder { opacity: 0.78; }
+.dark .image-wrap.fallback-placeholder .placeholder {
+  background-image: url('lego-figure-dark.svg?v=3');
+  opacity: 1;
+}
 .catalogue.list .image-wrap img.fallback-image { top: -4px; }
 
 @media (min-width: 851px) {
