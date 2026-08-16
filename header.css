@@ -137,14 +137,20 @@ body:not(.dark) .detail-image img.fallback-image { opacity: 1; }
   display: block;
   overflow: hidden;
   color: transparent;
-  background: url('lego-figure.svg?v=11') center center / 60% 91% no-repeat;
+  background: url('lego-figure.svg?v=15') center 48.5% / 63.5% 96.5% no-repeat;
   opacity: 1;
   transition: none !important;
   animation: none !important;
 }
 .dark .image-wrap.fallback-placeholder .placeholder {
-  background-image: url('lego-figure-dark.svg?v=3');
+  background-image: url('lego-figure-dark.svg?v=7');
   opacity: 1;
+}
+body[data-placeholder-style="outline"] .image-wrap.fallback-placeholder .placeholder {
+  background-image: url('lego-figure-outline.svg?v=4');
+}
+body.dark[data-placeholder-style="outline"] .image-wrap.fallback-placeholder .placeholder {
+  background-image: url('lego-figure-outline-dark.svg?v=4');
 }
 .catalogue.list .image-wrap img.fallback-image { top: -4px; }
 

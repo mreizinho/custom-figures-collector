@@ -894,16 +894,17 @@ body.dark { color-scheme: dark; }
   .filter-tags { order: 4; }
 }
 
-.display-currency-setting,.display-photo-animation-setting { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 18px; align-items:center; }
+.display-currency-setting,.display-placeholder-setting,.display-photo-animation-setting { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 18px; align-items:center; }
 .display-photo-animation-setting { column-gap:24px; }
 .display-photo-animation-setting > p { text-align:justify; text-align-last:left; }
-.display-currency-setting h3,.display-currency-setting p,.display-photo-animation-setting h3,.display-photo-animation-setting p { grid-column:1; }
-.display-currency-setting p,.display-photo-animation-setting p { margin:0; }
-.settings-currency-choices,.photo-animation-controls { grid-column:2; grid-row:1 / span 2; display:grid; width:240px; }
+.display-currency-setting h3,.display-currency-setting p,.display-placeholder-setting h3,.display-placeholder-setting p,.display-photo-animation-setting h3,.display-photo-animation-setting p { grid-column:1; }
+.display-currency-setting p,.display-placeholder-setting p,.display-photo-animation-setting p { margin:0; }
+.settings-currency-choices,.settings-placeholder-choices,.photo-animation-controls { grid-column:2; grid-row:1 / span 2; display:grid; width:240px; }
 .settings-currency-choices { grid-template-columns:repeat(3,minmax(0,1fr)); }
-.settings-copy .settings-currency-choices button { min-width:0; border-color:var(--line); background:var(--paper); padding-inline:10px; }
-.settings-copy .settings-currency-choices button + button { border-left:0; }
-.settings-copy .settings-currency-choices button.selected { border-color:var(--accent); background:var(--accent); color:#fff; }
+.settings-placeholder-choices { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.settings-copy .settings-currency-choices button,.settings-copy .settings-placeholder-choices button { min-width:0; border-color:var(--line); background:var(--paper); padding-inline:10px; }
+.settings-copy .settings-currency-choices button + button,.settings-copy .settings-placeholder-choices button + button { border-left:0; }
+.settings-copy .settings-currency-choices button.selected,.settings-copy .settings-placeholder-choices button.selected { border-color:var(--accent); background:var(--accent); color:#fff; }
 .photo-animation-controls { display:flex; align-items:center; justify-content:flex-end; gap:8px; width:176px; }
 .settings-copy .settings-switch { position:relative; display:block; flex:0 0 auto; margin:0; cursor:pointer; }
 .photo-animation-controls .settings-switch::before { content:'Enabled'; position:absolute; left:0; bottom:calc(100% + 7px); color:var(--ink); font-size:14px; font-weight:600; line-height:1; }
@@ -964,9 +965,9 @@ html { scrollbar-gutter: stable; }
   .settings-copy .settings-tabs [data-settings-tab="display"] { display:flex!important; }
   .desktop-columns-setting { display:none; }
   .settings-tab-panel > .display-currency-setting { border-top:0; }
-  .display-currency-setting,.display-photo-animation-setting { grid-template-columns:1fr; }
-  .display-currency-setting h3,.display-currency-setting p,.settings-currency-choices,.display-photo-animation-setting h3,.display-photo-animation-setting p,.photo-animation-controls { grid-column:1; grid-row:auto; }
-  .settings-currency-choices,.photo-animation-controls { width:100%; margin-top:10px; }
+  .display-currency-setting,.display-placeholder-setting,.display-photo-animation-setting { grid-template-columns:1fr; }
+  .display-currency-setting h3,.display-currency-setting p,.settings-currency-choices,.display-placeholder-setting h3,.display-placeholder-setting p,.settings-placeholder-choices,.display-photo-animation-setting h3,.display-photo-animation-setting p,.photo-animation-controls { grid-column:1; grid-row:auto; }
+  .settings-currency-choices,.settings-placeholder-choices,.photo-animation-controls { width:100%; margin-top:10px; }
   .photo-animation-controls { align-items:flex-end; justify-content:space-between; margin-top:16px; }
   .settings-copy .settings-photo-duration { padding-top:22px; }
   .settings-photo-duration > strong { top:0; bottom:auto; }
