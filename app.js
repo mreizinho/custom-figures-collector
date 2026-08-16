@@ -424,6 +424,9 @@ openDetail=figure=>{
   if(!pane)return result;
   const visibleFigures=filtered(),currentIndex=visibleFigures.findIndex(item=>item.id===figure.id);
   if(currentIndex<0)return result;
+  let detailNavigationInProgress=false;
+  const revealNavigatedPhoto=()=>{const incoming=$('#detail .detail-image');if(!incoming||$('#detail').classList.contains('image-zoomed'))return;incoming.classList.add('detail-navigation-entering');requestAnimationFrame(()=>requestAnimationFrame(()=>incoming.classList.add('detail-navigation-entered')));setTimeout(()=>incoming.classList.remove('detail-navigation-entering','detail-navigation-entered'),260)};
+  const animateDesktopDetailNavigation=(target,direction)=>{if(!target||detailNavigationInProgress||window.matchMedia('(max-width: 600px)').matches)return false;detailNavigationInProgress=true;pane.classList.add('detail-navigation-leaving');pane.style.setProperty('--detail-navigation-x',`${direction==='next'?-72:72}%`);pane.style.setProperty('--detail-navigation-opacity','0');setTimeout(()=>{openDetail(target);revealNavigatedPhoto()},190);return true};
   const addNavigationButton=(direction,targetIndex)=>{
     const target=visibleFigures[targetIndex],button=document.createElement('button');
     button.type='button';
@@ -433,29 +436,47 @@ openDetail=figure=>{
     button.title=target?`${direction==='previous'?'Previous':'Next'}: ${target.name}`:'';
     const points=direction==='previous'?'15 4 7 12 15 20':'9 4 17 12 9 20';
     button.innerHTML=`<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="${points}"/></svg>`;
-    button.onclick=event=>{event.preventDefault();event.stopPropagation();if(target)openDetail(target)};
+    button.onclick=event=>{event.preventDefault();event.stopPropagation();if(target&&!animateDesktopDetailNavigation(target,direction))openDetail(target)};
     pane.append(button);
   };
   addNavigationButton('previous',currentIndex-1);
   addNavigationButton('next',currentIndex+1);
   if(window.matchMedia('(max-width: 600px)').matches){
-    const pointers=new Map();let gestureStart=null,usedMultiplePointers=false;
+    const pointers=new Map();let gestureStart=null,usedMultiplePointers=false,swipeDirectionLocked=false;
+    const setSwipePosition=(x,opacity=1)=>{pane.style.setProperty('--detail-swipe-x',`${x}px`);pane.style.setProperty('--detail-swipe-opacity',String(opacity))};
+    const resetSwipePosition=()=>{pane.classList.remove('mobile-swipe-tracking','mobile-swipe-leaving');pane.style.removeProperty('--detail-swipe-x');pane.style.removeProperty('--detail-swipe-opacity')};
+    const showIncomingPhoto=()=>{const incoming=$('#detail .detail-image');if(!incoming||$('#detail').classList.contains('image-zoomed'))return;incoming.classList.add('mobile-swipe-entering');requestAnimationFrame(()=>requestAnimationFrame(()=>incoming.classList.add('mobile-swipe-entered')));setTimeout(()=>incoming.classList.remove('mobile-swipe-entering','mobile-swipe-entered'),260)};
     pane.addEventListener('pointerdown',event=>{
       if(event.pointerType==='mouse'||!event.target.closest('img')||$('#detail').classList.contains('image-zoomed'))return;
       pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
-      if(pointers.size===1){gestureStart={x:event.clientX,y:event.clientY,time:performance.now()};usedMultiplePointers=false}
+      if(pointers.size===1){gestureStart={x:event.clientX,y:event.clientY,time:performance.now()};usedMultiplePointers=false;swipeDirectionLocked=false}
       else usedMultiplePointers=true;
+    });
+    pane.addEventListener('pointermove',event=>{
+      if(!pointers.has(event.pointerId)||usedMultiplePointers||!gestureStart||$('#detail').classList.contains('image-zoomed'))return;
+      pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
+      const dx=event.clientX-gestureStart.x,dy=event.clientY-gestureStart.y;
+      if(!swipeDirectionLocked&&Math.abs(dx)>8)swipeDirectionLocked=Math.abs(dx)>Math.abs(dy)*1.15;
+      if(!swipeDirectionLocked)return;
+      const target=visibleFigures[currentIndex+(dx<0?1:-1)],resistedDx=target?dx:dx*.18;
+      pane.classList.add('mobile-swipe-tracking');
+      setSwipePosition(resistedDx,1-Math.min(.68,Math.abs(resistedDx)/Math.max(1,pane.clientWidth)*.78));
+      event.preventDefault();
     });
     pane.addEventListener('pointerup',event=>{
       const tracked=pointers.has(event.pointerId);pointers.delete(event.pointerId);
-      if(!tracked||pointers.size||usedMultiplePointers||!gestureStart||$('#detail').classList.contains('image-zoomed'))return;
+      if(!tracked||pointers.size||usedMultiplePointers||!gestureStart||$('#detail').classList.contains('image-zoomed')){resetSwipePosition();return}
       const dx=event.clientX-gestureStart.x,dy=event.clientY-gestureStart.y,elapsed=performance.now()-gestureStart.time,threshold=Math.max(56,pane.clientWidth*.12);
-      if(elapsed>700||Math.abs(dx)<threshold||Math.abs(dx)<=Math.abs(dy)*1.35)return;
-      const target=visibleFigures[currentIndex+(dx<0?1:-1)];if(!target)return;
+      if(swipeDirectionLocked)pane.dataset.suppressZoomClickUntil=String(Date.now()+600);
+      if(elapsed>700||Math.abs(dx)<threshold||Math.abs(dx)<=Math.abs(dy)*1.35){pane.classList.add('mobile-swipe-leaving');setSwipePosition(0,1);setTimeout(resetSwipePosition,190);return}
+      const target=visibleFigures[currentIndex+(dx<0?1:-1)];if(!target){pane.classList.add('mobile-swipe-leaving');setSwipePosition(0,1);setTimeout(resetSwipePosition,190);return}
       pane.dataset.suppressZoomClickUntil=String(Date.now()+600);
-      event.preventDefault();event.stopPropagation();openDetail(target);
+      event.preventDefault();event.stopPropagation();
+      pane.classList.remove('mobile-swipe-tracking');pane.classList.add('mobile-swipe-leaving');
+      setSwipePosition((dx<0?-1:1)*pane.clientWidth*.72,0);
+      setTimeout(()=>{openDetail(target);showIncomingPhoto()},190);
     });
-    pane.addEventListener('pointercancel',event=>pointers.delete(event.pointerId));
+    pane.addEventListener('pointercancel',event=>{pointers.delete(event.pointerId);pane.classList.add('mobile-swipe-leaving');setSwipePosition(0,1);setTimeout(resetSwipePosition,190)});
   }
   return result;
 };
