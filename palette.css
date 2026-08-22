@@ -238,10 +238,12 @@ body .actions .wish.selected .material-symbols-rounded { color:inherit; }
 .currency-toggle button { border: 0; background: transparent; color: var(--muted); padding: 4px 8px; font-family: 'DM Mono', monospace; font-size: 13px; line-height: 1; }
 .currency-toggle button + button { border-left: 1px solid var(--line); }
 .currency-toggle button.active { background: var(--ink); color: var(--paper); }
-.detail-actions button { display: inline-flex; align-items: center; justify-content: flex-start; width: 100%; min-width: 0; gap: 7px; text-align: left; }
+.detail-actions button { display: inline-flex; align-items: center; justify-content: flex-start; width: 100%; min-width: 0; height:46px; gap: 7px; text-align: left; }
 .detail-actions .material-symbols-rounded { flex: 0 0 auto; font-size: 18px; }
 .detail-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: center; width: 100%; }
 .detail-actions #detailWish { background: var(--accent); }
+.detail-actions #detailWish[aria-pressed="false"] { border:1px solid var(--line); background:#fff; color:var(--ink); }
+.detail-actions #detailOwn[aria-pressed="false"] { border:1px solid var(--line); background:#fff; color:var(--ink); }
 .detail-actions .detail-secondary-action { border: 1px solid var(--line); background: #fff !important; color: var(--ink); }
 .detail-actions .detail-secondary-action[aria-expanded="true"] { border-color: var(--ink); background: var(--ink) !important; color: var(--paper); }
 .detail-info-overlay {
@@ -786,6 +788,9 @@ input::placeholder { color: var(--muted); opacity: 1; }
 body.dark { color-scheme: dark; }
 .dark .actions .selected { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .dark .detail-actions button { color: var(--paper); }
+.dark .detail-actions #detailWish[aria-pressed="true"] { color:#fff; }
+.dark .detail-actions #detailWish[aria-pressed="false"] { border-color:var(--line); background:var(--bg); color:var(--ink); }
+.dark .detail-actions #detailOwn[aria-pressed="false"] { border-color:var(--line); background:var(--bg); color:var(--ink); }
 .dark .detail-actions .detail-secondary-action { background: var(--bg) !important; color: var(--ink); }
 .dark .detail-actions .detail-secondary-action[aria-expanded="true"] {
   border-color: var(--ink);

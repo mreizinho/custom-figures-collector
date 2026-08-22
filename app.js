@@ -423,6 +423,7 @@ uploadFigurePhotoTarget=(file,figure,target='primary')=>target==='alternate'?upl
 const openDetailBeforeCatalogueNavigation=openDetail;
 openDetail=figure=>{
   const result=openDetailBeforeCatalogueNavigation(figure),pane=$('#detail .detail-image');
+  const detailOwnButton=$('#detailOwn'),detailWishButton=$('#detailWish');if(detailOwnButton)detailOwnButton.setAttribute('aria-pressed',String(isOwned(figure)));if(detailWishButton)detailWishButton.setAttribute('aria-pressed',String(isWished(figure)));
   if(!pane)return result;
   const visibleFigures=filtered(),currentIndex=visibleFigures.findIndex(item=>item.id===figure.id);
   if(currentIndex<0)return result;
