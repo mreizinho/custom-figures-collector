@@ -81,11 +81,21 @@ body.dark {
 .topbar .brand { position: relative; display: inline-flex; align-items: center; min-width: 0; gap: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(20px, 2.6vw, 26px); line-height: 34px; letter-spacing: .65px; text-transform: uppercase; white-space: nowrap; }
 .card .brand { font-family: Outfit, Arial, sans-serif; font-size: 14px; font-weight: 400; letter-spacing: normal; }
 .brand-icon { display: grid; flex: 0 0 28px; width: 28px; height: 28px; margin-right: 0; }
+.brand-icon::before,
+.brand-icon::after { content: ''; grid-area: 1 / 1; width: 28px; height: 28px; background: center / contain no-repeat; }
+.brand-icon::before { background-image: url('lego-head.svg?v=4#outline'); }
+.brand-icon::after { background-image: url('lego-head.svg?v=4#outline-face'); visibility: hidden; }
+.dark .brand-icon::before { background-image: url('lego-head.svg?v=4#filled'); }
+.dark .brand-icon::after { background-image: url('lego-head.svg?v=4#filled-face'); }
 .brand-icon[role="button"] { cursor: pointer; border-radius: 6px; transition: transform .16s ease, opacity .16s ease; }
-@media (hover:hover) { .brand-icon[role="button"]:hover { transform: translateY(-1px) scale(1.06); } }
+@media (hover:hover) {
+  .brand-icon[role="button"]:hover { transform: translateY(-1px) scale(1.06); }
+  .brand-icon[role="button"]:hover::before { visibility: hidden; }
+  .brand-icon[role="button"]:hover::after { visibility: visible; }
+}
 .brand-icon[role="button"]:active { opacity: .72; transform: scale(.94); }
 .brand-icon[role="button"]:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 3px; }
-.brand-icon img { grid-area: 1 / 1; display: block; width: 28px; height: 28px; object-fit: contain; }
+.brand-icon img { grid-area: 1 / 1; display: block; width: 28px; height: 28px; object-fit: contain; visibility: hidden !important; }
 .brand-icon-filled { visibility: hidden; }
 .dark .brand-icon-outline { visibility: hidden; }
 .dark .brand-icon-filled { visibility: visible; }
