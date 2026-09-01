@@ -83,10 +83,10 @@ body.dark {
 .brand-icon { display: grid; flex: 0 0 28px; width: 28px; height: 28px; margin-right: 0; }
 .brand-icon::before,
 .brand-icon::after { content: ''; grid-area: 1 / 1; width: 28px; height: 28px; background: center / contain no-repeat; }
-.brand-icon::before { background-image: url('lego-head.svg?v=5#outline'); }
-.brand-icon::after { background-image: url('lego-head.svg?v=5#outline-face'); visibility: hidden; }
-.dark .brand-icon::before { background-image: url('lego-head.svg?v=5#filled'); }
-.dark .brand-icon::after { background-image: url('lego-head.svg?v=5#filled-face'); }
+.brand-icon::before { background-image: url('lego-head.svg?v=7#outline'); }
+.brand-icon::after { background-image: url('lego-head.svg?v=7#outline-face'); visibility: hidden; }
+.dark .brand-icon::before { background-image: url('lego-head.svg?v=7#filled'); }
+.dark .brand-icon::after { background-image: url('lego-head.svg?v=7#filled-face'); }
 .brand-icon[role="button"] { cursor: pointer; border-radius: 6px; transition: transform .16s ease, opacity .16s ease; }
 @media (hover:hover) {
   .brand-icon[role="button"]:hover { transform: translateY(-1px) scale(1.06); }
