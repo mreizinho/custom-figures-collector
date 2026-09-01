@@ -103,7 +103,7 @@ doc = BaseDocTemplate(
     leftMargin=20 * mm, rightMargin=20 * mm,
     topMargin=19 * mm, bottomMargin=21 * mm,
     title="Toy Miniature Catalogue - Revised Project Instructions",
-    author="Custom Figures Collector",
+    author="Custom Minifig Collector",
 )
 frame = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="main")
 doc.addPageTemplates(PageTemplate(id="standard", frames=[frame], onPage=footer))

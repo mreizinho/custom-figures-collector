@@ -1,4 +1,4 @@
-# Custom Figures Collector
+# Custom Minifig Collector
 
 A responsive collectors guide for custom LEGO figures. The catalogue reads its data from a public Google Sheet and keeps owned and wishlist changes locally in the browser.
 
