@@ -103,7 +103,7 @@ doc = BaseDocTemplate(
     leftMargin=20 * mm, rightMargin=20 * mm,
     topMargin=19 * mm, bottomMargin=21 * mm,
     title="Toy Miniature Catalogue - Revised Project Instructions",
-    author="Custom Minifig Collector",
+    author="Custom Minifigs Collector",
 )
 frame = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="main")
 doc.addPageTemplates(PageTemplate(id="standard", frames=[frame], onPage=footer))
@@ -153,8 +153,8 @@ story += section("Primary objective", "Create a clean, consistent catalogue phot
 story += section("Identity preservation - highest priority")
 story += bullets([
     "Preserve the exact head sculpt, facial printing, torso printing, leg printing, arm printing, molded parts, accessories, helmets, hair, cloth elements, weapons, backpacks, colors, proportions, surface finish, wear, and visible manufacturing details.",
-    "Preserve authentic asymmetry. Do not mirror a distinctive arm, hand, print, accessory, damage mark, or color difference merely to make the figure look symmetrical.",
-    "Do not improve the design, substitute parts, replace missing details from external references, or recreate the figure from memory.",
+    "Preserve authentic asymmetry. Do not mirror a distinctive arm, hand, print, accessory, damage mark, or color difference merely to make the minifig look symmetrical.",
+    "Do not improve the design, substitute parts, replace missing details from external references, or recreate the minifig from memory.",
     "When information is uncertain, preserve ambiguity rather than inventing details.",
 ])
 
@@ -170,19 +170,19 @@ story += [p("2. Isolation and orientation", "H1x")]
 story += section("Object isolation", "Remove everything except the featured miniature and its intended accessories.")
 story += bullets([
     "Remove the entire original background and table or display surface.",
-    "Remove neighboring toys, partial figures, hands, stands, supports, labels, and unrelated objects, including objects cut off by the frame edge.",
+    "Remove neighboring toys, partial minifigs, hands, stands, supports, labels, and unrelated objects, including objects cut off by the frame edge.",
     "Keep every intended accessory attached to or clearly associated with the featured miniature.",
     "Do not crop weapons, staffs, shields, helmets, wings, capes, tails, backpacks, or effect pieces.",
 ])
 
 story += section("Orientation")
 story += [p(
-    "If the figure already faces forward, maintain its orientation. If the figure is moderately "
+    "If the minifig already faces forward, maintain its orientation. If the minifig is moderately "
     "rotated, normalize it to a front-facing catalogue view. Limited reconstruction of partially "
     "hidden geometry is permitted only when it can be reliably inferred from visible parts of the "
     "same uploaded photograph. Preserve all visible printing, colors, accessories, asymmetry, "
     "materials, wear, and manufacturing details. Never introduce details sourced from another "
-    "figure or external reference. If a hidden area cannot be inferred reliably, preserve the "
+    "minifig or external reference. If a hidden area cannot be inferred reliably, preserve the "
     "closest authentic orientation instead.", "Callout")]
 story += bullets([
     "Correct only the perspective needed to make the object upright and naturally front-facing.",
