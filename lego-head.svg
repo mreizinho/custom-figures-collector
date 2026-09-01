@@ -25,9 +25,14 @@
       <circle cx="62.256" cy="48.038" r="4.153"/>
       <path d="M36.82 62.893c-.673.675-.67 1.769.005 2.439 3.646 3.633 8.436 5.449 13.226 5.449s9.581-1.816 13.223-5.449c.676-.671.68-1.765.008-2.439-.674-.675-1.766-.676-2.441-.005-5.949 5.928-15.629 5.928-21.581 0-.676-.671-1.767-.67-2.44.005z"/>
     </g>
+    <g id="favicon-art" fill="none" stroke="#000" stroke-width="8.5" stroke-linejoin="round">
+      <rect x="31" y="5" width="38" height="15" rx="3"/>
+      <rect x="10" y="20" width="80" height="67" rx="14"/>
+      <rect x="25" y="87" width="50" height="8" rx="1"/>
+    </g>
   </defs>
   <g id="outline" class="variant"><use href="#outline-art" fill="#242624" stroke="#242624" stroke-width="1.65"/></g>
-  <g id="favicon-outline" class="variant"><use href="#outline-art" fill="#000" stroke="#000" stroke-width="3"/></g>
+  <g id="favicon-outline" class="variant"><use href="#favicon-art"/></g>
   <g id="filled" class="variant"><use href="#filled-art"/></g>
   <g id="outline-face" class="variant"><use href="#outline-art" fill="#242624" stroke="#242624" stroke-width="1.65"/><use href="#face-art"/></g>
   <g id="filled-face" class="variant"><use href="#filled-art"/><use href="#face-art"/></g>
