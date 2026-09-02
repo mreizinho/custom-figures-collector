@@ -36,7 +36,7 @@ provider.addScope('https://www.googleapis.com/auth/drive.file');
 provider.addScope('https://www.googleapis.com/auth/drive.readonly');
 const GUEST_SPREADSHEET_ID = '1rDpFScTbHWIG3TEUatUNFVX7E68CoOmcgoDRQmrlwZE';
 const GUEST_SPREADSHEET_URL = `https://docs.google.com/spreadsheets/d/${GUEST_SPREADSHEET_ID}/`;
-const GUEST_COLLECTIONS = ['Star Wars', 'Misc'];
+const GUEST_COLLECTIONS = ['Star Wars'];
 const ignoredKeys = new Set(['minifig-exchange-rates', 'minifig-google-client-id', 'minifig-firebase-user-id']);
 const locallyProtectedKeys = new Set(['minifig-custom-tags', 'minifig-custom-tag-vocabulary']);
 const isCloudSettingKey = key => String(key).startsWith('minifig-') && !String(key).startsWith('minifig-theme') && !ignoredKeys.has(String(key));
