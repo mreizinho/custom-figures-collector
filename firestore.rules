@@ -60,8 +60,7 @@ service cloud.firestore {
 
     match /users/{userId}/releaseEvents/{eventId} {
       allow read, delete: if signedIn()
-        && request.auth.uid == userId
-        && resource.data.ownerUid == request.auth.uid;
+        && request.auth.uid == userId;
       allow create, update: if signedIn()
         && request.auth.uid == userId
         && request.resource.data.ownerUid == request.auth.uid;
