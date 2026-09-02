@@ -13,3 +13,13 @@ The connected sheet supports minifig name, character, brand, estimated value, or
 ## Notes
 
 Owned and wishlist changes are saved in the browser's local storage; they do not write back to the Google Sheet.
+
+## Hosting
+
+The current production deployment can remain on Vercel. A provider-neutral static build is available for a future Cloudflare Pages migration:
+
+```text
+node scripts/build-static.mjs
+```
+
+Use `dist` as the hosting output directory. See [CLOUDFLARE_MIGRATION.md](CLOUDFLARE_MIGRATION.md) for the staged migration, authentication, DNS, and rollback checklist.

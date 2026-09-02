@@ -1,0 +1,60 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email_verified == true
+        && request.auth.token.email == 'mreizinho@gmail.com';
+    }
+
+    function hasPremiumAccess(userId) {
+      return isAdmin()
+        || (exists(/databases/$(database)/documents/premiumEntitlements/$(userId))
+          && get(/databases/$(database)/documents/premiumEntitlements/$(userId)).data.status == 'active'
+          && get(/databases/$(database)/documents/premiumEntitlements/$(userId)).data.licenseType == 'lifetime');
+    }
+
+    match /premiumProfiles/{userId} {
+      allow create: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.keys().hasOnly(['uid', 'email', 'displayName', 'lastSeenAt']);
+      allow update: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['email', 'displayName', 'lastSeenAt']);
+      allow get: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow list: if isAdmin();
+      allow delete: if false;
+    }
+
+    match /premiumEntitlements/{userId} {
+      allow get: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow list, create, update: if isAdmin();
+      allow delete: if false;
+    }
+
+    match /premiumAuditLog/{entryId} {
+      allow read, create: if isAdmin();
+      allow update, delete: if false;
+    }
+
+    match /users/{userId} {
+      allow read, create, update: if signedIn()
+        && request.auth.uid == userId
+        && hasPremiumAccess(userId);
+      allow delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

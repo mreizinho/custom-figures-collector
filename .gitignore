@@ -6,3 +6,4 @@ output/image-api-tests/
 output/stability-background-tests/
 __pycache__/
 *.pyc
+dist/

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Premium Backoffice · Custom Minifigs Collector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css?v=20260902-2">
+</head>
+<body>
+  <header><a href="../" aria-label="Back to Custom Minifigs Collector">Custom Minifigs <span>Collector</span></a><div><strong>Premium backoffice</strong><button id="authButton" type="button">Sign in</button></div></header>
+  <main>
+    <section id="accessPanel" class="access-panel"><h1>Premium administration</h1><p>Sign in with the authorized administrator account.</p><p id="authStatus" role="status" aria-live="polite"></p></section>
+    <div id="adminWorkspace" hidden>
+      <section class="summary"><article><span>Premium users</span><strong id="premiumCount">0</strong></article><article><span>Active</span><strong id="activeCount">0</strong></article><article><span>Suspended or revoked</span><strong id="inactiveCount">0</strong></article></section>
+      <section class="editor">
+        <div><h2>Maintain premium access</h2><p>Customers must sign in once before their email can be granted access.</p></div>
+        <form id="premiumForm">
+          <label>Email<input id="premiumEmail" type="email" required autocomplete="off" placeholder="customer@example.com"></label>
+          <label>Status<select id="premiumStatus"><option value="active">Active</option><option value="suspended">Suspended</option><option value="revoked">Revoked</option></select></label>
+          <label class="notes">Administrative notes<textarea id="premiumNotes" rows="3" maxlength="1000"></textarea></label>
+          <button id="savePremium" type="submit">Save premium user</button>
+          <p id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+      <section class="directory"><div class="section-heading"><div><h2>Premium users</h2><p>Lifetime licenses and their current access state.</p></div><input id="userSearch" type="search" placeholder="Search email"></div><div class="table-wrap"><table><thead><tr><th>Email</th><th>Status</th><th>License</th><th>Updated</th><th></th></tr></thead><tbody id="premiumUsers"></tbody></table></div><p id="emptyUsers" hidden>No premium users found.</p></section>
+      <section class="audit"><div class="section-heading"><div><h2>Audit log</h2><p>The latest 100 administrative changes.</p></div><button id="refreshData" type="button">Refresh</button></div><div id="auditEntries" class="audit-entries"></div></section>
+    </div>
+  </main>
+  <script type="module" src="admin.js?v=20260902-2"></script>
+</body>
+</html>

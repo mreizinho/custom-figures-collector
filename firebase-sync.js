@@ -43,6 +43,7 @@ const isCloudSettingKey = key => String(key).startsWith('minifig-') && !String(k
 const nativeSetItem = Storage.prototype.setItem;
 const nativeRemoveItem = Storage.prototype.removeItem;
 let currentUser = null;
+let currentUserPremium = false;
 let remoteFingerprint = '';
 let saveTimer = 0;
 let applyingRemote = false;
@@ -56,10 +57,27 @@ let pendingCloudSettings = null;
 const REDIRECT_SIGN_IN_KEY = 'collector-google-redirect-pending';
 const useRedirectSignIn = false;
 
-function announceGoogleAuth(user, accessToken = '') {
-  window.collectorFirebaseUser = user?.uid || '';
+async function hasPremiumAccess(user) {
+  if (!user) return false;
+  const email = String(user.email || '').trim().toLowerCase();
+  await setDoc(doc(db, 'premiumProfiles', user.uid), {
+    uid: user.uid,
+    email,
+    displayName: user.displayName || '',
+    lastSeenAt: serverTimestamp()
+  }, { merge: true });
+  if (email === 'mreizinho@gmail.com' && user.emailVerified) return true;
+  const snapshot = await getDoc(doc(db, 'premiumEntitlements', user.uid));
+  const entitlement = snapshot.data() || {};
+  return snapshot.exists() && entitlement.status === 'active' && entitlement.licenseType === 'lifetime';
+}
+
+function announceGoogleAuth(user, accessToken = '', premium = currentUserPremium) {
+  window.collectorFirebaseAuthenticatedUser = user?.uid || '';
+  window.collectorFirebaseUser = user && premium ? user.uid : '';
+  window.collectorPremiumUser = Boolean(user && premium);
   window.dispatchEvent(new CustomEvent('collector-google-auth', {
-    detail: { uid: user?.uid || '', accessToken }
+    detail: { uid: user && premium ? user.uid : '', signedInUid: user?.uid || '', email: user?.email || '', premium: Boolean(user && premium), accessToken: premium ? accessToken : '' }
   }));
 }
 
@@ -132,8 +150,8 @@ function applySettings(settings) {
 
 async function saveNow(force = false) {
   const authenticatedUser = auth.currentUser || currentUser;
-  if (!authenticatedUser) {
-    if (force) throw new Error('Google sign-in is not active. Sign in again before uploading.');
+  if (!authenticatedUser || !currentUserPremium) {
+    if (force) throw new Error(authenticatedUser ? 'A premium license is required before uploading.' : 'Google sign-in is not active. Sign in again before uploading.');
     return;
   }
   if (applyingRemote || (cloudSyncPaused && !force)) return;
@@ -154,7 +172,7 @@ async function saveNow(force = false) {
 }
 
 function scheduleSave() {
-  if (!(auth.currentUser || currentUser) || applyingRemote) return;
+  if (!(auth.currentUser || currentUser) || !currentUserPremium || applyingRemote) return;
   clearTimeout(saveTimer);
   saveTimer = window.setTimeout(() => saveNow().catch(error => status(`Sync failed: ${error.message}`, true)), 700);
 }
@@ -169,13 +187,13 @@ Storage.prototype.removeItem = function patchedRemoveItem(key) {
   if (this === localStorage && isCloudSettingKey(key)) scheduleSave();
 };
 
-function renderAccount(user) {
+function renderAccount(user, premium = currentUserPremium) {
   const button = document.querySelector('#firebaseAuth');
   if (!button) return;
   button.innerHTML = `<span class="material-symbols-rounded">${user ? 'logout' : 'login'}</span>${user ? 'Sign out' : 'Sign in'}`;
   button.setAttribute('aria-pressed', String(Boolean(user)));
-  document.querySelectorAll('[data-firebase-required]').forEach(control => { control.disabled = !user; });
-  status(user ? `Signed in as ${user.email || 'Google user'}.` : 'Sign in to synchronize this collection across devices.');
+  document.querySelectorAll('[data-firebase-required]').forEach(control => { control.disabled = !user || !premium; });
+  status(user ? premium ? `Signed in as ${user.email || 'Google user'} · Premium.` : `Signed in as ${user.email || 'Google user'}. This account does not have a premium license.` : 'Sign in to synchronize this collection across devices.');
 }
 
 function chooseInitialSyncDirection(hasRemoteSettings) {
@@ -273,7 +291,7 @@ function installSettingsUi() {
         }
         const result = await signInWithPopup(auth, provider);
         pendingGoogleAccessToken = GoogleAuthProvider.credentialFromResult(result)?.accessToken || '';
-        announceGoogleAuth(result.user, pendingGoogleAccessToken);
+        announceGoogleAuth(result.user, '', false);
       }
     } catch (error) {
       promptOnNextUserConnection = false;
@@ -337,7 +355,7 @@ function installSettingsUi() {
     renderAccount(auth.currentUser);
   });
   renderAccount(auth.currentUser);
-  if (auth.currentUser) announceGoogleAuth(auth.currentUser);
+  if (auth.currentUser) announceGoogleAuth(auth.currentUser, '', false);
 }
 
 function settingsFromRemoteData(data = {}) {
@@ -408,6 +426,7 @@ async function connectUser(user) {
   const shouldOfferCloudDownload = Boolean(user && promptOnNextUserConnection);
   if (user) promptOnNextUserConnection = false;
   currentUser = user;
+  currentUserPremium = false;
   cloudSyncPaused = Boolean(user);
   renderAccount(user);
   if (!user) {
@@ -438,8 +457,33 @@ async function connectUser(user) {
     return;
   }
 
+  currentUserPremium = await hasPremiumAccess(user);
+  if (revision !== authStateRevision) return;
+  renderAccount(user, currentUserPremium);
+  if (!currentUserPremium) {
+    announceGoogleAuth(user, '', false);
+    pendingGoogleAccessToken = '';
+    nativeRemoveItem.call(localStorage, 'minifig-firebase-user-id');
+    sessionStorage.removeItem('collector-restored-spreadsheet-id');
+    sessionStorage.removeItem('collector-restored-spreadsheet-url');
+    const guestChanged = localStorage.getItem('minifig-spreadsheet-id') !== GUEST_SPREADSHEET_ID || localStorage.getItem('minifig-collections') !== JSON.stringify(GUEST_COLLECTIONS);
+    nativeSetItem.call(localStorage, 'minifig-spreadsheet-id', GUEST_SPREADSHEET_ID);
+    nativeSetItem.call(localStorage, 'minifig-spreadsheet-url', GUEST_SPREADSHEET_URL);
+    nativeSetItem.call(localStorage, 'minifig-collections', JSON.stringify(GUEST_COLLECTIONS));
+    nativeSetItem.call(localStorage, 'minifig-collection', GUEST_COLLECTIONS[0]);
+    status(`Signed in as ${user.email || 'Google user'}. A premium license is required for full access.`, true);
+    window.dispatchEvent(new CustomEvent('collector-premium-required', { detail: { uid: user.uid, email: user.email || '' } }));
+    if (guestChanged) location.reload();
+    return;
+  }
+
+  const reference = doc(db, 'users', user.uid);
+  const snapshot = await getDoc(reference);
+  if (revision !== authStateRevision) return;
+  const remoteData = snapshot.data() || {};
+
   nativeSetItem.call(localStorage, 'minifig-firebase-user-id', user.uid);
-  announceGoogleAuth(user, pendingGoogleAccessToken);
+  announceGoogleAuth(user, pendingGoogleAccessToken, true);
   pendingGoogleAccessToken = '';
   sessionStorage.removeItem('collector-restored-spreadsheet-id');
   sessionStorage.removeItem('collector-restored-spreadsheet-url');
@@ -449,10 +493,6 @@ async function connectUser(user) {
     return;
   }
 
-  const reference = doc(db, 'users', user.uid);
-  const snapshot = await getDoc(reference);
-  if (revision !== authStateRevision) return;
-  const remoteData = snapshot.data() || {};
   const remoteSettings = settingsFromRemoteData(remoteData);
   const remoteSpreadsheetId = remoteSettings?.['minifig-spreadsheet-id'] || '';
   if (!remoteSettings || !remoteSpreadsheetId || remoteSpreadsheetId === GUEST_SPREADSHEET_ID) {
@@ -492,7 +532,7 @@ setPersistence(auth, browserLocalPersistence)
       const result = await getRedirectResult(auth);
       if (result) {
         pendingGoogleAccessToken = GoogleAuthProvider.credentialFromResult(result)?.accessToken || '';
-        announceGoogleAuth(result.user, pendingGoogleAccessToken);
+        announceGoogleAuth(result.user, '', false);
       }
       sessionStorage.removeItem(REDIRECT_SIGN_IN_KEY);
     } catch (error) {
