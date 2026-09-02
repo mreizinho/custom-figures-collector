@@ -3,8 +3,8 @@ import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.16.0/f
 
 const services=await new Promise((resolve,reject)=>{let attempts=0;const check=()=>{if(window.collectorFirebaseServices)return resolve(window.collectorFirebaseServices);if(++attempts>100)return reject(Error('Calendar could not connect to Firebase.'));setTimeout(check,50)};check()});
 const {auth,db}=services,$=selector=>document.querySelector(selector);
-const reminderOptions=[['none','No reminder'],['0','At release time'],['10','10 minutes before'],['30','30 minutes before'],['60','1 hour before'],['120','2 hours before'],['360','6 hours before'],['1440','1 day before'],['10080','1 week before'],['custom','Custom…']];
-const reminderLabel=minutes=>{const value=Number(minutes);if(value===0)return'At release time';if(value%10080===0)return`${value/10080} ${value===10080?'week':'weeks'} before`;if(value%1440===0)return`${value/1440} ${value===1440?'day':'days'} before`;if(value%60===0)return`${value/60} ${value===60?'hour':'hours'} before`;return`${value} ${value===1?'minute':'minutes'} before`};
+const reminderOptions=[['none','No reminder'],['0','At release time'],['10','10 min before'],['30','30 min before'],['60','1 h before'],['120','2 h before'],['360','6 h before'],['1440','1 day before'],['10080','1 week before'],['custom','Custom…']];
+const reminderLabel=minutes=>{const value=Number(minutes);if(value===0)return'At release time';if(value%10080===0)return`${value/10080} ${value===10080?'week':'weeks'} before`;if(value%1440===0)return`${value/1440} ${value===1440?'day':'days'} before`;if(value%60===0)return`${value/60} h before`;return`${value} min before`};
 let globalEvents=[],privateEvents=[],currentUser=null,editingEvent=null;
 const reminderKey='minifig-release-reminders',notificationKey='minifig-release-notified';
 const stored=(key)=>{try{return JSON.parse(localStorage.getItem(key)||'{}')}catch{return{}}};
