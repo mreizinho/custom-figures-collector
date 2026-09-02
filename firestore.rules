@@ -46,11 +46,25 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    match /releaseEvents/{eventId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
     match /users/{userId} {
       allow read, create, update: if signedIn()
         && request.auth.uid == userId
         && hasPremiumAccess(userId);
       allow delete: if false;
+    }
+
+    match /users/{userId}/releaseEvents/{eventId} {
+      allow read, delete: if signedIn()
+        && request.auth.uid == userId
+        && resource.data.ownerUid == request.auth.uid;
+      allow create, update: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.ownerUid == request.auth.uid;
     }
 
     match /{document=**} {
