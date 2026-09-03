@@ -12,13 +12,6 @@ service cloud.firestore {
         && request.auth.token.email == 'mreizinho@gmail.com';
     }
 
-    function hasPremiumAccess(userId) {
-      return isAdmin()
-        || (exists(/databases/$(database)/documents/premiumEntitlements/$(userId))
-          && get(/databases/$(database)/documents/premiumEntitlements/$(userId)).data.status == 'active'
-          && get(/databases/$(database)/documents/premiumEntitlements/$(userId)).data.licenseType == 'lifetime');
-    }
-
     match /premiumProfiles/{userId} {
       allow create: if signedIn()
         && request.auth.uid == userId
@@ -53,8 +46,7 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read, create, update: if signedIn()
-        && request.auth.uid == userId
-        && hasPremiumAccess(userId);
+        && request.auth.uid == userId;
       allow delete: if false;
     }
 
