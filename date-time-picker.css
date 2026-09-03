@@ -27,3 +27,4 @@
 .date-time-picker-dialog[data-date-order="ymd"]:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-headings>:nth-child(3),.date-time-picker-dialog[data-date-order="ymd"]:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:nth-child(3){order:3}
 .date-time-picker-dialog[data-date-order="ymd"]:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:first-child{border-right:1px solid var(--line)}
 .date-time-picker-dialog[data-date-order="ymd"]:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:nth-child(3){border-right:0}
+@media(max-width:600px){.settings-copy{display:flex;flex-direction:column;overflow:hidden}.settings-copy>h2,.settings-copy>.settings-tabs{flex:0 0 auto}.settings-tab-panel{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}.settings-tab-panel::-webkit-scrollbar{display:none}}
