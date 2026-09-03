@@ -16,3 +16,5 @@
 /* Restore the divider after the visually reordered Day wheel. */
 .date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:nth-child(3){border-right:1px solid var(--line)}
 .date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:first-child{border-right:0}
+.date-time-format-controls{display:grid;grid-template-columns:1fr 1fr;gap:12px}.date-time-format-controls label{display:grid;gap:6px;font-weight:600}.date-time-format-controls select{width:100%;min-height:42px;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:9px 12px}@media(max-width:600px){.date-time-format-controls{grid-template-columns:1fr}}
+.premium-upgrade-setting[hidden]{display:none!important}@media(max-width:600px){.settings-copy .settings-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}.settings-copy .settings-tabs [data-settings-tab="display"]{display:flex!important}.settings-copy .settings-tabs::after{width:33.333%}}
