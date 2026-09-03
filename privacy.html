@@ -7,8 +7,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    (() => {
+      const mobile = window.matchMedia('(max-width: 600px)');
+      const applyTheme = () => {
+        const device = mobile.matches ? 'mobile' : 'desktop';
+        const user = localStorage.getItem('minifig-google-user-id') || 'anonymous';
+        const saved = localStorage.getItem(`minifig-theme-${device}-${user}`)
+          ?? localStorage.getItem(`minifig-theme-${device}`)
+          ?? localStorage.getItem('minifig-theme')
+          ?? 'light';
+        document.documentElement.classList.toggle('dark', saved === 'dark');
+      };
+      applyTheme();
+      mobile.addEventListener('change', applyTheme);
+      window.addEventListener('storage', applyTheme);
+    })();
+  </script>
   <style>
-    :root{color-scheme:light dark;--accent:#ff5a35;--paper:#fff;--ink:#242522;--muted:#6f716b;--line:#d5d6d1;--bg:#f3f3f0}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 Outfit,Arial,sans-serif}main{width:min(820px,calc(100% - 32px));margin:40px auto;padding:clamp(28px,6vw,64px);border:1px solid var(--line);background:var(--paper)}h1{margin:0 0 6px;font-size:clamp(36px,7vw,58px);line-height:1.05}h2{margin:34px 0 8px;font-size:24px}p,li{color:var(--muted)}a{color:var(--accent)}.updated{margin-top:0}.back{display:inline-block;margin-bottom:28px;text-decoration:none;font-weight:600}@media(prefers-color-scheme:dark){:root{--paper:#282a26;--ink:#f4f4ef;--muted:#c5c6bf;--line:#4b4d47;--bg:#1c1e1b}}
+    :root{color-scheme:light;--accent:#ff5a35;--paper:#fff;--ink:#242522;--muted:#6f716b;--line:#d5d6d1;--bg:#f3f3f0}:root.dark{color-scheme:dark;--paper:#282a26;--ink:#f4f4ef;--muted:#c5c6bf;--line:#4b4d47;--bg:#1c1e1b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 Outfit,Arial,sans-serif}main{width:min(820px,calc(100% - 32px));margin:40px auto;padding:clamp(28px,6vw,64px);border:1px solid var(--line);background:var(--paper)}h1{margin:0 0 6px;font-size:clamp(36px,7vw,58px);line-height:1.05}h2{margin:34px 0 8px;font-size:24px}p,li{color:var(--muted)}a{color:var(--accent)}.updated{margin-top:0}.back{display:inline-block;margin-bottom:28px;text-decoration:none;font-weight:600}
   </style>
 </head>
 <body>
