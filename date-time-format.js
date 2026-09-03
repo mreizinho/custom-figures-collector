@@ -28,5 +28,5 @@ const spreadsheetInput=document.querySelector('#spreadsheetUrl');
 const syncSpreadsheetValue=()=>{if(spreadsheetSection)spreadsheetSection.hidden=false;if(spreadsheetInput&&(!window.collectorFirebaseAuthenticatedUser||(typeof isDemoMode==='function'&&isDemoMode())))spreadsheetInput.value=''};
 window.addEventListener('collector-google-auth',syncSpreadsheetValue);
 document.querySelector('#settingsToggle')?.addEventListener('click',()=>setTimeout(syncSpreadsheetValue,0));
-const settingsDialog=document.querySelector('#settingsDialog');if(settingsDialog)new MutationObserver(()=>{if(settingsDialog.open)syncSpreadsheetValue()}).observe(settingsDialog,{attributes:true,attributeFilter:['open']});
+const formatSettingsDialog=document.querySelector('#settingsDialog');if(formatSettingsDialog)new MutationObserver(()=>{if(formatSettingsDialog.open)syncSpreadsheetValue()}).observe(formatSettingsDialog,{attributes:true,attributeFilter:['open']});
 syncSpreadsheetValue();
