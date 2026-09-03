@@ -8,8 +8,7 @@ service cloud.firestore {
 
     function isAdmin() {
       return signedIn()
-        && request.auth.token.email_verified == true
-        && request.auth.token.email == 'mreizinho@gmail.com';
+        && request.auth.uid == 'rh8WrITlLTXrsDj5mbJHzA1D4Bk2';
     }
 
     match /premiumProfiles/{userId} {

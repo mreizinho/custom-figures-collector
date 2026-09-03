@@ -68,7 +68,7 @@ async function hasPremiumAccess(user) {
     displayName: user.displayName || '',
     lastSeenAt: serverTimestamp()
   }, { merge: true });
-  if (email === 'mreizinho@gmail.com' && user.emailVerified) return true;
+  if (user.uid === 'rh8WrITlLTXrsDj5mbJHzA1D4Bk2') return true;
   const snapshot = await getDoc(doc(db, 'premiumEntitlements', user.uid));
   const entitlement = snapshot.data() || {};
   return snapshot.exists() && entitlement.status === 'active' && entitlement.licenseType === 'lifetime';
