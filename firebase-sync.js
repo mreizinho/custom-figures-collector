@@ -55,6 +55,9 @@ let cloudSyncPaused = false;
 let authStateRevision = 0;
 let promptOnNextUserConnection = false;
 let pendingCloudSettings = null;
+// Premium licensing has not launched yet. Keep the entitlement implementation
+// available, but grant the current product to every authenticated Google user.
+const PREMIUM_ENTITLEMENTS_ENABLED = false;
 const REDIRECT_SIGN_IN_KEY = 'collector-google-redirect-pending';
 const useRedirectSignIn = false;
 
@@ -71,6 +74,29 @@ async function hasPremiumAccess(user) {
   const snapshot = await getDoc(doc(db, 'premiumEntitlements', user.uid));
   const entitlement = snapshot.data() || {};
   return snapshot.exists() && entitlement.status === 'active' && entitlement.licenseType === 'lifetime';
+}
+
+async function findCollectorSpreadsheet(accessToken) {
+  if (!accessToken) return undefined;
+  const query = encodeURIComponent("name = 'Custom Minifigs Collector' and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false");
+  const response = await fetch(`https://www.googleapis.com/drive/v3/files?q=${query}&fields=files(id,name,webViewLink,modifiedTime)&orderBy=modifiedTime desc&pageSize=10`, {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
+  if (!response.ok) {
+    console.warn('Could not check Google Drive for an existing collection spreadsheet.', response.status);
+    return undefined;
+  }
+  const files = (await response.json()).files || [];
+  return files[0] || null;
+}
+
+function cachedGoogleAccessToken() {
+  try {
+    const cached = JSON.parse(sessionStorage.getItem('collector-sheets-access-token') || 'null');
+    return cached?.token && cached.expiresAt > Date.now() + 60000 ? cached.token : '';
+  } catch {
+    return '';
+  }
 }
 
 function announceGoogleAuth(user, accessToken = '', premium = currentUserPremium) {
@@ -194,7 +220,7 @@ function renderAccount(user, premium = currentUserPremium) {
   button.innerHTML = `<span class="material-symbols-rounded">${user ? 'logout' : 'login'}</span>${user ? 'Sign out' : 'Sign in'}`;
   button.setAttribute('aria-pressed', String(Boolean(user)));
   document.querySelectorAll('[data-firebase-required]').forEach(control => { control.disabled = !user || !premium; });
-  status(user ? premium ? `Signed in as ${user.email || 'Google user'} · Premium.` : `Signed in as ${user.email || 'Google user'}. This account does not have a premium license.` : 'Sign in to synchronize this collection across devices.');
+  status(user ? premium ? `Signed in as ${user.email || 'Google user'} · Premium access enabled.` : `Signed in as ${user.email || 'Google user'}.` : 'Demo mode. Sign in with Google to find or create your personal collection spreadsheet.');
 }
 
 function chooseInitialSyncDirection(hasRemoteSettings) {
@@ -458,7 +484,7 @@ async function connectUser(user) {
     return;
   }
 
-  currentUserPremium = await hasPremiumAccess(user);
+  currentUserPremium = PREMIUM_ENTITLEMENTS_ENABLED ? await hasPremiumAccess(user) : true;
   if (revision !== authStateRevision) return;
   renderAccount(user, currentUserPremium);
   if (!currentUserPremium) {
@@ -478,31 +504,51 @@ async function connectUser(user) {
     return;
   }
 
+  nativeSetItem.call(localStorage, 'minifig-firebase-user-id', user.uid);
+  const loginAccessToken = pendingGoogleAccessToken || cachedGoogleAccessToken();
+  announceGoogleAuth(user, loginAccessToken, true);
+  pendingGoogleAccessToken = '';
+  sessionStorage.removeItem('collector-restored-spreadsheet-id');
+  sessionStorage.removeItem('collector-restored-spreadsheet-url');
+  status(`Signed in as ${user.email || 'Google user'}. Checking Google Drive for your collection spreadsheet…`);
+  const discoveredSpreadsheet = await findCollectorSpreadsheet(loginAccessToken);
+  if (revision !== authStateRevision) return;
+  const spreadsheetBeforeDiscovery = spreadsheetIdFromValue(localStorage.getItem('minifig-spreadsheet-id') || '');
+  const discoveredSpreadsheetChanged = Boolean(discoveredSpreadsheet?.id && discoveredSpreadsheet.id !== spreadsheetBeforeDiscovery);
+  if (discoveredSpreadsheet?.id) {
+    const spreadsheetUrl = discoveredSpreadsheet.webViewLink || `https://docs.google.com/spreadsheets/d/${discoveredSpreadsheet.id}/edit`;
+    nativeSetItem.call(localStorage, 'minifig-spreadsheet-id', discoveredSpreadsheet.id);
+    nativeSetItem.call(localStorage, 'minifig-spreadsheet-url', spreadsheetUrl);
+    if (discoveredSpreadsheetChanged) {
+      sessionStorage.setItem('collector-restored-spreadsheet-id', discoveredSpreadsheet.id);
+      sessionStorage.setItem('collector-restored-spreadsheet-url', spreadsheetUrl);
+    }
+  }
+
   const reference = doc(db, 'users', user.uid);
   const snapshot = await getDoc(reference);
   if (revision !== authStateRevision) return;
   const remoteData = snapshot.data() || {};
-
-  nativeSetItem.call(localStorage, 'minifig-firebase-user-id', user.uid);
-  announceGoogleAuth(user, pendingGoogleAccessToken, true);
-  pendingGoogleAccessToken = '';
-  sessionStorage.removeItem('collector-restored-spreadsheet-id');
-  sessionStorage.removeItem('collector-restored-spreadsheet-url');
   const localSpreadsheetId = spreadsheetIdFromValue(localStorage.getItem('minifig-spreadsheet-id') || '');
-  if (!shouldOfferCloudDownload && localSpreadsheetId && localSpreadsheetId !== GUEST_SPREADSHEET_ID) {
-    status(`Signed in as ${user.email || 'Google user'}.`);
+  if (!shouldOfferCloudDownload && localSpreadsheetId && localSpreadsheetId !== GUEST_SPREADSHEET_ID && discoveredSpreadsheet !== null) {
+    status(`Signed in as ${user.email || 'Google user'}.${discoveredSpreadsheet ? ' Your existing collection spreadsheet was found.' : ''}`);
+    if (discoveredSpreadsheetChanged) location.reload();
     return;
   }
 
   const remoteSettings = settingsFromRemoteData(remoteData);
   const remoteSpreadsheetId = remoteSettings?.['minifig-spreadsheet-id'] || '';
   if (!remoteSettings || !remoteSpreadsheetId || remoteSpreadsheetId === GUEST_SPREADSHEET_ID) {
-    if (localSpreadsheetId && localSpreadsheetId !== GUEST_SPREADSHEET_ID) {
+    if (localSpreadsheetId && localSpreadsheetId !== GUEST_SPREADSHEET_ID && discoveredSpreadsheet !== null) {
       status(`Signed in as ${user.email || 'Google user'}. Your current personal spreadsheet was kept.`);
+      if (discoveredSpreadsheetChanged) location.reload();
       return;
     }
-    status(`Signed in as ${user.email || 'Google user'}. No personal spreadsheet configuration is saved yet.`);
-    window.dispatchEvent(new CustomEvent('collector-onboarding-needed', { detail: { uid: user.uid, email: user.email || '' } }));
+    nativeSetItem.call(localStorage, 'minifig-spreadsheet-id', GUEST_SPREADSHEET_ID);
+    nativeSetItem.call(localStorage, 'minifig-spreadsheet-url', GUEST_SPREADSHEET_URL);
+    const spreadsheetWasChecked = discoveredSpreadsheet === null;
+    status(`Signed in as ${user.email || 'Google user'}. ${spreadsheetWasChecked ? 'No collection spreadsheet was found. Create your first collection to get started.' : 'No personal spreadsheet configuration is saved yet.'}`);
+    window.dispatchEvent(new CustomEvent('collector-onboarding-needed', { detail: { uid: user.uid, email: user.email || '', reason: spreadsheetWasChecked ? 'spreadsheet-not-found' : 'configuration-not-found' } }));
     return;
   }
   remoteFingerprint = fingerprint(remoteSettings);
@@ -514,6 +560,7 @@ async function connectUser(user) {
   if (revision !== authStateRevision) return;
   if (!download) {
     status(`Signed in as ${user.email || 'Google user'}. The current configuration was kept.`);
+    if (discoveredSpreadsheetChanged) location.reload();
     return;
   }
   stageRestoredSpreadsheet(remoteSettings);
