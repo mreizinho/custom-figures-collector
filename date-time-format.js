@@ -22,3 +22,9 @@ const syncPremiumPromotion=()=>{const promotion=document.querySelector('.premium
 window.addEventListener('collector-google-auth',syncPremiumPromotion);
 new MutationObserver(syncPremiumPromotion).observe(document.body,{childList:true,subtree:true});
 syncPremiumPromotion();
+
+const spreadsheetSection=document.querySelector('#spreadsheetUrl')?.closest('section');
+const syncSpreadsheetVisibility=()=>{if(spreadsheetSection)spreadsheetSection.hidden=!window.collectorFirebaseAuthenticatedUser||(typeof isDemoMode==='function'&&isDemoMode())};
+window.addEventListener('collector-google-auth',syncSpreadsheetVisibility);
+document.querySelector('#settingsToggle')?.addEventListener('click',()=>queueMicrotask(syncSpreadsheetVisibility));
+syncSpreadsheetVisibility();
