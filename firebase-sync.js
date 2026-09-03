@@ -76,7 +76,7 @@ async function hasPremiumAccess(user) {
 
 async function findCollectorSpreadsheet(accessToken) {
   if (!accessToken) return undefined;
-  const query = encodeURIComponent("name = 'Custom Minifigs Collector' and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false");
+  const query = encodeURIComponent("(name = 'CMCollectorDB' or name = 'Custom Minifigs Collector') and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false");
   const response = await fetch(`https://www.googleapis.com/drive/v3/files?q=${query}&fields=files(id,name,webViewLink,modifiedTime)&orderBy=modifiedTime desc&pageSize=10`, {
     headers: { Authorization: `Bearer ${accessToken}` }
   });
@@ -85,7 +85,7 @@ async function findCollectorSpreadsheet(accessToken) {
     return undefined;
   }
   const files = (await response.json()).files || [];
-  return files[0] || null;
+  return files.find(file => file.name === 'CMCollectorDB') || files[0] || null;
 }
 
 function cachedGoogleAccessToken() {
