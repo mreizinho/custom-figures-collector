@@ -149,7 +149,24 @@ function render(){
     catalogue.append(card);
   });
   $('#resultCount').textContent=`${activeCollection.toUpperCase()}: Showing ${items.length} of ${figures.length} minifigs`;
-  $('#empty').hidden=!!items.length;$('#resetEmpty').hidden=false;updateStats();
+  const emptyState=$('#empty'),emptyAction=$('#resetEmpty'),emptyCollection=figures.length===0;
+  emptyState.hidden=!!items.length;
+  if(!items.length&&emptyCollection){
+    emptyState.querySelector('.material-symbols-rounded').textContent='person_add';
+    emptyState.querySelector('h2').textContent='Add your first minifig';
+    emptyState.querySelector('p').textContent=`Your ${activeCollection} collection is ready. Add your first minifig to get started.`;
+    emptyAction.hidden=false;
+    emptyAction.textContent='Add first minifig';
+    emptyAction.onclick=()=>$('#addFigure').click();
+  }else{
+    emptyState.querySelector('.material-symbols-rounded').textContent='search_off';
+    emptyState.querySelector('h2').textContent='No minifigs found';
+    emptyState.querySelector('p').textContent='Try a different search or clear the active filters.';
+    emptyAction.hidden=false;
+    emptyAction.textContent='Clear filters';
+    emptyAction.onclick=clearFilters;
+  }
+  updateStats();
   const filters=document.querySelectorAll('.filters input:checked').length;
   $('#filterCount').textContent=filters?`(${filters})`:'';$('#clearFilters').hidden=!filters;
 }
