@@ -177,14 +177,16 @@ body.dark {
 .custom-color-actions button { border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 6px 10px; font-size: 11px; }
 .custom-color-actions button:last-child { border-color: var(--ink); background: var(--ink); color: var(--paper); font-weight: 600; }
 .header-actions { display: flex; align-items: center; gap: 8px; }
-.header-actions button { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 50%; background: var(--paper); color: var(--ink); padding: 0; font-size: 18px; }
+.header-actions button,.header-actions>a { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 50%; background: var(--paper); color: var(--ink); padding: 0; font-size: 18px; text-decoration:none; }
 .header-actions .material-symbols-rounded { display: block; transform: translateY(0); }
 @media (min-width: 601px) and (hover: hover) {
   .header-actions > button,
+  .header-actions > a,
   .header-actions > .collection-control > button {
     transition: color .16s ease, border-color .16s ease, background-color .16s ease, opacity .16s ease, transform .16s ease, box-shadow .16s ease;
   }
   .header-actions > button:hover,
+  .header-actions > a:hover,
   .header-actions > .collection-control > button:hover,
   .header-actions > #theme:hover {
     color: var(--accent);
@@ -194,12 +196,14 @@ body.dark {
     transform: none;
   }
   .header-actions > button:active,
+  .header-actions > a:active,
   .header-actions > .collection-control > button:active,
   .header-actions > #theme:active {
     opacity: .72;
     transform: scale(.96);
   }
   .header-actions > button:focus-visible,
+  .header-actions > a:focus-visible,
   .header-actions > .collection-control > button:focus-visible,
   .header-actions > #theme:focus-visible {
     color: var(--accent);
@@ -237,11 +241,8 @@ body .actions .wish.selected .material-symbols-rounded { color:inherit; }
   padding: 1px;
   border: 0;
   background: var(--line);
-  margin-bottom: 34px;
+  margin-bottom: 28px;
 }
-.stats-privacy { position:absolute; top:calc(100% + 10px); right:0; width:25%; color:var(--muted); font-size:12px; text-align:right; text-decoration:none; }
-.stats-privacy:hover,.stats-privacy:focus-visible { color:var(--accent); }
-@media(max-width:850px){.stats-privacy{width:50%;}}
 .stats article { border: 0; background: var(--paper); padding: 20px 24px; }
 .stats article:last-child { border: 0; }
 .stats > article > span { text-transform: uppercase; letter-spacing: .65px; font-size: 11px; font-weight: 600; }
@@ -1012,7 +1013,7 @@ html { scrollbar-gutter: stable; }
 }
 
 @media (max-width: 560px) {
-  .stats { margin-bottom: 34px; }
+  .stats { margin-bottom: 24px; }
   .stats article { padding: 16px 17px; }
   .filter-toggle { display: flex; }
   .toolbar { display:grid; grid-template-columns:minmax(0,1fr) 48px; width:100%; }
@@ -1065,15 +1066,15 @@ html { scrollbar-gutter: stable; }
   .mobile-menu-toggle { display: grid; flex: 0 0 44px; }
   .header-actions { display: none; position: absolute; top: calc(100% + 8px); right: 20px; z-index: 50; width: 210px; padding: 6px; border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow); }
   .topbar.menu-open .header-actions { display: grid; }
-  .header-actions button { display: flex; justify-content: flex-start; gap: 11px; width: 100%; height: 44px; border: 0; border-radius: 0; background: transparent; padding: 0 12px; text-align: left; }
+  .header-actions button,.header-actions>a { display: flex; justify-content: flex-start; gap: 11px; width: 100%; height: 44px; border: 0; border-radius: 0; background: transparent; padding: 0 12px; text-align: left; }
   .header-actions #statsToggle,
   .header-actions #theme { border: 0; border-radius: 0; background: transparent; }
   .collection-control { width: 100%; }
   .collection-control > #collectionToggle { border: 0; border-radius: 0; background: transparent; }
   .collection-menu { position: static; width: 100%; margin: 0 0 4px; border: 0; border-top: 1px solid var(--line); box-shadow: none; padding: 4px 6px; }
   .header-actions .collection-menu button { display: grid; grid-template-columns: 18px minmax(0, 1fr) 18px; height: 38px; padding-block: 6px; }
-  .header-actions button:hover { background: var(--bg); }
-  .header-actions button::after { content: attr(data-menu-label); font-size: 14px; white-space: nowrap; }
+  .header-actions button:hover,.header-actions>a:hover { background: var(--bg); }
+  .header-actions button::after,.header-actions>a::after { content: attr(data-menu-label); font-size: 14px; white-space: nowrap; }
   .add-photo-dialog { position:fixed; inset:0; width:100%; max-width:none; height:100dvh; max-height:none; margin:0; border:0; border-radius:0; }
   .add-photo-dialog form { width:100%; min-width:0; padding:72px 22px max(28px,env(safe-area-inset-bottom)); }
 }
