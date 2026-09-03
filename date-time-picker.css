@@ -6,3 +6,6 @@
 .date-time-picker-option{scroll-snap-align:center;transition:color .16s ease}
 .date-time-picker-option:hover{background:transparent;font-weight:700}
 .date-time-picker-option[aria-selected="true"]{background:transparent;color:#fff}
+/* Extended two-row dial fade and quick date action. */
+.date-time-picker-options{mask-image:linear-gradient(to bottom,transparent 0,#000 40%,#000 60%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 40%,#000 60%,transparent 100%)}
+.date-time-picker-actions [data-picker-today]{margin-right:auto;border-color:transparent;color:var(--accent);padding-inline:4px}
