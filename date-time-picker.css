@@ -9,3 +9,7 @@
 /* Extended two-row dial fade and quick date action. */
 .date-time-picker-options{mask-image:linear-gradient(to bottom,transparent 0,#000 40%,#000 60%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 40%,#000 60%,transparent 100%)}
 .date-time-picker-actions [data-picker-today]{margin-right:auto;border-color:transparent;color:var(--accent);padding-inline:4px}
+/* Date wheel order: day, month, year. */
+.date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-headings>:first-child,.date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:first-child{order:3}
+.date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-headings>:nth-child(2),.date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:nth-child(2){order:2}
+.date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-headings>:nth-child(3),.date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:nth-child(3){order:1}
