@@ -24,7 +24,8 @@ new MutationObserver(syncPremiumPromotion).observe(document.body,{childList:true
 syncPremiumPromotion();
 
 const spreadsheetSection=document.querySelector('#spreadsheetUrl')?.closest('section');
-const syncSpreadsheetVisibility=()=>{if(spreadsheetSection)spreadsheetSection.hidden=!window.collectorFirebaseAuthenticatedUser||(typeof isDemoMode==='function'&&isDemoMode())};
-window.addEventListener('collector-google-auth',syncSpreadsheetVisibility);
-document.querySelector('#settingsToggle')?.addEventListener('click',()=>queueMicrotask(syncSpreadsheetVisibility));
-syncSpreadsheetVisibility();
+const spreadsheetInput=document.querySelector('#spreadsheetUrl');
+const syncSpreadsheetValue=()=>{if(spreadsheetSection)spreadsheetSection.hidden=false;if(spreadsheetInput&&(!window.collectorFirebaseAuthenticatedUser||(typeof isDemoMode==='function'&&isDemoMode())))spreadsheetInput.value=''};
+window.addEventListener('collector-google-auth',syncSpreadsheetValue);
+document.querySelector('#settingsToggle')?.addEventListener('click',()=>queueMicrotask(syncSpreadsheetValue));
+syncSpreadsheetValue();
