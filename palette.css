@@ -239,7 +239,7 @@ body .actions .wish.selected .material-symbols-rounded { color:inherit; }
   background: var(--line);
   margin-bottom: 54px;
 }
-.stats-privacy { position:absolute; top:calc(100% + 10px); right:0; width:25%; color:var(--muted); font-size:12px; text-align:center; text-decoration:none; }
+.stats-privacy { position:absolute; top:calc(100% + 10px); right:0; width:25%; color:var(--muted); font-size:12px; text-align:right; text-decoration:none; }
 .stats-privacy:hover,.stats-privacy:focus-visible { color:var(--accent); }
 @media(max-width:850px){.stats-privacy{width:50%;}}
 .stats article { border: 0; background: var(--paper); padding: 20px 24px; }
