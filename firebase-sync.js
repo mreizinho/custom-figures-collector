@@ -316,7 +316,12 @@ function installSettingsUi() {
         }
         const result = await signInWithPopup(auth, provider);
         pendingGoogleAccessToken = GoogleAuthProvider.credentialFromResult(result)?.accessToken || '';
-        announceGoogleAuth(result.user, '', false);
+        // onAuthStateChanged may finish before the popup promise resolves. Do not
+        // overwrite that completed connection with a temporary signed-out event;
+        // only publish here when connectUser has already granted app access.
+        if (currentUser?.uid === result.user.uid && currentUserPremium) {
+          announceGoogleAuth(result.user, pendingGoogleAccessToken, true);
+        }
       }
     } catch (error) {
       promptOnNextUserConnection = false;
@@ -578,7 +583,9 @@ setPersistence(auth, browserLocalPersistence)
       const result = await getRedirectResult(auth);
       if (result) {
         pendingGoogleAccessToken = GoogleAuthProvider.credentialFromResult(result)?.accessToken || '';
-        announceGoogleAuth(result.user, '', false);
+        if (currentUser?.uid === result.user.uid && currentUserPremium) {
+          announceGoogleAuth(result.user, pendingGoogleAccessToken, true);
+        }
       }
       sessionStorage.removeItem(REDIRECT_SIGN_IN_KEY);
     } catch (error) {
