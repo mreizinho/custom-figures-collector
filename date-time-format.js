@@ -9,9 +9,13 @@ window.collectorDateTime={dateFormat,hour12,month,formatDate,formatTime};
 
 const displayPanel=document.querySelector('[data-settings-panel="display"]');
 if(displayPanel){
-  const section=document.createElement('section');section.className='date-time-format-setting';section.innerHTML='<h3>Date and time</h3><div class="date-time-format-controls"><label>Date format<select data-date-format><option>D MMM YYYY</option><option>DD/MM/YYYY</option><option>MM/DD/YYYY</option><option>YYYY-MM-DD</option></select></label><label>Time format<select data-time-format><option value="false">24-hour</option><option value="true">12-hour</option></select></label></div><p>Used consistently throughout the calendar and date/time fields.</p>';displayPanel.prepend(section);
-  const dateSelect=section.querySelector('[data-date-format]'),timeSelect=section.querySelector('[data-time-format]');dateSelect.value=dateFormat();timeSelect.value=String(hour12());
-  const save=()=>{localStorage.setItem(DATE_FORMAT_KEY,dateSelect.value);localStorage.setItem(TIME_FORMAT_KEY,timeSelect.value);window.dispatchEvent(new Event('collector-date-time-format-change'))};dateSelect.onchange=save;timeSelect.onchange=save;
+  const section=document.createElement('section');section.className='date-time-format-setting';section.innerHTML='<div class="date-time-format-controls"><label>Date format<select data-date-format><option>D MMM YYYY</option><option>DD/MM/YYYY</option><option>MM/DD/YYYY</option><option>YYYY-MM-DD</option></select></label><label>Time format<select data-time-format><option value="false">24-hour</option><option value="true">12-hour</option></select></label></div><p>Used consistently throughout the calendar and date/time fields.</p>';displayPanel.prepend(section);
+  const currency=displayPanel.querySelector('.display-currency-setting'),desktopGrid=displayPanel.querySelector('.desktop-columns-setting');if(currency&&desktopGrid)desktopGrid.before(currency);
+  const dateSelect=section.querySelector('[data-date-format]'),timeSelect=section.querySelector('[data-time-format]'),apply=document.querySelector('#applySettings');let baselineDate=dateFormat(),baselineTime=String(hour12()),pending=false;
+  const sync=()=>{baselineDate=dateFormat();baselineTime=String(hour12());dateSelect.value=baselineDate;timeSelect.value=baselineTime;pending=false};
+  const stage=()=>{pending=dateSelect.value!==baselineDate||timeSelect.value!==baselineTime;if(pending&&apply)apply.disabled=false};dateSelect.onchange=stage;timeSelect.onchange=stage;
+  document.querySelector('#settingsToggle')?.addEventListener('click',()=>queueMicrotask(sync));
+  if(apply){new MutationObserver(()=>{if(pending&&apply.disabled)apply.disabled=false}).observe(apply,{attributes:true,attributeFilter:['disabled']});apply.addEventListener('click',()=>{if(!pending)return;localStorage.setItem(DATE_FORMAT_KEY,dateSelect.value);localStorage.setItem(TIME_FORMAT_KEY,timeSelect.value);baselineDate=dateSelect.value;baselineTime=timeSelect.value;pending=false;window.dispatchEvent(new Event('collector-date-time-format-change'))},{capture:true})}
 }
 
 const syncPremiumPromotion=()=>{const promotion=document.querySelector('.premium-upgrade-setting');if(promotion)promotion.hidden=Boolean(window.collectorPremiumUser)};
