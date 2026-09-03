@@ -13,3 +13,6 @@
 .date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-headings>:first-child,.date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:first-child{order:3}
 .date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-headings>:nth-child(2),.date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:nth-child(2){order:2}
 .date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-headings>:nth-child(3),.date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:nth-child(3){order:1}
+/* Restore the divider after the visually reordered Day wheel. */
+.date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:nth-child(3){border-right:1px solid var(--line)}
+.date-time-picker-dialog:has([data-picker-tab="date"][aria-selected="true"]) .date-time-picker-columns>:first-child{border-right:0}
